@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu municipio: qué está obligado a darte tu ayuntamiento</title>
+  <meta name="description" content="Escribe el nombre de tu municipio y consulta, según su población en el padrón del INE, qué servicios está obligado a prestar tu ayuntamiento y cuáles son tus administraciones.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="¿Qué está obligado a darte tu ayuntamiento?">
+  <meta property="og:description" content="Los servicios obligatorios de cada ayuntamiento dependen de su población. Consulta el tuyo con el padrón del INE.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="compacto">
+    <p class="migas"><a href="./">¿De quién es la competencia?</a></p>
+    <h1>¿Qué está obligado a darte tu ayuntamiento?</h1>
+    <p class="subtitle">Depende de cuánta gente viva en tu municipio. Escribe su nombre.</p>
+    <form class="search-box" role="search" onsubmit="return false">
+      <label for="buscador-municipio" class="solo-lectores">Nombre de tu municipio</label>
+      <input type="search" id="buscador-municipio" placeholder="Empieza a escribir el nombre de tu municipio" autocomplete="off"
+             role="combobox" aria-expanded="false" aria-controls="sugerencias" aria-autocomplete="list">
+    </form>
+  </header>
+
+  <main>
+    <ul id="sugerencias" class="sugerencias" role="listbox" aria-label="Municipios" hidden></ul>
+    <section id="ficha-municipio" aria-live="polite"></section>
+
+    <p class="acciones" id="acciones-municipio" hidden>
+      <button type="button" class="boton-secundario" data-compartir>Compartir</button>
+      <a class="boton-secundario" data-error href="#">He visto un error</a>
+    </p>
+    <p class="volver"><a href="./">← Buscar otra cosa</a></p>
+  </main>
+
+  <footer>
+    <p id="fuente-padron"></p>
+    <p><a href="como-lo-sabemos.html">Cómo lo sabemos</a> · <a href="preguntas.html">Todas las preguntas</a> · <a data-repo href="#">Código y datos</a></p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="data.js"></script>
+  <script src="municipios.js"></script>
+  <script src="core.js"></script>
+  <script src="comun.js"></script>
+  <script src="municipio.js"></script>
+</body>
+</html>

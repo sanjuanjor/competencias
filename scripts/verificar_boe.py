@@ -1,4 +1,4 @@
-"""Verifica contra el BOE todas las referencias legales de data/competencias.json.
+"""Verifica contra el BOE todas las referencias legales de data/competencias.json y data/casos.json.
 
 Para cada norma citada comprueba que existe y sigue vigente; para cada cita,
 que el bloque (artículo o disposición) existe en el texto consolidado y que su
@@ -26,6 +26,7 @@ sys.path.insert(0, str(ROOT / "mcp-server"))
 from competencias_mcp import boe  # noqa: E402
 
 DATOS = ROOT / "data" / "competencias.json"
+CASOS = ROOT / "data" / "casos.json"
 INFORME = ROOT / "data" / "verificacion_boe.json"
 
 
@@ -38,6 +39,9 @@ def citas(datos: dict):
         for exc in materia.get("excepciones", []):
             for ref in exc["refs"]:
                 yield f"{materia['id']}/excepción «{exc['titulo']}»", ref
+    for caso in json.loads(CASOS.read_text(encoding="utf-8"))["casos"]:
+        for ref in caso.get("refs", []):
+            yield f"casos/{caso['id']}", ref
 
 
 def titulo_coincide(articulo: str, titulo_bloque: str) -> bool | None:

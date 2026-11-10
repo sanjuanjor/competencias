@@ -191,16 +191,6 @@ main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
 #mapa-resultado .nivel { margin: 0; }
 #mapa-resultado .via-nombre { font-weight: 700; font-size: 1.05rem; }
 
-#todas-las-materias ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: .35rem 1rem;
-  font-size: .95rem;
-}
-
 .volver { margin-top: 1.5rem; }
 
 footer {
@@ -211,3 +201,174 @@ footer {
 }
 footer p { margin: .3rem 0; }
 footer a { color: inherit; }
+
+/* ---------- portada ---------- */
+
+.bloque {
+  margin-top: 1.6rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 1.2rem 1.3rem;
+}
+.bloque > h2 { margin-top: 0; font-size: 1.25rem; }
+#portada > .bloque:first-child { margin-top: 0; }
+.mas { margin: .8rem 0 0; font-size: .92rem; }
+
+.rejilla {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+  gap: .6rem;
+}
+.rejilla a {
+  display: block;
+  height: 100%;
+  padding: .7rem .85rem;
+  border: 1px solid var(--borde);
+  border-left-width: 4px;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  background: var(--fondo);
+}
+.rejilla a:hover, .rejilla a:focus-visible { border-color: var(--enlace); }
+.rejilla strong { display: block; font-size: .98rem; }
+.rejilla span { display: block; font-size: .82rem; color: var(--texto-suave); margin-top: .15rem; }
+.rejilla .borde-estado { border-left-color: var(--estado); }
+.rejilla .borde-ccaa { border-left-color: var(--ccaa); }
+.rejilla .borde-provincial { border-left-color: var(--provincial); }
+.rejilla .borde-municipal { border-left-color: var(--municipal); }
+
+.formulario-linea { display: flex; gap: .6rem; flex-wrap: wrap; }
+.formulario-linea input {
+  flex: 1 1 240px;
+  min-width: 0;
+  padding: .65rem .9rem;
+  font-size: 1rem;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: var(--fondo);
+  color: var(--texto);
+}
+.formulario-linea button {
+  background: #1d4ed8;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: .65rem 1.1rem;
+  font-size: .95rem;
+  cursor: pointer;
+}
+.formulario-linea button:hover { background: #1e40af; }
+
+/* ---------- preguntas y veredictos ---------- */
+
+.tarjetas-pregunta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: .7rem;
+}
+.tarjetas-pregunta .pregunta { margin: 0; }
+
+.pregunta h3 { margin: 0 0 .35rem; font-size: 1.02rem; line-height: 1.35; }
+.pregunta h3 a { color: inherit; text-decoration: none; }
+.pregunta h3 a:hover, .pregunta h3 a:focus-visible { text-decoration: underline; }
+#resultados > .pregunta { border-style: solid; border-width: 1px 1px 1px 4px; padding: .9rem 1.1rem; margin: .7rem 0; }
+#resultados > .pregunta:first-of-type h3 { font-size: 1.2rem; }
+
+.veredicto { padding: 1rem 1.1rem; }
+.veredicto-titular { margin: 0 0 .3rem; }
+.veredicto-titular .chip { font-size: .9rem; padding: .25rem .8rem; }
+.veredicto .veredicto-titular .chip { font-size: 1.05rem; padding: .35rem 1rem; }
+.veredicto-texto { margin: .3rem 0 0; font-size: .95rem; }
+.veredicto .veredicto-texto { font-size: 1.08rem; }
+
+.titulo-resultados {
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--texto-suave);
+  margin: 1.4rem 0 .4rem;
+}
+.titulo-resultados:first-child { margin-top: 0; }
+
+.donde { font-size: .88rem; }
+.donde-acudir p { margin: .4rem 0; font-size: .95rem; }
+.portales { font-size: .88rem; line-height: 1.9; }
+details > summary { cursor: pointer; }
+
+details.materia > summary { list-style: none; display: block; }
+details.materia > summary::-webkit-details-marker { display: none; }
+details.materia > summary .materia-nombre { font-weight: 700; font-size: 1.1rem; }
+details.materia > summary .materia-nombre::before { content: "▸ "; color: var(--texto-suave); }
+details.materia[open] > summary .materia-nombre::before { content: "▾ "; }
+details.materia > summary .desc { display: block; margin: .1rem 0 0; }
+details.materia[open] > summary { margin-bottom: .6rem; }
+
+.acciones { display: flex; gap: .6rem; flex-wrap: wrap; margin: .9rem 0 0; }
+.boton-secundario {
+  display: inline-block;
+  background: transparent;
+  color: var(--enlace);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: .45rem .85rem;
+  font-size: .88rem;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.boton-secundario:hover, .boton-secundario:focus-visible { border-color: var(--enlace); }
+
+.lista-preguntas { list-style: none; padding: 0; margin: .4rem 0 0; }
+.lista-preguntas li { margin: .45rem 0; font-size: .95rem; display: flex; gap: .5rem; flex-wrap: wrap; align-items: baseline; }
+.lista-preguntas .chip { font-size: .7rem; padding: .1rem .5rem; }
+.materia h2 a { color: inherit; }
+.nivel h2 { margin: 0 0 .1rem; font-size: 1.05rem; }
+.nivel h3 { margin: 0 0 .3rem; font-size: .98rem; }
+
+/* ---------- municipio ---------- */
+
+.sugerencias { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: .35rem; }
+.sugerencias button {
+  width: 100%;
+  text-align: left;
+  padding: .6rem .9rem;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+  cursor: pointer;
+}
+.sugerencias button:hover, .sugerencias button:focus-visible { border-color: var(--enlace); }
+.sugerencias span { color: var(--texto-suave); font-size: .88rem; }
+.municipio-nombre { margin: 0 0 .1rem !important; font-size: 1.5rem !important; }
+.servicios { margin: .2rem 0 .4rem; padding-left: 1.2rem; font-size: .95rem; }
+.servicios li { margin: .25rem 0; }
+.enlace-materia { font-size: .8rem; color: var(--texto-suave); margin-left: .3rem; }
+.administraciones { list-style: none; padding: 0; margin: .4rem 0; }
+.administraciones li { margin: .5rem 0; font-size: .95rem; }
+.administraciones .chip { margin-right: .4rem; }
+
+/* ---------- texto largo ---------- */
+
+.prosa p, .prosa li { font-size: .98rem; }
+.prosa h2 { margin-top: 1.8rem; font-size: 1.2rem; }
+.prosa h2:first-child { margin-top: 0; }
+.esquema { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: .7rem; margin: 1rem 0; }
+.esquema .nivel { margin: 0; }
+.glosario dt { font-weight: 700; margin-top: .8rem; }
+.glosario dd { margin: .15rem 0 0; color: var(--texto-suave); font-size: .95rem; }
+
+/* ---------- pantallas estrechas ---------- */
+
+body { overflow-wrap: anywhere; }
+.search-box input, .search-box select { flex-basis: 100%; max-width: 100%; }
+@media (min-width: 640px) {
+  .search-box input { flex: 1 1 320px; }
+  .search-box select { flex: 0 1 260px; }
+}

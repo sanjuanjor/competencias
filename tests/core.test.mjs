@@ -12,6 +12,8 @@ const leer = ruta => JSON.parse(readFileSync(new URL(ruta, import.meta.url), "ut
 const datos = leer("../data/competencias.json");
 const carreteras = leer("../data/carreteras.json");
 const casos = leer("./casos.json");
+const preguntas = leer("../data/casos.json").casos;
+const servicios = leer("../data/servicios_municipales.json");
 const materias = datos.materias;
 
 test("buscador", () => {
@@ -35,6 +37,38 @@ test("detección de noticias", () => {
   for (const caso of casos.noticias) {
     const hallazgo = core.detectarNoticia(materias, caso.texto);
     assert.equal(hallazgo ? hallazgo.materia.id : null, caso.materia, `«${caso.texto}»`);
+  }
+});
+
+test("búsqueda de preguntas", () => {
+  for (const caso of casos.busqueda_casos) {
+    const resultados = core.buscarCasos(preguntas, caso.q);
+    if (caso.vacio) {
+      assert.deepEqual(resultados.map(r => r.caso.id), [], `«${caso.q}» no debería dar preguntas`);
+    } else {
+      assert.ok(resultados.length, `«${caso.q}» no da preguntas`);
+      assert.equal(resultados[0].caso.id, caso.caso, `«${caso.q}»`);
+    }
+  }
+});
+
+test("respuesta de cada pregunta según el territorio", () => {
+  for (const esperado of casos.resolucion_casos) {
+    const caso = preguntas.find(c => c.id === esperado.caso);
+    const resuelto = core.resolverCaso(caso, esperado.ccaa);
+    assert.equal(resuelto.admin, esperado.admin, `${esperado.caso} en ${esperado.ccaa}`);
+    assert.equal(core.titularCorto(resuelto.admin, esperado.ccaa, datos.territorios), esperado.titular);
+    const refs = core.refsDeCaso(caso, materias, esperado.ccaa);
+    assert.ok(refs.length, `${esperado.caso} sin referencia legal`);
+    if (esperado.ref) assert.ok(refs.some(r => r.id_boe === esperado.ref), `${esperado.caso}: falta ${esperado.ref}`);
+  }
+});
+
+test("servicios municipales obligatorios", () => {
+  for (const esperado of casos.servicios_municipales) {
+    const resultado = core.serviciosObligatorios(servicios, esperado.poblacion);
+    assert.equal(resultado.tramos.length, esperado.tramos, `tramos con ${esperado.poblacion} hab.`);
+    assert.equal(resultado.apoyos.length, esperado.apoyos, `apoyos con ${esperado.poblacion} hab.`);
   }
 });
 

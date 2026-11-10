@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cómo lo sabemos: método, fuentes y límites</title>
+  <meta name="description" content="De dónde sale cada respuesta de «¿De quién es la competencia?», cómo se comprueba contra el BOE, cómo se reparten las competencias en España y qué límites tiene esta web.">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Cómo lo sabemos: método, fuentes y límites">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="compacto">
+    <p class="migas"><a href="./">¿De quién es la competencia?</a></p>
+    <h1>Cómo lo sabemos</h1>
+    <p class="subtitle">De dónde sale cada respuesta, cómo se comprueba y qué límites tiene.</p>
+  </header>
+
+  <main>
+    <article class="materia prosa">
+      <h2>Por qué casi nada es de una sola administración</h2>
+      <p>En España una misma materia suele repartirse entre varias administraciones, y lo habitual es que cada una haga una cosa distinta. Para entender de quién es un problema concreto conviene separar tres preguntas:</p>
+      <div class="esquema">
+        <section class="nivel nivel-estado">
+          <h3>¿Quién pone las reglas?</h3>
+          <p>Quien aprueba las leyes. En muchas materias el Estado dicta la <strong>legislación básica</strong>, común a todo el país, y cada comunidad la <strong>desarrolla</strong> con sus propias leyes.</p>
+        </section>
+        <section class="nivel nivel-ccaa">
+          <h3>¿Quién lo gestiona?</h3>
+          <p>Quien organiza el servicio, contrata al personal y decide el presupuesto. En sanidad, educación o servicios sociales es la comunidad autónoma.</p>
+        </section>
+        <section class="nivel nivel-municipal">
+          <h3>¿Quién te atiende?</h3>
+          <p>La ventanilla a la que acudes. Muchas veces es el ayuntamiento, aunque el servicio lo regule o lo pague otra administración.</p>
+        </section>
+      </div>
+      <p>Por eso las respuestas de esta web señalan a la administración que <em>puede resolver</em> el problema concreto, y las fichas de materia explican el papel de todas.</p>
+
+      <h2>De dónde sale cada respuesta</h2>
+      <ul>
+        <li><strong>La Constitución</strong>, sobre todo los artículos 148 y 149, que reparten las competencias entre el Estado y las comunidades autónomas.</li>
+        <li><strong>La Ley de Bases del Régimen Local</strong> (Ley 7/1985), que fija las competencias de ayuntamientos y diputaciones y los servicios obligatorios según la población.</li>
+        <li><strong>Las leyes sectoriales</strong> de cada materia y, para las diferencias entre territorios, los <strong>Estatutos de Autonomía</strong> y las leyes de régimen foral.</li>
+      </ul>
+      <p>Cada respuesta enlaza al artículo exacto en el texto consolidado del Boletín Oficial del Estado, para que puedas leerlo tú.</p>
+
+      <h2>Cómo se comprueba</h2>
+      <p id="estado-verificacion">Un programa consulta periódicamente la API de datos abiertos del BOE y comprueba, para cada cita, que la norma sigue vigente y que el artículo enlazado existe.</p>
+      <p>La población de los municipios procede de las cifras oficiales del padrón que publica el Instituto Nacional de Estadística. <span id="estado-padron"></span></p>
+      <p>La titularidad de las carreteras se deduce de su nomenclatura oficial y del territorio, con datos de OpenStreetMap: es una estimación con grado de confianza, no un dato registral.</p>
+
+      <h2>Qué límites tiene</h2>
+      <ul>
+        <li><strong>Está pendiente de revisión por un jurista.</strong> La comprobación automática confirma que cada norma está vigente y que el artículo existe, pero no que nuestra explicación lo interprete bien. Hasta que un profesional del derecho revise el contenido, tómalo como orientación.</li>
+        <li><strong>Describe el marco general.</strong> Recoge las diferencias más importantes entre comunidades, pero no todas: cada Estatuto de Autonomía tiene matices, y hay competencias traspasadas por acuerdos que cambian con el tiempo.</li>
+        <li><strong>Simplifica.</strong> Para dar una respuesta útil señalamos a la administración principal. En competencias compartidas puede haber más de una implicada.</li>
+        <li><strong>No es asesoramiento jurídico.</strong> Para un caso concreto, la fuente que vale es la norma publicada y, si lo necesitas, un profesional.</li>
+      </ul>
+
+      <h2>Glosario</h2>
+      <dl class="glosario">
+        <dt>Competencia</dt>
+        <dd>La capacidad legal de una administración para actuar en una materia: legislar, gestionar o ambas.</dd>
+        <dt>Competencia exclusiva</dt>
+        <dd>Corresponde a una sola administración. Aun así, a veces la «exclusiva» del Estado convive con la ejecución por las comunidades.</dd>
+        <dt>Legislación básica</dt>
+        <dd>Las normas mínimas comunes que aprueba el Estado para todo el país. Las comunidades las completan con sus propias leyes.</dd>
+        <dt>Desarrollo legislativo</dt>
+        <dd>Las leyes y reglamentos con los que una comunidad concreta y amplía la legislación básica estatal.</dd>
+        <dt>Ejecución</dt>
+        <dd>Aplicar las normas en la práctica: gestionar servicios, conceder ayudas, inspeccionar y sancionar.</dd>
+        <dt>Traspaso</dt>
+        <dd>El acuerdo por el que el Estado entrega a una comunidad los medios para ejercer una competencia. Hasta que no se produce, la gestiona el Estado.</dd>
+        <dt>Régimen foral</dt>
+        <dd>El régimen propio del País Vasco y Navarra, amparado por la Constitución, que incluye haciendas propias y competencias que en el resto de España son estatales.</dd>
+        <dt>Diputación</dt>
+        <dd>La administración de la provincia. Asiste a los municipios pequeños. En las islas su papel lo hacen cabildos y consejos insulares, y en las comunidades de una sola provincia, la propia comunidad.</dd>
+        <dt>Servicio obligatorio</dt>
+        <dd>El que un ayuntamiento está obligado a prestar por ley según su población.</dd>
+      </dl>
+
+      <h2>Si ves un error</h2>
+      <p>Las leyes cambian y nos podemos equivocar. En cada página hay un enlace «He visto un error» que abre un aviso público con la página ya indicada; ayuda mucho que incluyas la norma o el enlace oficial que lo demuestra. Los datos y el código son abiertos: puedes consultarlos y proponer cambios en el <a data-repo href="#">repositorio</a>.</p>
+    </article>
+
+    <p class="acciones">
+      <button type="button" class="boton-secundario" data-compartir>Compartir</button>
+      <a class="boton-secundario" data-error href="#">He visto un error</a>
+    </p>
+    <p class="volver"><a href="./">← Volver al buscador</a></p>
+  </main>
+
+  <footer>
+    <p><a href="preguntas.html">Todas las preguntas</a> · <a href="municipio.html">Tu municipio</a> · <a data-repo href="#">Código y datos</a></p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="comun.js"></script>
+  <script>
+    if (SITIO.verificacion.fecha) {
+      document.getElementById("estado-verificacion").textContent +=
+        " La última comprobación, sobre " + SITIO.verificacion.normas + " normas, es del " + SITIO.verificacion.fecha + ".";
+    }
+    if (SITIO.padron) {
+      document.getElementById("estado-padron").textContent = "Los datos cargados son los de " + SITIO.padron + ".";
+    }
+  </script>
+</body>
+</html>

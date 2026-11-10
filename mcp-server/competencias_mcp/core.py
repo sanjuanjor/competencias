@@ -43,6 +43,8 @@ STOPWORDS = {raiz_de(p) for p in (
     "sobre", "entre", "este", "esta", "estos", "estas", "ese", "esa", "mis",
     "gestiona", "paga", "pagan", "encarga", "responsable", "compete", "competencia",
     "depende", "dependen", "hace", "tiene", "son", "quiero", "saber",
+    "arregla", "arreglan", "decide", "deciden", "fija", "pone", "ponen", "puedo", "tengo",
+    "hay", "han", "puesto", "pido", "aviso", "reclamo", "lleva", "cobra", "cobran",
 )}
 
 
@@ -63,14 +65,16 @@ def url_ref(ref: dict) -> str:
 
 # ---------- índice de tags por materia ----------
 
-_INDICES: dict[str, dict] = {}
+_INDICES: dict[int, dict] = {}
 
 
 def _indice_de(materia: dict) -> dict:
-    indice = _INDICES.get(materia["id"])
+    """Índice de búsqueda de una materia (tags, nombre) o de un caso (claves, pregunta)."""
+    indice = _INDICES.get(id(materia))
     if indice is None:
+        fuertes = materia.get("tags") or materia.get("claves") or []
         vistos: dict[str, dict] = {}
-        for fuerte, lista in ((True, materia.get("tags", [])), (False, materia.get("tags_debiles", []))):
+        for fuerte, lista in ((True, fuertes), (False, materia.get("tags_debiles", []))):
             for tag in lista:
                 secuencia = tokens(tag)
                 if not secuencia:
@@ -82,10 +86,10 @@ def _indice_de(materia: dict) -> dict:
                     vistos[clave]["fuerte"] = True
         indice = {
             "tags": list(vistos.values()),
-            "nombre": set(tokens(materia["nombre"])),
-            "descripcion": set(tokens(materia["descripcion"])),
+            "nombre": set(tokens(materia.get("nombre") or materia.get("pregunta", ""))),
+            "descripcion": set(tokens(materia.get("descripcion", ""))),
         }
-        _INDICES[materia["id"]] = indice
+        _INDICES[id(materia)] = indice
     return indice
 
 
@@ -157,6 +161,62 @@ def excepciones_de(materia: dict, iso_ccaa: str | None) -> list[dict]:
     if not iso_ccaa:
         return []
     return [e for e in materia.get("excepciones", []) if iso_ccaa in e["ccaa"]]
+
+
+# ---------- casos concretos ----------
+
+UMBRAL_CASO = 3
+
+
+def buscar_casos(casos: list[dict], consulta: str, prefijos: bool = False) -> list[tuple[int, dict]]:
+    """Preguntas concretas que encajan con la consulta, de más a menos relevante."""
+    resultados = [(puntuar(c, consulta, prefijos), c) for c in casos]
+    return sorted((r for r in resultados if r[0] >= UMBRAL_CASO), key=lambda r: -r[0])
+
+
+def resolver_caso(caso: dict, iso_ccaa: str | None) -> dict:
+    """Respuesta de un caso en un territorio: aplica su excepción si la hay."""
+    for excepcion in caso.get("excepciones", []):
+        if iso_ccaa and iso_ccaa in excepcion["ccaa"]:
+            return {"admin": excepcion["admin"], "respuesta": excepcion["respuesta"], "excepcion": True}
+    return {"admin": caso["admin"], "respuesta": caso["respuesta"], "excepcion": False}
+
+
+def refs_de_caso(caso: dict, materias: list[dict], iso_ccaa: str | None) -> list[dict]:
+    """Referencias legales que respaldan la respuesta de un caso."""
+    materia = next((m for m in materias if m["id"] == caso["materia"]), None)
+    resuelto = resolver_caso(caso, iso_ccaa)
+
+    def del_nivel(admin: str) -> list[dict]:
+        niveles = materia["niveles"] if materia else []
+        return next((n["refs"] for n in niveles if n["administracion"] == admin), [])
+
+    if resuelto["excepcion"]:
+        propias = [r for x in excepciones_de(materia, iso_ccaa) for r in x["refs"]] if materia else []
+        return propias or del_nivel(resuelto["admin"])
+    return caso.get("refs") or del_nivel(caso["admin"])
+
+
+def titular_corto(admin: str, iso_ccaa: str | None, territorios: list[dict]) -> str:
+    """«Tu ayuntamiento», «El Estado», «Generalitat de Catalunya»..."""
+    if admin == "estado":
+        return "El Estado"
+    if admin == "municipal":
+        return "Tu ayuntamiento"
+    if admin == "provincial":
+        return "Tu diputación"
+    territorio = next((t for t in territorios if t["iso"] == iso_ccaa), None)
+    return territorio["gobierno"] if territorio else "Tu comunidad autónoma"
+
+
+# ---------- servicios municipales obligatorios ----------
+
+def servicios_obligatorios(config: dict, poblacion: int) -> dict:
+    """Tramos de servicios obligatorios y apoyos de la diputación para una población."""
+    return {
+        "tramos": [t for t in config["tramos"] if t["desde"] == 0 or poblacion > t["desde"]],
+        "apoyos": [a for a in config["apoyo_diputacion"] if poblacion < a["hasta"]],
+    }
 
 
 # ---------- carreteras ----------

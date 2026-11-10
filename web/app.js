@@ -1,5 +1,5 @@
-/* Interfaz de la web: buscador, selector de comunidad y mapa de carreteras.
-   La lógica (búsqueda, clasificación de vías) vive en core.js; los datos, en data.js. */
+/* Portada: buscador de preguntas y materias, selector de comunidad y mapa de
+   carreteras. La lógica vive en core.js; los datos, en data.js. */
 (function () {
   "use strict";
 
@@ -7,6 +7,8 @@
   const e = Core.escaparHtml;
   const materias = COMPETENCIAS.materias;
   const territorios = COMPETENCIAS.territorios;
+  const MAX_PREGUNTAS = 6;
+  const MAX_POPULARES = 12;
 
   /* ---------- comunidad seleccionada ---------- */
 
@@ -26,12 +28,9 @@
   if (!territorios.some(t => t.iso === territorioActual)) territorioActual = "";
   selectorTerritorio.value = territorioActual;
 
-  function gobiernoDe(iso) {
-    const t = territorios.find(x => x.iso === iso);
-    return t ? t.gobierno : null;
-  }
+  const territorioDe = iso => territorios.find(t => t.iso === iso);
 
-  /* ---------- fichas ---------- */
+  /* ---------- piezas ---------- */
 
   function htmlRefs(refs) {
     const items = refs.map(ref =>
@@ -40,11 +39,48 @@
     return `<ul class="refs">${items}</ul>`;
   }
 
-  function htmlNivel(nivel) {
+  /* Dónde acudir: indicación de la materia y, si se conoce la comunidad, su portal. */
+  function htmlDonde(materia, admin) {
+    const nivel = materia.niveles.find(n => n.administracion === admin);
+    const partes = [];
+    if (nivel && nivel.donde) partes.push(e(nivel.donde));
+    const t = territorioDe(territorioActual);
+    if (admin === "ccaa" && t) {
+      const salud = materia.id === "sanidad" ? ` Tu servicio de salud es ${e(t.salud)}.` : "";
+      partes.push(`Portal de ${e(t.gobierno)}: <a href="${e(t.web)}" target="_blank" rel="noopener">${e(t.web.replace("https://", ""))}</a>.${salud}`);
+    } else if (admin === "estado") {
+      const estado = COMPETENCIAS.organismos.estado;
+      partes.push(`Información general: teléfono ${e(estado.telefono)} y <a href="${e(estado.web)}" target="_blank" rel="noopener">administracion.gob.es</a>.`);
+    }
+    return partes.length ? `<p class="donde"><strong>Dónde acudir:</strong> ${partes.join(" ")}</p>` : "";
+  }
+
+  function htmlPregunta(caso, detallada) {
+    const resuelto = Core.resolverCaso(caso, territorioActual);
+    const materia = materias.find(m => m.id === caso.materia);
+    const titular = Core.titularCorto(resuelto.admin, territorioActual, territorios);
+    const otros = !territorioActual && (caso.excepciones || []).length
+      ? `<p class="aviso-territorio">No es igual en toda España: elige tu comunidad arriba.</p>` : "";
+    const detalle = detallada ? `
+        ${otros}
+        ${htmlDonde(materia, resuelto.admin)}
+        ${htmlRefs(Core.refsDeCaso(caso, materias, territorioActual))}
+        <p class="acciones">
+          <a class="boton-secundario" href="pregunta/${e(caso.id)}.html">Ver la explicación completa</a>
+          <button type="button" class="boton-secundario" data-compartir data-url="pregunta/${e(caso.id)}.html" data-titulo="${e(caso.pregunta)}">Compartir</button>
+        </p>` : "";
+    return `
+      <article class="pregunta nivel nivel-${resuelto.admin}">
+        <h3><a href="pregunta/${e(caso.id)}.html">${e(caso.pregunta)}</a></h3>
+        <p class="veredicto-titular"><span class="chip chip-${resuelto.admin}">${e(titular)}</span></p>
+        <p class="veredicto-texto">${e(resuelto.respuesta)}</p>${detalle}
+      </article>`;
+  }
+
+  function htmlNivel(materia, nivel) {
     const admin = nivel.administracion;
-    const etiqueta = admin === "ccaa" && territorioActual
-      ? gobiernoDe(territorioActual)
-      : Core.ETIQUETAS[admin];
+    const t = territorioDe(territorioActual);
+    const etiqueta = admin === "ccaa" && t ? t.gobierno : Core.ETIQUETAS[admin];
     return `
       <div class="nivel nivel-${admin}">
         <div class="cabecera">
@@ -52,6 +88,7 @@
           <span class="rol">${e(nivel.rol)}</span>
         </div>
         <p>${e(nivel.detalle)}</p>
+        ${htmlDonde(materia, admin)}
         ${htmlRefs(nivel.refs)}
       </div>`;
   }
@@ -72,36 +109,79 @@
       </div>`).join("");
   }
 
-  function htmlMateria(materia) {
+  function htmlPreguntasDe(materia) {
+    const propias = CASOS.filter(c => c.materia === materia.id).slice(0, 6);
+    if (!propias.length) return "";
+    const items = propias.map(c => {
+      const admin = Core.resolverCaso(c, territorioActual).admin;
+      return `<li><a href="pregunta/${e(c.id)}.html">${e(c.pregunta)}</a> ` +
+        `<span class="chip chip-${admin}">${e(Core.titularCorto(admin, territorioActual, territorios))}</span></li>`;
+    }).join("");
+    return `<h4 class="titulo-resultados">Preguntas frecuentes</h4><ul class="lista-preguntas">${items}</ul>`;
+  }
+
+  function htmlMateria(materia, abierta) {
     return `
-      <article class="materia" id="materia-${e(materia.id)}">
-        <h3><a href="materia/${e(materia.id)}.html">${e(materia.nombre)}</a></h3>
-        <p class="desc">${e(materia.descripcion)}</p>
+      <details class="materia"${abierta ? " open" : ""}>
+        <summary><span class="materia-nombre">${e(materia.nombre)}</span><span class="desc">${e(materia.descripcion)}</span></summary>
         ${htmlExcepciones(materia)}
-        ${materia.niveles.map(htmlNivel).join("")}
-      </article>`;
+        ${materia.niveles.map(n => htmlNivel(materia, n)).join("")}
+        ${htmlPreguntasDe(materia)}
+        <p class="acciones"><a class="boton-secundario" href="materia/${e(materia.id)}.html">Ficha completa de ${e(materia.nombre)}</a></p>
+      </details>`;
   }
 
   /* ---------- buscador ---------- */
 
   const entrada = document.getElementById("buscador");
-  const contenedor = document.getElementById("resultados");
+  const resultados = document.getElementById("resultados");
+  const portada = document.getElementById("portada");
+  let ultimaSinResultados = "";
+
+  function pintarPopulares() {
+    document.getElementById("populares").innerHTML =
+      CASOS.filter(c => c.popular).slice(0, MAX_POPULARES).map(c => htmlPregunta(c, false)).join("");
+  }
 
   function pintar() {
     const consulta = entrada.value.trim();
-    const lista = consulta
-      ? Core.buscar(materias, consulta, { prefijos: true }).map(r => r.materia)
-      : materias;
-
     const url = new URL(location.href);
     if (consulta) url.searchParams.set("q", consulta); else url.searchParams.delete("q");
     history.replaceState(null, "", url);
 
-    contenedor.innerHTML = lista.length
-      ? lista.map(htmlMateria).join("")
-      : `<p class="aviso-sin-resultados">Sin resultados para «${e(consulta)}». Prueba con otras palabras ` +
-        `(<em>colegios</em>, <em>basuras</em>, <em>hospital</em>, <em>alquiler</em>) o mira ` +
-        `<a href="#todas-las-materias">todas las materias</a>.</p>`;
+    pintarPopulares();
+    portada.hidden = !!consulta;
+    resultados.hidden = !consulta;
+    if (!consulta) { resultados.innerHTML = ""; return; }
+
+    const preguntas = Core.buscarCasos(CASOS, consulta, { prefijos: true }).slice(0, MAX_PREGUNTAS).map(r => r.caso);
+    const fichas = Core.buscar(materias, consulta, { prefijos: true }).map(r => r.materia);
+    // Si una pregunta encaja, su materia se ofrece también aunque el buscador de materias no la traiga.
+    for (const caso of preguntas) {
+      const materia = materias.find(m => m.id === caso.materia);
+      if (!fichas.includes(materia)) fichas.push(materia);
+    }
+
+    if (!preguntas.length && !fichas.length) {
+      resultados.innerHTML = `<p class="aviso-sin-resultados">No tenemos respuesta para «${e(consulta)}». Prueba con otras palabras ` +
+        `o mira <a href="preguntas.html">todas las preguntas</a>. Si crees que debería estar, ` +
+        `<a href="${e(SITIO.repositorio)}/issues/new?title=${encodeURIComponent("Falta: " + consulta)}" target="_blank" rel="noopener">dínoslo</a>.</p>`;
+      if (consulta.length > 3 && consulta !== ultimaSinResultados) {
+        ultimaSinResultados = consulta;
+        window.registrarEvento("sin-resultados/" + Core.normalizar(consulta));
+      }
+      return;
+    }
+
+    const bloquePreguntas = preguntas.length
+      ? `<h2 class="titulo-resultados">Respuesta directa</h2>` +
+        preguntas.map((c, i) => htmlPregunta(c, i === 0)).join("")
+      : "";
+    const bloqueFichas = fichas.length
+      ? `<h2 class="titulo-resultados">${preguntas.length ? "Qué hace cada administración" : "Materias relacionadas"}</h2>` +
+        fichas.slice(0, 5).map((m, i) => htmlMateria(m, !preguntas.length && i === 0)).join("")
+      : "";
+    resultados.innerHTML = bloquePreguntas + bloqueFichas;
   }
 
   let temporizador = null;
@@ -118,9 +198,9 @@
   entrada.value = new URLSearchParams(location.search).get("q") || "";
   pintar();
 
-  if (VERIFICACION.fecha) {
+  if (SITIO.verificacion.fecha) {
     document.getElementById("verificacion").textContent =
-      `Las ${VERIFICACION.normas} normas citadas se comprobaron contra el BOE el ${VERIFICACION.fecha}.`;
+      `Las ${SITIO.verificacion.normas} normas citadas se comprobaron contra el BOE el ${SITIO.verificacion.fecha}.`;
   }
 
   /* ---------- mapa de carreteras ---------- */
@@ -175,7 +255,8 @@
     const clasificacion = Core.clasificarVia(CARRETERAS, via, territorio.ccaa);
     const titular = Core.nombreTitular(CARRETERAS, clasificacion, territorio, territorios);
     const admin = clasificacion.admin;
-    const nivel = admin && materias.find(m => m.id === "carreteras").niveles.find(n => n.administracion === admin);
+    const carreteras = materias.find(m => m.id === "carreteras");
+    const nivel = admin && carreteras.niveles.find(n => n.administracion === admin);
     const lugar = [territorio.municipio, territorio.provincia].filter(Boolean).join(", ");
 
     resultadoMapa.innerHTML = `
@@ -186,6 +267,7 @@
           <span class="rol">confianza ${e(clasificacion.confianza)}${via.distancia !== null ? ` · a ${via.distancia} m` : ""}${lugar ? " · " + e(lugar) : ""}</span>
         </div>
         <p>${e(clasificacion.motivo)}</p>
+        ${nivel && nivel.donde ? `<p class="donde"><strong>Dónde acudir:</strong> ${e(nivel.donde)}</p>` : ""}
         ${nivel ? htmlRefs(nivel.refs) : ""}
       </div>`;
   }

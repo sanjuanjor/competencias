@@ -89,6 +89,17 @@
       "ultima_actualizacion": "2025-12-17",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-6859"
     },
+    "BOE-A-1988-18762": {
+      "id_boe": "BOE-A-1988-18762",
+      "titulo": "Ley 22/1988, de 28 de julio, de Costas.",
+      "rango": "Ley",
+      "vigente": true,
+      "derogada": false,
+      "anulada": false,
+      "vigencia_agotada": false,
+      "ultima_actualizacion": "2025-12-17",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1988-18762"
+    },
     "BOE-A-1990-31117": {
       "id_boe": "BOE-A-1990-31117",
       "titulo": "Ley 28/1990, de 26 de diciembre, por la que se aprueba el Convenio Económico entre el Estado y la Comunidad Foral de Navarra.",
@@ -199,6 +210,17 @@
       "ultima_actualizacion": "2026-11-04",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-7899"
     },
+    "BOE-A-2007-20555": {
+      "id_boe": "BOE-A-2007-20555",
+      "titulo": "Real Decreto Legislativo 1/2007, de 16 de noviembre, por el que se aprueba el texto refundido de la Ley General para la Defensa de los Consumidores y Usuarios y otras leyes complementarias.",
+      "rango": "Real Decreto Legislativo",
+      "vigente": true,
+      "derogada": false,
+      "anulada": false,
+      "vigencia_agotada": false,
+      "ultima_actualizacion": "2026-11-04",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2007-20555"
+    },
     "BOE-A-2007-4233": {
       "id_boe": "BOE-A-2007-4233",
       "titulo": "Ley Orgánica 1/2007, de 28 de febrero, de reforma del Estatuto de Autonomía de las Illes Balears.",
@@ -262,7 +284,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-05",
+      "ultima_actualizacion": "2026-11-10",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430"
     },
     "BOE-A-2015-11724": {
@@ -275,6 +297,17 @@
       "vigencia_agotada": false,
       "ultima_actualizacion": "2026-11-05",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724"
+    },
+    "BOE-A-2015-3442": {
+      "id_boe": "BOE-A-2015-3442",
+      "titulo": "Ley Orgánica 4/2015, de 30 de marzo, de protección de la seguridad ciudadana.",
+      "rango": "Ley Orgánica",
+      "vigente": true,
+      "derogada": false,
+      "anulada": false,
+      "vigencia_agotada": false,
+      "ultima_actualizacion": "2025-12-19",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-3442"
     },
     "BOE-A-2015-7730": {
       "id_boe": "BOE-A-2015-7730",
@@ -320,6 +353,17 @@
       "ultima_actualizacion": "2026-07-23",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2021-8447"
     },
+    "BOE-A-2022-10757": {
+      "id_boe": "BOE-A-2022-10757",
+      "titulo": "Ley 11/2022, de 28 de junio, General de Telecomunicaciones.",
+      "rango": "Ley",
+      "vigente": true,
+      "derogada": false,
+      "anulada": false,
+      "vigencia_agotada": false,
+      "ultima_actualizacion": "2026-11-05",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2022-10757"
+    },
     "BOE-A-2022-5809": {
       "id_boe": "BOE-A-2022-5809",
       "titulo": "Ley 7/2022, de 8 de abril, de residuos y suelos contaminados para una economía circular.",
@@ -361,7 +405,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-04",
+      "ultima_actualizacion": "2026-11-10",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-7500"
     }
   },

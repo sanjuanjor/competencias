@@ -3,18 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¿De quién es la competencia? — Reparto competencial en España</title>
-  <meta name="description" content="Descubre qué administración (Estado, comunidad autónoma, diputación o ayuntamiento) es responsable de cada materia en España, con la ley y el artículo que lo establecen.">
+  <title>¿De quién es la competencia? — Quién se encarga de qué en España</title>
+  <meta name="description" content="Escribe tu duda y descubre qué administración es responsable: Estado, comunidad autónoma, diputación o ayuntamiento. Con la ley que lo establece y dónde acudir.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="¿De quién es la competencia?">
+  <meta property="og:description" content="Quién se encarga de qué en España: Estado, comunidad autónoma, diputación o ayuntamiento. Con la ley que lo establece.">
+  <meta property="og:image" content="og.png">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
     <h1>¿De quién es la competencia?</h1>
-    <p class="subtitle">Quién hace qué en España — Estado, comunidades autónomas, diputaciones y ayuntamientos — con la ley y el artículo que lo dicen.</p>
+    <p class="subtitle">Escribe tu duda y te decimos qué administración se encarga, por qué y dónde acudir.</p>
     <form class="search-box" role="search" onsubmit="return false">
-      <label for="buscador" class="solo-lectores">Busca una materia o un problema</label>
-      <input type="search" id="buscador" placeholder="Busca: becas comedor, baches, listas de espera, basuras, metro…" autocomplete="off">
+      <label for="buscador" class="solo-lectores">Escribe tu duda</label>
+      <input type="search" id="buscador" placeholder="Farola fundida, lista de espera, multa de aparcamiento, IBI…" autocomplete="off">
       <label for="territorio" class="solo-lectores">Tu comunidad autónoma</label>
       <select id="territorio">
         <option value="">Toda España (marco general)</option>
@@ -29,9 +33,70 @@
   </header>
 
   <main>
-    <section id="resultados" aria-live="polite"></section>
+    <section id="resultados" aria-live="polite" hidden></section>
 
-    <section id="mapa-seccion">
+    <div id="portada">
+      <section class="bloque">
+        <h2>Preguntas frecuentes</h2>
+        <div id="populares" class="tarjetas-pregunta"></div>
+        <p class="mas"><a href="preguntas.html">Ver todas las preguntas →</a></p>
+      </section>
+
+      <section class="bloque">
+        <h2>Por administración</h2>
+        <ul class="rejilla rejilla-admin">
+          <li><a class="borde-estado" href="administracion/estado.html"><strong>El Estado</strong><span>Lo que debe ser igual en todo el país y las leyes básicas.</span></a></li>
+          <li><a class="borde-ccaa" href="administracion/ccaa.html"><strong>Tu comunidad autónoma</strong><span>Sanidad, educación, servicios sociales y mucho más.</span></a></li>
+          <li><a class="borde-provincial" href="administracion/provincial.html"><strong>Tu diputación</strong><span>Apoyo a los municipios pequeños y red provincial.</span></a></li>
+          <li><a class="borde-municipal" href="administracion/municipal.html"><strong>Tu ayuntamiento</strong><span>Calles, agua, basuras, urbanismo y policía local.</span></a></li>
+        </ul>
+      </section>
+
+      <section class="bloque">
+        <h2>¿Qué está obligado a darte tu ayuntamiento?</h2>
+        <p>Depende de cuánta gente viva en tu municipio. Escribe su nombre y lo vemos con el padrón del INE.</p>
+        <form class="formulario-linea" action="municipio.html" method="get">
+          <label for="municipio-portada" class="solo-lectores">Nombre de tu municipio</label>
+          <input type="search" id="municipio-portada" name="q" placeholder="Tu municipio" autocomplete="off" required>
+          <button type="submit">Consultar</button>
+        </form>
+      </section>
+
+      <nav id="todas-las-materias" class="bloque" aria-label="Todas las materias">
+        <h2>Por materia</h2>
+        <!-- MATERIAS:INICIO -->
+      <ul class="rejilla">
+        <li><a href="materia/educacion.html"><strong>Educación</strong><span>Colegios, institutos, guarderías, profesorado, becas, currículo y escolarización.</span></a></li>
+        <li><a href="materia/universidades.html"><strong>Universidades</strong><span>Universidades públicas, tasas de matrícula, becas generales y títulos universitarios.</span></a></li>
+        <li><a href="materia/sanidad.html"><strong>Sanidad</strong><span>Hospitales, centros de salud, urgencias, médicos, farmacia y salud pública.</span></a></li>
+        <li><a href="materia/carreteras.html"><strong>Carreteras</strong><span>Autovías, autopistas, carreteras nacionales, autonómicas, provinciales y calles.</span></a></li>
+        <li><a href="materia/vivienda.html"><strong>Vivienda y urbanismo</strong><span>Vivienda pública, alquiler, VPO, planes urbanísticos y licencias de obra.</span></a></li>
+        <li><a href="materia/servicios-sociales.html"><strong>Servicios sociales y lucha contra la pobreza</strong><span>Ayudas sociales, ingreso mínimo vital, rentas mínimas, dependencia y protección de menores.</span></a></li>
+        <li><a href="materia/pensiones.html"><strong>Pensiones y Seguridad Social</strong><span>Pensiones de jubilación, viudedad e incapacidad, cotizaciones y bajas.</span></a></li>
+        <li><a href="materia/transporte-publico.html"><strong>Transporte público</strong><span>Metro, autobuses urbanos e interurbanos, Cercanías y trenes.</span></a></li>
+        <li><a href="materia/seguridad.html"><strong>Seguridad ciudadana y tráfico</strong><span>Policía Nacional, Guardia Civil, policías autonómicas y locales, multas y tráfico.</span></a></li>
+        <li><a href="materia/proteccion-civil.html"><strong>Protección civil, bomberos y emergencias</strong><span>Bomberos, 112, incendios, inundaciones, planes de emergencia y UME.</span></a></li>
+        <li><a href="materia/justicia.html"><strong>Justicia y prisiones</strong><span>Juzgados, jueces, fiscales, funcionarios de justicia, registro civil y cárceles.</span></a></li>
+        <li><a href="materia/fiscalidad.html"><strong>Impuestos y financiación</strong><span>IRPF, IVA, sociedades, sucesiones, patrimonio, IBI y tasas municipales.</span></a></li>
+        <li><a href="materia/empleo.html"><strong>Empleo y relaciones laborales</strong><span>Paro, SEPE, contratos, salario mínimo, formación y políticas de empleo.</span></a></li>
+        <li><a href="materia/extranjeria.html"><strong>Inmigración y extranjería</strong><span>Permisos de residencia, asilo, fronteras, nacionalidad, acogida e integración.</span></a></li>
+        <li><a href="materia/energia.html"><strong>Energía</strong><span>Factura de la luz, red eléctrica, renovables, gas y alumbrado público.</span></a></li>
+        <li><a href="materia/medio-ambiente.html"><strong>Medio ambiente</strong><span>Contaminación, espacios protegidos, ruido y zonas de bajas emisiones.</span></a></li>
+        <li><a href="materia/residuos-limpieza.html"><strong>Residuos y limpieza viaria</strong><span>Recogida de basuras, reciclaje, limpieza de calles y puntos limpios.</span></a></li>
+        <li><a href="materia/aguas.html"><strong>Aguas</strong><span>Ríos, embalses, confederaciones hidrográficas, agua del grifo y alcantarillado.</span></a></li>
+        <li><a href="materia/cultura-deporte.html"><strong>Cultura y deporte</strong><span>Museos, bibliotecas, patrimonio, instalaciones deportivas y fiestas.</span></a></li>
+        <li><a href="materia/agricultura-pesca.html"><strong>Agricultura, ganadería y pesca</strong><span>Ayudas de la PAC, ganadería, cuotas de pesca, montes y mercados.</span></a></li>
+        <li><a href="materia/turismo.html"><strong>Turismo</strong><span>Pisos turísticos, hoteles, promoción turística y oficinas de turismo.</span></a></li>
+        <li><a href="materia/consumo-comercio.html"><strong>Consumo y comercio</strong><span>Reclamaciones de consumo, garantías, horarios comerciales, mercadillos.</span></a></li>
+        <li><a href="materia/telecomunicaciones.html"><strong>Telecomunicaciones y medios</strong><span>Cobertura móvil, internet, televisión pública y Correos.</span></a></li>
+        <li><a href="materia/puertos-aeropuertos-costas.html"><strong>Puertos, aeropuertos y costas</strong><span>Aeropuertos, puertos comerciales y deportivos, playas y litoral.</span></a></li>
+        <li><a href="materia/defensa-exteriores.html"><strong>Defensa y relaciones internacionales</strong><span>Fuerzas Armadas, embajadas, consulados, tratados y Unión Europea.</span></a></li>
+      </ul>
+      <!-- MATERIAS:FIN -->
+      </nav>
+    </div>
+
+    <section id="mapa-seccion" class="bloque">
       <h2>¿De quién es esta carretera?</h2>
       <p>Pulsa <strong>«Usar mi ubicación»</strong> si estás en una vía, o haz clic en cualquier punto del mapa. Localizamos la vía más cercana en OpenStreetMap y deducimos su titular por la nomenclatura oficial y el territorio.</p>
       <div class="mapa-controles">
@@ -41,42 +106,17 @@
       <div id="mapa"></div>
       <div id="mapa-resultado" aria-live="polite"></div>
     </section>
-
-    <nav id="todas-las-materias" aria-label="Todas las materias">
-      <h2>Todas las materias</h2>
-      <!-- MATERIAS:INICIO -->
-      <ul>
-        <li><a href="materia/educacion.html">Educación</a></li>
-        <li><a href="materia/universidades.html">Universidades</a></li>
-        <li><a href="materia/sanidad.html">Sanidad</a></li>
-        <li><a href="materia/carreteras.html">Carreteras</a></li>
-        <li><a href="materia/vivienda.html">Vivienda y urbanismo</a></li>
-        <li><a href="materia/servicios-sociales.html">Servicios sociales y lucha contra la pobreza</a></li>
-        <li><a href="materia/pensiones.html">Pensiones y Seguridad Social</a></li>
-        <li><a href="materia/transporte-publico.html">Transporte público</a></li>
-        <li><a href="materia/seguridad.html">Seguridad ciudadana y tráfico</a></li>
-        <li><a href="materia/proteccion-civil.html">Protección civil, bomberos y emergencias</a></li>
-        <li><a href="materia/justicia.html">Justicia y prisiones</a></li>
-        <li><a href="materia/fiscalidad.html">Impuestos y financiación</a></li>
-        <li><a href="materia/empleo.html">Empleo y relaciones laborales</a></li>
-        <li><a href="materia/extranjeria.html">Inmigración y extranjería</a></li>
-        <li><a href="materia/energia.html">Energía</a></li>
-        <li><a href="materia/medio-ambiente.html">Medio ambiente</a></li>
-        <li><a href="materia/residuos-limpieza.html">Residuos y limpieza viaria</a></li>
-        <li><a href="materia/aguas.html">Aguas</a></li>
-        <li><a href="materia/cultura-deporte.html">Cultura y deporte</a></li>
-      </ul>
-      <!-- MATERIAS:FIN -->
-    </nav>
   </main>
 
   <footer>
-    <p>Contenido divulgativo sobre el marco general: la fuente vinculante es siempre el <a href="https://www.boe.es" target="_blank" rel="noopener">BOE</a> y los boletines autonómicos. <span id="verificacion"></span></p>
-    <p>La titularidad de las vías es una estimación a partir de <a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap</a>.</p>
+    <p>Contenido divulgativo, pendiente de revisión por un jurista. La fuente vinculante es siempre el <a href="https://www.boe.es" target="_blank" rel="noopener">BOE</a>. <span id="verificacion"></span></p>
+    <p><a href="como-lo-sabemos.html">Cómo lo sabemos</a> · <a href="preguntas.html">Todas las preguntas</a> · <a data-repo href="#">Código y datos</a> · <a data-error href="#">He visto un error</a></p>
   </footer>
 
+  <script src="config.js"></script>
   <script src="data.js"></script>
   <script src="core.js"></script>
+  <script src="comun.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="app.js"></script>
 </body>

@@ -44,6 +44,8 @@
     "sobre", "entre", "este", "esta", "estos", "estas", "ese", "esa", "mis",
     "gestiona", "paga", "pagan", "encarga", "responsable", "compete", "competencia",
     "depende", "dependen", "hace", "tiene", "son", "quiero", "saber",
+    "arregla", "arreglan", "decide", "deciden", "fija", "pone", "ponen", "puedo", "tengo",
+    "hay", "han", "puesto", "pido", "aviso", "reclamo", "lleva", "cobra", "cobran",
   ].map(raizDe));
 
   function tokens(texto) {
@@ -88,11 +90,12 @@
         if (!previo) vistos.set(clave, { secuencia, fuerte });
         else if (fuerte) previo.fuerte = true;
       };
-      (materia.tags || []).forEach(t => anadir(t, true));
+      // Sirve para materias (tags, nombre, descripcion) y para casos (claves, pregunta).
+      (materia.tags || materia.claves || []).forEach(t => anadir(t, true));
       (materia.tags_debiles || []).forEach(t => anadir(t, false));
       indice = {
         tags: Array.from(vistos.values()),
-        nombre: new Set(tokens(materia.nombre)),
+        nombre: new Set(tokens(materia.nombre || materia.pregunta)),
         descripcion: new Set(tokens(materia.descripcion)),
       };
       indices.set(materia, indice);
@@ -174,6 +177,60 @@
   function excepcionesDe(materia, isoCcaa) {
     if (!isoCcaa) return [];
     return (materia.excepciones || []).filter(e => e.ccaa.includes(isoCcaa));
+  }
+
+  /* ---------- casos concretos ---------- */
+
+  const UMBRAL_CASO = 3;
+
+  /* Preguntas concretas que encajan con la consulta, de más a menos relevante. */
+  function buscarCasos(casos, consulta, opciones) {
+    return casos
+      .map(caso => ({ caso, puntos: puntuar(caso, consulta, opciones) }))
+      .filter(r => r.puntos >= UMBRAL_CASO)
+      .sort((a, b) => b.puntos - a.puntos);
+  }
+
+  /* Respuesta de un caso en un territorio: aplica su excepción si la hay. */
+  function resolverCaso(caso, isoCcaa) {
+    const excepcion = isoCcaa && (caso.excepciones || []).find(x => x.ccaa.includes(isoCcaa));
+    return excepcion
+      ? { admin: excepcion.admin, respuesta: excepcion.respuesta, excepcion: true }
+      : { admin: caso.admin, respuesta: caso.respuesta, excepcion: false };
+  }
+
+  /* Referencias legales que respaldan la respuesta de un caso. */
+  function refsDeCaso(caso, materias, isoCcaa) {
+    const materia = materias.find(m => m.id === caso.materia);
+    const resuelto = resolverCaso(caso, isoCcaa);
+    const delNivel = admin => {
+      const nivel = materia && materia.niveles.find(n => n.administracion === admin);
+      return nivel ? nivel.refs : [];
+    };
+    if (resuelto.excepcion) {
+      const propias = materia ? excepcionesDe(materia, isoCcaa).flatMap(x => x.refs) : [];
+      return propias.length ? propias : delNivel(resuelto.admin);
+    }
+    return caso.refs || delNivel(caso.admin);
+  }
+
+  /* «Tu ayuntamiento», «El Estado», «Generalitat de Catalunya»... */
+  function titularCorto(admin, isoCcaa, territorios) {
+    if (admin === "estado") return "El Estado";
+    if (admin === "municipal") return "Tu ayuntamiento";
+    if (admin === "provincial") return "Tu diputación";
+    const territorio = (territorios || []).find(t => t.iso === isoCcaa);
+    return territorio ? territorio.gobierno : "Tu comunidad autónoma";
+  }
+
+  /* ---------- servicios municipales obligatorios ---------- */
+
+  /* Tramos de servicios obligatorios y apoyos de la diputación para una población. */
+  function serviciosObligatorios(config, poblacion) {
+    return {
+      tramos: config.tramos.filter(t => t.desde === 0 || poblacion > t.desde),
+      apoyos: config.apoyo_diputacion.filter(a => poblacion < a.hasta),
+    };
   }
 
   /* ---------- carreteras ---------- */
@@ -313,6 +370,7 @@
   return {
     ETIQUETAS, normalizar, tokens, escaparHtml, urlRef,
     puntuar, buscar, detectarNoticia, excepcionesDe,
+    buscarCasos, resolverCaso, refsDeCaso, titularCorto, serviciosObligatorios,
     normalizarRef, clasificarVia, nombreTitular,
     urlGeocodificador, distanciaAGeometria, interpretarGeocodificacion,
   };

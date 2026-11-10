@@ -1,0 +1,69 @@
+{
+  "descripcion": "Servicios que todo ayuntamiento está obligado a prestar según su población (art. 26.1 de la Ley 7/1985, de Bases del Régimen Local) y papel de la diputación en los municipios pequeños (arts. 26.2 y 36.1.c). «Superior a» significa estrictamente mayor que el umbral.",
+  "ref": {"norma": "Ley 7/1985 (LBRL)", "id_boe": "BOE-A-1985-5392", "articulo": "26", "bloque": "a26"},
+  "ref_diputacion": {"norma": "Ley 7/1985 (LBRL)", "id_boe": "BOE-A-1985-5392", "articulo": "36.1.c", "bloque": "a36"},
+  "tramos": [
+    {
+      "desde": 0,
+      "titulo": "En todos los municipios",
+      "apartado": "26.1.a",
+      "servicios": [
+        {"nombre": "Alumbrado público", "materia": "energia"},
+        {"nombre": "Cementerio", "materia": "sanidad"},
+        {"nombre": "Recogida de residuos", "materia": "residuos-limpieza"},
+        {"nombre": "Limpieza viaria", "materia": "residuos-limpieza"},
+        {"nombre": "Abastecimiento domiciliario de agua potable", "materia": "aguas"},
+        {"nombre": "Alcantarillado", "materia": "aguas"},
+        {"nombre": "Acceso a los núcleos de población", "materia": "carreteras"},
+        {"nombre": "Pavimentación de las vías públicas", "materia": "carreteras"}
+      ]
+    },
+    {
+      "desde": 5000,
+      "titulo": "Con más de 5.000 habitantes, además",
+      "apartado": "26.1.b",
+      "servicios": [
+        {"nombre": "Parque público", "materia": "medio-ambiente"},
+        {"nombre": "Biblioteca pública", "materia": "cultura-deporte"},
+        {"nombre": "Tratamiento de residuos", "materia": "residuos-limpieza"}
+      ]
+    },
+    {
+      "desde": 20000,
+      "titulo": "Con más de 20.000 habitantes, además",
+      "apartado": "26.1.c",
+      "servicios": [
+        {"nombre": "Protección civil", "materia": "proteccion-civil"},
+        {"nombre": "Evaluación e información de situaciones de necesidad social y atención inmediata a personas en riesgo de exclusión", "materia": "servicios-sociales"},
+        {"nombre": "Prevención y extinción de incendios", "materia": "proteccion-civil"},
+        {"nombre": "Instalaciones deportivas de uso público", "materia": "cultura-deporte"}
+      ]
+    },
+    {
+      "desde": 50000,
+      "titulo": "Con más de 50.000 habitantes, además",
+      "apartado": "26.1.d",
+      "servicios": [
+        {"nombre": "Transporte colectivo urbano de viajeros", "materia": "transporte-publico"},
+        {"nombre": "Medio ambiente urbano", "materia": "medio-ambiente"}
+      ]
+    }
+  ],
+  "apoyo_diputacion": [
+    {
+      "hasta": 20000,
+      "texto": "Al tener menos de 20.000 habitantes, la {intermedia} coordina la prestación de la recogida y el tratamiento de residuos, el agua y el alcantarillado, la limpieza viaria, el acceso a los núcleos de población, la pavimentación y el alumbrado público.",
+      "apartado": "26.2"
+    },
+    {
+      "hasta": 20000,
+      "texto": "Si el ayuntamiento no presta el servicio de prevención y extinción de incendios, lo asume la {intermedia}.",
+      "apartado": "36.1.c"
+    },
+    {
+      "hasta": 5000,
+      "texto": "Si el ayuntamiento no presta el tratamiento de residuos, lo asume la {intermedia}.",
+      "apartado": "36.1.c"
+    }
+  ]
+}

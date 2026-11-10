@@ -1,106 +1,138 @@
 // Archivo GENERADO por scripts/build_data.py — no editar a mano.
 const COMPETENCIAS = {
- "version": "0.2.0",
- "descripcion": "Matriz de reparto competencial entre Estado, Comunidades Autónomas, Diputaciones y Ayuntamientos en España, con referencia a la norma concreta.",
- "avisos": [
-  "Esta matriz refleja el marco general (Constitución, LBRL y leyes sectoriales básicas). Los Estatutos de Autonomía concretan el reparto en cada comunidad; las diferencias más relevantes se recogen como excepciones territoriales.",
-  "Contenido divulgativo: la fuente vinculante es siempre el BOE y los boletines oficiales autonómicos."
- ],
  "territorios": [
   {
    "iso": "ES-AN",
    "nombre": "Andalucía",
-   "gobierno": "Junta de Andalucía"
+   "gobierno": "Junta de Andalucía",
+   "web": "https://www.juntadeandalucia.es",
+   "salud": "Servicio Andaluz de Salud (SAS)"
   },
   {
    "iso": "ES-AR",
    "nombre": "Aragón",
-   "gobierno": "Gobierno de Aragón"
+   "gobierno": "Gobierno de Aragón",
+   "web": "https://www.aragon.es",
+   "salud": "Servicio Aragonés de Salud"
   },
   {
    "iso": "ES-AS",
    "nombre": "Principado de Asturias",
-   "gobierno": "Gobierno del Principado de Asturias"
+   "gobierno": "Gobierno del Principado de Asturias",
+   "web": "https://www.asturias.es",
+   "salud": "Servicio de Salud del Principado de Asturias (SESPA)"
   },
   {
    "iso": "ES-IB",
    "nombre": "Illes Balears",
-   "gobierno": "Govern de les Illes Balears"
+   "gobierno": "Govern de les Illes Balears",
+   "web": "https://www.caib.es",
+   "salud": "Servei de Salut de les Illes Balears (IB-Salut)"
   },
   {
    "iso": "ES-CN",
    "nombre": "Canarias",
-   "gobierno": "Gobierno de Canarias"
+   "gobierno": "Gobierno de Canarias",
+   "web": "https://www.gobiernodecanarias.org",
+   "salud": "Servicio Canario de la Salud"
   },
   {
    "iso": "ES-CB",
    "nombre": "Cantabria",
-   "gobierno": "Gobierno de Cantabria"
+   "gobierno": "Gobierno de Cantabria",
+   "web": "https://www.cantabria.es",
+   "salud": "Servicio Cántabro de Salud"
   },
   {
    "iso": "ES-CM",
    "nombre": "Castilla-La Mancha",
-   "gobierno": "Junta de Comunidades de Castilla-La Mancha"
+   "gobierno": "Junta de Comunidades de Castilla-La Mancha",
+   "web": "https://www.castillalamancha.es",
+   "salud": "Servicio de Salud de Castilla-La Mancha (SESCAM)"
   },
   {
    "iso": "ES-CL",
    "nombre": "Castilla y León",
-   "gobierno": "Junta de Castilla y León"
+   "gobierno": "Junta de Castilla y León",
+   "web": "https://www.jcyl.es",
+   "salud": "Sanidad de Castilla y León (Sacyl)"
   },
   {
    "iso": "ES-CT",
    "nombre": "Cataluña",
-   "gobierno": "Generalitat de Catalunya"
+   "gobierno": "Generalitat de Catalunya",
+   "web": "https://web.gencat.cat",
+   "salud": "Servei Català de la Salut (CatSalut)"
   },
   {
    "iso": "ES-CE",
    "nombre": "Ceuta",
-   "gobierno": "Ciudad Autónoma de Ceuta"
+   "gobierno": "Ciudad Autónoma de Ceuta",
+   "web": "https://www.ceuta.es",
+   "salud": "Instituto Nacional de Gestión Sanitaria (INGESA)"
   },
   {
    "iso": "ES-VC",
    "nombre": "Comunitat Valenciana",
-   "gobierno": "Generalitat Valenciana"
+   "gobierno": "Generalitat Valenciana",
+   "web": "https://www.gva.es",
+   "salud": "Conselleria de Sanitat"
   },
   {
    "iso": "ES-EX",
    "nombre": "Extremadura",
-   "gobierno": "Junta de Extremadura"
+   "gobierno": "Junta de Extremadura",
+   "web": "https://www.juntaex.es",
+   "salud": "Servicio Extremeño de Salud (SES)"
   },
   {
    "iso": "ES-GA",
    "nombre": "Galicia",
-   "gobierno": "Xunta de Galicia"
+   "gobierno": "Xunta de Galicia",
+   "web": "https://www.xunta.gal",
+   "salud": "Servizo Galego de Saúde (Sergas)"
   },
   {
    "iso": "ES-RI",
    "nombre": "La Rioja",
-   "gobierno": "Gobierno de La Rioja"
+   "gobierno": "Gobierno de La Rioja",
+   "web": "https://www.larioja.org",
+   "salud": "Servicio Riojano de Salud"
   },
   {
    "iso": "ES-MD",
    "nombre": "Comunidad de Madrid",
-   "gobierno": "Comunidad de Madrid"
+   "gobierno": "Comunidad de Madrid",
+   "web": "https://www.comunidad.madrid",
+   "salud": "Servicio Madrileño de Salud (SERMAS)"
   },
   {
    "iso": "ES-ML",
    "nombre": "Melilla",
-   "gobierno": "Ciudad Autónoma de Melilla"
+   "gobierno": "Ciudad Autónoma de Melilla",
+   "web": "https://www.melilla.es",
+   "salud": "Instituto Nacional de Gestión Sanitaria (INGESA)"
   },
   {
    "iso": "ES-MC",
    "nombre": "Región de Murcia",
-   "gobierno": "Gobierno de la Región de Murcia"
+   "gobierno": "Gobierno de la Región de Murcia",
+   "web": "https://www.carm.es",
+   "salud": "Servicio Murciano de Salud"
   },
   {
    "iso": "ES-NC",
    "nombre": "Comunidad Foral de Navarra",
-   "gobierno": "Gobierno de Navarra"
+   "gobierno": "Gobierno de Navarra",
+   "web": "https://www.navarra.es",
+   "salud": "Servicio Navarro de Salud-Osasunbidea"
   },
   {
    "iso": "ES-PV",
    "nombre": "País Vasco",
-   "gobierno": "Gobierno Vasco"
+   "gobierno": "Gobierno Vasco",
+   "web": "https://www.euskadi.eus",
+   "salud": "Osakidetza"
   }
  ],
  "materias": [
@@ -177,7 +209,8 @@ const COMPETENCIAS = {
        "articulo": "6 bis.3",
        "bloque": "a6bis"
       }
-     ]
+     ],
+     "donde": "La dirección del centro y, por encima, la delegación o dirección territorial de educación de tu comunidad."
     },
     {
      "administracion": "municipal",
@@ -196,7 +229,8 @@ const COMPETENCIAS = {
        "articulo": "disposición adicional 15ª",
        "bloque": "dadecimoquinta"
       }
-     ]
+     ],
+     "donde": "La concejalía de educación de tu ayuntamiento."
     }
    ],
    "excepciones": [
@@ -280,7 +314,8 @@ const COMPETENCIAS = {
        "articulo": "57",
        "bloque": "a5-9"
       }
-     ]
+     ],
+     "donde": "La propia universidad y la consejería de universidades de tu comunidad."
     }
    ]
   },
@@ -367,7 +402,8 @@ const COMPETENCIAS = {
        "articulo": "50",
        "bloque": "acincuenta"
       }
-     ]
+     ],
+     "donde": "El servicio de atención al paciente de tu hospital o centro de salud, que tramita las reclamaciones ante el servicio de salud de tu comunidad."
     },
     {
      "administracion": "municipal",
@@ -386,7 +422,8 @@ const COMPETENCIAS = {
        "articulo": "42",
        "bloque": "acuarentaydos"
       }
-     ]
+     ],
+     "donde": "El área de salud pública o sanidad de tu ayuntamiento."
     }
    ],
    "excepciones": [
@@ -462,7 +499,8 @@ const COMPETENCIAS = {
        "articulo": "4",
        "bloque": "a4"
       }
-     ]
+     ],
+     "donde": "La Demarcación de Carreteras del Estado de tu provincia (Ministerio de Transportes)."
     },
     {
      "administracion": "ccaa",
@@ -475,7 +513,8 @@ const COMPETENCIAS = {
        "articulo": "148.1.5",
        "bloque": "a148"
       }
-     ]
+     ],
+     "donde": "La consejería responsable de carreteras de tu comunidad."
     },
     {
      "administracion": "provincial",
@@ -488,7 +527,8 @@ const COMPETENCIAS = {
        "articulo": "36",
        "bloque": "a36"
       }
-     ]
+     ],
+     "donde": "El servicio de vías y obras de tu diputación, cabildo o consejo insular."
     },
     {
      "administracion": "municipal",
@@ -501,7 +541,8 @@ const COMPETENCIAS = {
        "articulo": "25.2.d y 26.1.a",
        "bloque": "a25"
       }
-     ]
+     ],
+     "donde": "El servicio de avisos e incidencias en la vía pública de tu ayuntamiento."
     }
    ],
    "excepciones": [
@@ -576,7 +617,6 @@ const COMPETENCIAS = {
     "hipotecas",
     "zona tensionada",
     "zonas tensionadas",
-    "pisos turisticos",
     "inquilinos",
     "caseros"
    ],
@@ -617,7 +657,8 @@ const COMPETENCIAS = {
        "articulo": "148.1.3",
        "bloque": "a148"
       }
-     ]
+     ],
+     "donde": "La consejería o agencia de vivienda de tu comunidad."
     },
     {
      "administracion": "municipal",
@@ -630,7 +671,8 @@ const COMPETENCIAS = {
        "articulo": "25.2.a",
        "bloque": "a25"
       }
-     ]
+     ],
+     "donde": "El área de urbanismo de tu ayuntamiento."
     }
    ]
   },
@@ -687,7 +729,8 @@ const COMPETENCIAS = {
        "articulo": "25",
        "bloque": "a2-7"
       }
-     ]
+     ],
+     "donde": "El Instituto Nacional de la Seguridad Social (INSS)."
     },
     {
      "administracion": "ccaa",
@@ -706,7 +749,8 @@ const COMPETENCIAS = {
        "articulo": "11",
        "bloque": "a11"
       }
-     ]
+     ],
+     "donde": "La consejería de servicios sociales de tu comunidad; la solicitud suele empezar en los servicios sociales municipales."
     },
     {
      "administracion": "municipal",
@@ -719,7 +763,8 @@ const COMPETENCIAS = {
        "articulo": "25.2.e y 26.1.c",
        "bloque": "a25"
       }
-     ]
+     ],
+     "donde": "El centro de servicios sociales de tu barrio o municipio."
     }
    ],
    "excepciones": [
@@ -788,7 +833,8 @@ const COMPETENCIAS = {
        "articulo": "5",
        "bloque": "a5"
       }
-     ]
+     ],
+     "donde": "El Instituto Nacional de la Seguridad Social (INSS), por su sede electrónica o en un centro de atención (CAISS)."
     },
     {
      "administracion": "ccaa",
@@ -801,7 +847,8 @@ const COMPETENCIAS = {
        "articulo": "373",
        "bloque": "a373"
       }
-     ]
+     ],
+     "donde": "Los servicios sociales de tu comunidad."
     }
    ]
   },
@@ -860,7 +907,8 @@ const COMPETENCIAS = {
        "articulo": "4",
        "bloque": "a4"
       }
-     ]
+     ],
+     "donde": "Los canales de reclamación de Renfe o ADIF; por encima, el Ministerio de Transportes."
     },
     {
      "administracion": "ccaa",
@@ -873,7 +921,8 @@ const COMPETENCIAS = {
        "articulo": "148.1.5",
        "bloque": "a148"
       }
-     ]
+     ],
+     "donde": "El consorcio o la autoridad de transporte de tu comunidad."
     },
     {
      "administracion": "municipal",
@@ -886,7 +935,8 @@ const COMPETENCIAS = {
        "articulo": "25.2.g y 26.1.d",
        "bloque": "a25"
       }
-     ]
+     ],
+     "donde": "La empresa municipal de transportes o el ayuntamiento."
     }
    ],
    "excepciones": [
@@ -963,7 +1013,8 @@ const COMPETENCIAS = {
        "articulo": "11",
        "bloque": "aonce"
       }
-     ]
+     ],
+     "donde": "La comisaría de Policía Nacional o el cuartel de la Guardia Civil; para tráfico, la Jefatura Provincial de Tráfico (DGT)."
     },
     {
      "administracion": "ccaa",
@@ -995,7 +1046,8 @@ const COMPETENCIAS = {
        "articulo": "53",
        "bloque": "acincuentaytres"
       }
-     ]
+     ],
+     "donde": "La policía local (092 en muchos municipios)."
     }
    ],
    "excepciones": [
@@ -1104,7 +1156,8 @@ const COMPETENCIAS = {
        "articulo": "15.2",
        "bloque": "a15"
       }
-     ]
+     ],
+     "donde": "El teléfono de emergencias 112."
     },
     {
      "administracion": "municipal",
@@ -1117,7 +1170,8 @@ const COMPETENCIAS = {
        "articulo": "25.2.f y 26.1.c",
        "bloque": "a25"
       }
-     ]
+     ],
+     "donde": "El teléfono de emergencias 112; para asuntos no urgentes, el ayuntamiento."
     }
    ]
   },
@@ -1175,7 +1229,8 @@ const COMPETENCIAS = {
        "articulo": "122",
        "bloque": "a122"
       }
-     ]
+     ],
+     "donde": "El propio juzgado y, para quejas sobre su funcionamiento, el Consejo General del Poder Judicial."
     },
     {
      "administracion": "ccaa",
@@ -1188,7 +1243,8 @@ const COMPETENCIAS = {
        "articulo": "37",
        "bloque": "atreintaysiete"
       }
-     ]
+     ],
+     "donde": "La consejería de justicia de tu comunidad o, donde no está transferida, la gerencia territorial del Ministerio de Justicia."
     }
    ],
    "excepciones": [
@@ -1289,7 +1345,8 @@ const COMPETENCIAS = {
        "articulo": "149.1.14",
        "bloque": "a149"
       }
-     ]
+     ],
+     "donde": "La Agencia Tributaria (sede electrónica o cita previa)."
     },
     {
      "administracion": "ccaa",
@@ -1314,7 +1371,8 @@ const COMPETENCIAS = {
        "articulo": "25",
        "bloque": "a25"
       }
-     ]
+     ],
+     "donde": "La agencia tributaria o la consejería de hacienda de tu comunidad."
     },
     {
      "administracion": "municipal",
@@ -1327,7 +1385,8 @@ const COMPETENCIAS = {
        "articulo": "59",
        "bloque": "a59"
       }
-     ]
+     ],
+     "donde": "La oficina de recaudación o de atención al contribuyente de tu ayuntamiento."
     }
    ],
    "excepciones": [
@@ -1434,7 +1493,8 @@ const COMPETENCIAS = {
        "articulo": "27",
        "bloque": "a27"
       }
-     ]
+     ],
+     "donde": "El Servicio Público de Empleo Estatal (SEPE)."
     },
     {
      "administracion": "ccaa",
@@ -1447,7 +1507,8 @@ const COMPETENCIAS = {
        "articulo": "23",
        "bloque": "a2-5"
       }
-     ]
+     ],
+     "donde": "La oficina de empleo de tu comunidad."
     },
     {
      "administracion": "municipal",
@@ -1517,7 +1578,8 @@ const COMPETENCIAS = {
        "articulo": "2 bis",
        "bloque": "a2.bis"
       }
-     ]
+     ],
+     "donde": "La Oficina de Extranjería de tu provincia."
     },
     {
      "administracion": "ccaa",
@@ -1549,7 +1611,8 @@ const COMPETENCIAS = {
        "articulo": "15 a 17",
        "bloque": "a15"
       }
-     ]
+     ],
+     "donde": "La oficina del padrón de tu ayuntamiento."
     }
    ]
   },
@@ -1610,7 +1673,8 @@ const COMPETENCIAS = {
        "articulo": "3",
        "bloque": "a3"
       }
-     ]
+     ],
+     "donde": "Tu comercializadora en primer lugar; si no responde, los servicios de consumo de tu comunidad."
     },
     {
      "administracion": "ccaa",
@@ -1636,7 +1700,8 @@ const COMPETENCIAS = {
        "articulo": "26.1.a",
        "bloque": "a26"
       }
-     ]
+     ],
+     "donde": "El servicio de avisos e incidencias en la vía pública de tu ayuntamiento."
     }
    ]
   },
@@ -1700,7 +1765,8 @@ const COMPETENCIAS = {
        "articulo": "148.1.9 y 148.1.11",
        "bloque": "a148"
       }
-     ]
+     ],
+     "donde": "La consejería de medio ambiente de tu comunidad."
     },
     {
      "administracion": "municipal",
@@ -1719,7 +1785,8 @@ const COMPETENCIAS = {
        "articulo": "14.3",
        "bloque": "a1-6"
       }
-     ]
+     ],
+     "donde": "El área de medio ambiente o de parques y jardines de tu ayuntamiento."
     }
    ]
   },
@@ -1797,7 +1864,8 @@ const COMPETENCIAS = {
        "articulo": "12.5",
        "bloque": "a1-4"
       }
-     ]
+     ],
+     "donde": "El servicio de limpieza de tu ayuntamiento (en muchas ciudades, el teléfono 010)."
     }
    ]
   },
@@ -1861,7 +1929,8 @@ const COMPETENCIAS = {
        "articulo": "17",
        "bloque": "a17"
       }
-     ]
+     ],
+     "donde": "La Confederación Hidrográfica de tu cuenca."
     },
     {
      "administracion": "ccaa",
@@ -1887,7 +1956,8 @@ const COMPETENCIAS = {
        "articulo": "25.2.c y 26.1.a",
        "bloque": "a25"
       }
-     ]
+     ],
+     "donde": "La empresa de aguas de tu municipio o el ayuntamiento."
     }
    ]
   },
@@ -1964,7 +2034,461 @@ const COMPETENCIAS = {
        "articulo": "25.2.l, 25.2.m y 26.1",
        "bloque": "a25"
       }
+     ],
+     "donde": "La concejalía de cultura o de deportes de tu ayuntamiento."
+    }
+   ]
+  },
+  {
+   "id": "agricultura-pesca",
+   "nombre": "Agricultura, ganadería y pesca",
+   "descripcion": "Ayudas de la PAC, ganadería, cuotas de pesca, montes y mercados.",
+   "tags": [
+    "agricultura",
+    "agricultores",
+    "ganaderia",
+    "ganaderos",
+    "pac",
+    "politica agraria comun",
+    "ayudas de la pac",
+    "cosecha",
+    "cuotas de pesca",
+    "pesca maritima",
+    "flota pesquera",
+    "pescadores",
+    "cofradia de pescadores",
+    "sanidad animal",
+    "lengua azul",
+    "tractoradas",
+    "sector agrario",
+    "denominacion de origen"
+   ],
+   "tags_debiles": [
+    "campo",
+    "pesca",
+    "ganado",
+    "cultivos",
+    "granja",
+    "granjas",
+    "montes"
+   ],
+   "niveles": [
+    {
+     "administracion": "estado",
+     "rol": "Bases y pesca marítima",
+     "detalle": "Fija las bases de la ordenación del sector dentro de la planificación económica, negocia la Política Agraria Común en la Unión Europea y es competente sobre la pesca marítima.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "149.1.13 y 149.1.19",
+       "bloque": "a149"
+      }
+     ],
+     "donde": "El Ministerio de Agricultura, Pesca y Alimentación."
+    },
+    {
+     "administracion": "ccaa",
+     "rol": "Competencia propia",
+     "detalle": "Es competente en agricultura y ganadería, montes, pesca en aguas interiores y marisqueo: tramita y paga las ayudas de la PAC, controla la sanidad animal y gestiona el desarrollo rural.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "148.1.7, 148.1.8 y 148.1.11",
+       "bloque": "a148"
+      }
+     ],
+     "donde": "La oficina comarcal agraria o la consejería de agricultura de tu comunidad."
+    },
+    {
+     "administracion": "municipal",
+     "rol": "Mercados y ferias locales",
+     "detalle": "Gestiona los mercados de abastos, las lonjas, las ferias y los caminos rurales del municipio.",
+     "refs": [
+      {
+       "norma": "Ley 7/1985 (LBRL)",
+       "id_boe": "BOE-A-1985-5392",
+       "articulo": "25.2.d y 25.2.i",
+       "bloque": "a25"
+      }
      ]
+    }
+   ]
+  },
+  {
+   "id": "turismo",
+   "nombre": "Turismo",
+   "descripcion": "Pisos turísticos, hoteles, promoción turística y oficinas de turismo.",
+   "tags": [
+    "turismo",
+    "pisos turisticos",
+    "piso turistico",
+    "viviendas turisticas",
+    "vivienda turistica",
+    "alquiler turistico",
+    "apartamentos turisticos",
+    "hoteles",
+    "turistas",
+    "oficina de turismo",
+    "turismofobia",
+    "masificacion turistica",
+    "airbnb",
+    "campings",
+    "turespaña",
+    "paradores"
+   ],
+   "tags_debiles": [
+    "hotel",
+    "turistico",
+    "turistica",
+    "visitantes"
+   ],
+   "niveles": [
+    {
+     "administracion": "estado",
+     "rol": "Promoción exterior y coordinación",
+     "detalle": "Promociona España como destino en el extranjero (Turespaña) y coordina la política turística dentro de la planificación económica general.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "149.1.10 y 149.1.13",
+       "bloque": "a149"
+      }
+     ]
+    },
+    {
+     "administracion": "ccaa",
+     "rol": "Competencia exclusiva",
+     "detalle": "Promociona y ordena el turismo en su territorio: regula y registra los alojamientos (hoteles, campings, viviendas de uso turístico), los clasifica, los inspecciona y sanciona.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "148.1.18",
+       "bloque": "a148"
+      }
+     ],
+     "donde": "La consejería de turismo de tu comunidad."
+    },
+    {
+     "administracion": "municipal",
+     "rol": "Información y promoción local",
+     "detalle": "Informa y promociona la actividad turística local (oficinas de turismo) y puede limitar los alojamientos turísticos a través del planeamiento urbanístico y las licencias.",
+     "refs": [
+      {
+       "norma": "Ley 7/1985 (LBRL)",
+       "id_boe": "BOE-A-1985-5392",
+       "articulo": "25.2.a y 25.2.h",
+       "bloque": "a25"
+      }
+     ],
+     "donde": "La oficina de turismo o el área de urbanismo de tu ayuntamiento."
+    }
+   ]
+  },
+  {
+   "id": "consumo-comercio",
+   "nombre": "Consumo y comercio",
+   "descripcion": "Reclamaciones de consumo, garantías, horarios comerciales, mercadillos.",
+   "tags": [
+    "consumo",
+    "consumidores",
+    "consumidor",
+    "reclamacion de consumo",
+    "hoja de reclamaciones",
+    "hojas de reclamaciones",
+    "omic",
+    "arbitraje de consumo",
+    "garantia",
+    "garantias",
+    "horarios comerciales",
+    "horario comercial",
+    "apertura en festivos",
+    "rebajas",
+    "mercadillo",
+    "mercadillos",
+    "venta ambulante",
+    "comercio ambulante",
+    "pequeño comercio",
+    "clausulas abusivas"
+   ],
+   "tags_debiles": [
+    "reclamacion",
+    "reclamaciones",
+    "reclamar",
+    "comercio",
+    "comercios",
+    "tiendas",
+    "tienda",
+    "domingos"
+   ],
+   "niveles": [
+    {
+     "administracion": "estado",
+     "rol": "Legislación básica",
+     "detalle": "Aprueba la legislación general de defensa de los consumidores (garantías, cláusulas abusivas, derecho de desistimiento) y las bases del comercio interior, como los horarios mínimos de apertura.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "51",
+       "bloque": "a51"
+      },
+      {
+       "norma": "Real Decreto Legislativo 1/2007, Ley General para la Defensa de los Consumidores y Usuarios",
+       "id_boe": "BOE-A-2007-20555",
+       "articulo": "1",
+       "bloque": "a1"
+      }
+     ]
+    },
+    {
+     "administracion": "ccaa",
+     "rol": "Desarrollo, inspección y sanción",
+     "detalle": "Asume en su Estatuto la defensa del consumidor y el comercio interior: inspecciona y sanciona a las empresas, gestiona las juntas arbitrales de consumo y fija los horarios comerciales y los festivos de apertura.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "148.1.12",
+       "bloque": "a148"
+      },
+      {
+       "norma": "Real Decreto Legislativo 1/2007, Ley General para la Defensa de los Consumidores y Usuarios",
+       "id_boe": "BOE-A-2007-20555",
+       "articulo": "57",
+       "bloque": "a57"
+      }
+     ],
+     "donde": "La dirección general de consumo de tu comunidad o su junta arbitral de consumo."
+    },
+    {
+     "administracion": "municipal",
+     "rol": "Mercados y venta ambulante",
+     "detalle": "Autoriza los mercadillos y la venta ambulante y gestiona los mercados municipales. Muchos ayuntamientos tienen además una oficina de información al consumidor (OMIC).",
+     "refs": [
+      {
+       "norma": "Ley 7/1985 (LBRL)",
+       "id_boe": "BOE-A-1985-5392",
+       "articulo": "25.2.i",
+       "bloque": "a25"
+      }
+     ],
+     "donde": "La oficina municipal de información al consumidor (OMIC), si tu ayuntamiento la tiene."
+    }
+   ]
+  },
+  {
+   "id": "telecomunicaciones",
+   "nombre": "Telecomunicaciones y medios",
+   "descripcion": "Cobertura móvil, internet, televisión pública y Correos.",
+   "tags": [
+    "telecomunicaciones",
+    "cobertura movil",
+    "banda ancha",
+    "fibra optica",
+    "internet rural",
+    "5g",
+    "telefonia",
+    "operadoras",
+    "rtve",
+    "television publica",
+    "television autonomica",
+    "tdt",
+    "correos",
+    "radio publica",
+    "brecha digital"
+   ],
+   "tags_debiles": [
+    "internet",
+    "movil",
+    "television",
+    "antena",
+    "antenas",
+    "cobertura"
+   ],
+   "niveles": [
+    {
+     "administracion": "estado",
+     "rol": "Competencia exclusiva",
+     "detalle": "Tiene la competencia exclusiva sobre telecomunicaciones y correos: regula a las operadoras, gestiona el espectro radioeléctrico, impulsa la extensión de la banda ancha y dicta las normas básicas de radio y televisión. RTVE y Correos son estatales.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "149.1.21 y 149.1.27",
+       "bloque": "a149"
+      },
+      {
+       "norma": "Ley 11/2022, General de Telecomunicaciones",
+       "id_boe": "BOE-A-2022-10757",
+       "articulo": "1",
+       "bloque": "a1"
+      }
+     ],
+     "donde": "Tu operadora en primer lugar; si no responde, la Oficina de Atención al Usuario de Telecomunicaciones."
+    },
+    {
+     "administracion": "ccaa",
+     "rol": "Medios de comunicación propios",
+     "detalle": "Desarrolla las normas básicas sobre medios de comunicación y gestiona su radio y televisión públicas autonómicas.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "149.1.27",
+       "bloque": "a149"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "puertos-aeropuertos-costas",
+   "nombre": "Puertos, aeropuertos y costas",
+   "descripcion": "Aeropuertos, puertos comerciales y deportivos, playas y litoral.",
+   "tags": [
+    "aeropuerto",
+    "aeropuertos",
+    "aena",
+    "puerto comercial",
+    "puertos del estado",
+    "autoridad portuaria",
+    "puerto deportivo",
+    "puertos deportivos",
+    "playa",
+    "playas",
+    "socorristas",
+    "chiringuito",
+    "chiringuitos",
+    "ley de costas",
+    "dominio publico maritimo",
+    "paseo maritimo",
+    "litoral",
+    "control aereo",
+    "controladores aereos"
+   ],
+   "tags_debiles": [
+    "puerto",
+    "puertos",
+    "costa",
+    "costas",
+    "vuelos",
+    "mar"
+   ],
+   "niveles": [
+    {
+     "administracion": "estado",
+     "rol": "Puertos y aeropuertos de interés general, y la costa",
+     "detalle": "Es competente sobre los puertos y aeropuertos de interés general (Puertos del Estado, Aena), el control del espacio aéreo y el dominio público marítimo-terrestre: deslinda la costa y autoriza las ocupaciones de las playas.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "149.1.20",
+       "bloque": "a149"
+      },
+      {
+       "norma": "Ley 22/1988, de Costas",
+       "id_boe": "BOE-A-1988-18762",
+       "articulo": "110",
+       "bloque": "a110"
+      }
+     ],
+     "donde": "La Demarcación o Servicio Provincial de Costas, la Autoridad Portuaria o Aena, según el caso."
+    },
+    {
+     "administracion": "ccaa",
+     "rol": "Puertos y aeropuertos no comerciales",
+     "detalle": "Es competente sobre los puertos de refugio, los puertos y aeropuertos deportivos y, en general, los que no desarrollan actividades comerciales, además de la ordenación del litoral.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "148.1.6",
+       "bloque": "a148"
+      }
+     ]
+    },
+    {
+     "administracion": "municipal",
+     "rol": "Limpieza y seguridad de las playas",
+     "detalle": "Mantiene las playas en condiciones de limpieza, higiene y salubridad y vigila las normas de salvamento y seguridad de las vidas humanas (socorristas).",
+     "refs": [
+      {
+       "norma": "Ley 22/1988, de Costas",
+       "id_boe": "BOE-A-1988-18762",
+       "articulo": "115",
+       "bloque": "a115"
+      }
+     ],
+     "donde": "El área de playas o de medio ambiente de tu ayuntamiento."
+    }
+   ],
+   "excepciones": [
+    {
+     "ccaa": [
+      "ES-CT",
+      "ES-AN",
+      "ES-CN",
+      "ES-IB"
+     ],
+     "titulo": "Gestión del litoral traspasada",
+     "detalle": "En esta comunidad la gestión de las autorizaciones y concesiones en las playas (chiringuitos, instalaciones de temporada) está traspasada a la administración autonómica; el deslinde de la costa sigue siendo estatal.",
+     "refs": [
+      {
+       "norma": "Ley 22/1988, de Costas",
+       "id_boe": "BOE-A-1988-18762",
+       "articulo": "110",
+       "bloque": "a110"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "defensa-exteriores",
+   "nombre": "Defensa y relaciones internacionales",
+   "descripcion": "Fuerzas Armadas, embajadas, consulados, tratados y Unión Europea.",
+   "tags": [
+    "ejercito",
+    "fuerzas armadas",
+    "militares",
+    "ministerio de defensa",
+    "gasto militar",
+    "otan",
+    "embajada",
+    "embajadas",
+    "consulado",
+    "consulados",
+    "tratado internacional",
+    "politica exterior",
+    "relaciones internacionales",
+    "servicio militar"
+   ],
+   "tags_debiles": [
+    "defensa",
+    "militar",
+    "exterior",
+    "diplomacia",
+    "tratados"
+   ],
+   "niveles": [
+    {
+     "administracion": "estado",
+     "rol": "Competencia exclusiva",
+     "detalle": "La defensa, las Fuerzas Armadas y las relaciones internacionales son competencia exclusiva del Estado: ejército, embajadas y consulados, tratados y representación ante la Unión Europea.",
+     "refs": [
+      {
+       "norma": "Constitución Española",
+       "id_boe": "BOE-A-1978-31229",
+       "articulo": "149.1.3 y 149.1.4",
+       "bloque": "a149"
+      }
+     ],
+     "donde": "En el extranjero, el consulado o la embajada de España."
     }
    ]
   }

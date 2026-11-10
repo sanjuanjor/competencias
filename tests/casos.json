@@ -501,5 +501,145 @@
         "municipio": "Villar"
       }
     }
+  ],
+  "busqueda_casos": [
+    {
+      "q": "farola fundida",
+      "caso": "farola-fundida"
+    },
+    {
+      "q": "me han puesto una multa de aparcamiento",
+      "caso": "multa-aparcamiento"
+    },
+    {
+      "q": "lista de espera para operarme",
+      "caso": "lista-espera"
+    },
+    {
+      "q": "quién recoge la basura",
+      "caso": "recogida-basura"
+    },
+    {
+      "q": "renovar el dni",
+      "caso": "dni-pasaporte"
+    },
+    {
+      "q": "bache en mi calle",
+      "caso": "bache-calle"
+    },
+    {
+      "q": "cobrar el paro",
+      "caso": "cobrar-paro"
+    },
+    {
+      "q": "ruido de un bar",
+      "caso": "ruido"
+    },
+    {
+      "q": "impuesto de sucesiones",
+      "caso": "sucesiones"
+    },
+    {
+      "q": "pisos turísticos",
+      "caso": "pisos-turisticos"
+    },
+    {
+      "q": "empadronarme",
+      "caso": "empadronamiento"
+    },
+    {
+      "q": "aguacate",
+      "vacio": true
+    },
+    {
+      "q": "quién decide",
+      "vacio": true
+    }
+  ],
+  "resolucion_casos": [
+    {
+      "caso": "cercanias",
+      "ccaa": null,
+      "admin": "estado",
+      "titular": "El Estado"
+    },
+    {
+      "caso": "cercanias",
+      "ccaa": "ES-MD",
+      "admin": "estado",
+      "titular": "El Estado"
+    },
+    {
+      "caso": "cercanias",
+      "ccaa": "ES-CT",
+      "admin": "ccaa",
+      "titular": "Generalitat de Catalunya",
+      "ref": "BOE-A-2006-13087"
+    },
+    {
+      "caso": "irpf",
+      "ccaa": "ES-PV",
+      "admin": "provincial",
+      "titular": "Tu diputación",
+      "ref": "BOE-A-2002-9969"
+    },
+    {
+      "caso": "carretera-entre-pueblos",
+      "ccaa": "ES-MD",
+      "admin": "ccaa",
+      "titular": "Comunidad de Madrid"
+    },
+    {
+      "caso": "metro",
+      "ccaa": null,
+      "admin": "ccaa",
+      "titular": "Tu comunidad autónoma"
+    },
+    {
+      "caso": "farola-fundida",
+      "ccaa": "ES-AN",
+      "admin": "municipal",
+      "titular": "Tu ayuntamiento",
+      "ref": "BOE-A-1985-5392"
+    },
+    {
+      "caso": "dni-pasaporte",
+      "ccaa": null,
+      "admin": "estado",
+      "titular": "El Estado",
+      "ref": "BOE-A-2015-3442"
+    }
+  ],
+  "servicios_municipales": [
+    {
+      "poblacion": 73,
+      "tramos": 1,
+      "apoyos": 3
+    },
+    {
+      "poblacion": 5000,
+      "tramos": 1,
+      "apoyos": 2
+    },
+    {
+      "poblacion": 5001,
+      "tramos": 2,
+      "apoyos": 2
+    },
+    {
+      "poblacion": 20000,
+      "tramos": 2,
+      "apoyos": 0
+    },
+    {
+      "poblacion": 20001,
+      "tramos": 3,
+      "apoyos": 0
+    },
+    {
+      "poblacion": 60000,
+      "tramos": 4,
+      "apoyos": 0
+    }
   ]
 }
