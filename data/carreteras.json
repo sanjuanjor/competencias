@@ -1,0 +1,57 @@
+{
+  "descripcion": "Reglas para deducir la titularidad de una vía a partir de su nomenclatura (ref de OpenStreetMap) y de la comunidad autónoma en la que está. Se evalúan en orden y gana la primera que encaja. Es una estimación: la fuente vinculante es el catálogo oficial de cada administración.",
+  "geocodificador": "https://nominatim.openstreetmap.org/reverse",
+  "distancia_maxima_m": 150,
+  "tipos_urbanos": ["residential", "living_street", "pedestrian", "service", "unclassified", "tertiary", "footway", "cycleway", "path", "track", "steps"],
+  "operadores": [
+    {"patron": "ministerio|carreteras del estado|administraci[oó]n general del estado|\\bmitma\\b", "admin": "estado"},
+    {"patron": "diputaci|cabildo|consell insular|consejo insular|aldundi", "admin": "provincial"},
+    {"patron": "junta de|generalitat|gobierno de|gobierno vasco|govern|xunta|comunidad de|comunidad foral|principado", "admin": "ccaa"},
+    {"patron": "ayuntamiento|ajuntament|concello|udala|madrid calle 30", "admin": "municipal"}
+  ],
+  "titulares": {
+    "estado": "Ministerio de Transportes y Movilidad Sostenible",
+    "ccaa": "{gobierno}",
+    "provincial": "Diputación Provincial de {provincia}",
+    "municipal": "Ayuntamiento de {municipio}"
+  },
+  "reglas": [
+    {"ccaa": ["ES-PV", "ES-NC"], "patron": "^AP-68$", "admin": "estado", "confianza": "media", "motivo": "La AP-68 es una autopista de la red estatal también a su paso por este territorio."},
+    {"ccaa": ["ES-PV"], "patron": ".", "admin": "provincial", "confianza": "alta", "titular": "Diputación Foral de {provincia}", "motivo": "En el País Vasco todas las carreteras, incluidas las N- y A-, son de las Diputaciones Forales (Estatuto de Autonomía, art. 10.34)."},
+    {"ccaa": ["ES-NC"], "patron": ".", "admin": "ccaa", "confianza": "alta", "motivo": "En Navarra las carreteras son del Gobierno de Navarra, incluidas las N- y A- (LORAFNA, art. 49.1.f)."},
+    {"ccaa": ["ES-IB"], "patron": ".", "admin": "provincial", "confianza": "alta", "titular": "Consell Insular", "motivo": "En Illes Balears las carreteras son competencia propia de los Consells Insulars (Estatuto, art. 70.15)."},
+    {"ccaa": ["ES-CN"], "patron": ".", "admin": "ccaa", "confianza": "media", "motivo": "En Canarias no hay red estatal: las carreteras de interés regional son del Gobierno de Canarias y el resto del Cabildo insular, que además suele gestionarlas todas."},
+
+    {"ccaa": ["ES-MD"], "patron": "^M-30$", "admin": "municipal", "confianza": "alta", "titular": "Ayuntamiento de Madrid", "motivo": "La M-30 es una vía urbana del Ayuntamiento de Madrid (Madrid Calle 30)."},
+    {"ccaa": ["ES-MD"], "patron": "^M-(40|50|11|12|13|14|21|22|23|31)$", "admin": "estado", "confianza": "alta", "motivo": "Pese al prefijo M-, {ref} es una autovía o acceso de la Red de Carreteras del Estado."},
+    {"ccaa": ["ES-MD"], "patron": "^M-\\d+", "admin": "ccaa", "confianza": "alta", "motivo": "El prefijo M- identifica la red de la Comunidad de Madrid."},
+
+    {"ccaa": ["ES-CT"], "patron": "^C-\\d+", "admin": "ccaa", "confianza": "alta", "motivo": "El prefijo C- identifica la red básica de la Generalitat de Catalunya."},
+    {"ccaa": ["ES-CT"], "patron": "^(B|GI|T|L)-\\d{2}$", "admin": "estado", "confianza": "media", "motivo": "Los accesos y rondas con código provincial y dos cifras ({ref}) suelen pertenecer a la red estatal."},
+    {"ccaa": ["ES-CT"], "patron": "^(B|GI|T|L)-\\d{3}$", "admin": "ccaa", "confianza": "media", "motivo": "Las carreteras con código provincial y tres cifras son de la red comarcal de la Generalitat."},
+    {"ccaa": ["ES-CT"], "patron": "^(BV|GIV|TV|LV)-", "admin": "provincial", "confianza": "media", "motivo": "Los prefijos terminados en V identifican carreteras vecinales de la Diputación."},
+
+    {"ccaa": ["ES-AN"], "patron": "^A-(92[A-Z]?|\\d{3,4}[A-Z]?)$", "admin": "ccaa", "confianza": "alta", "motivo": "En Andalucía la A-92 y las A- de tres o cuatro cifras forman la red autonómica de la Junta."},
+    {"ccaa": ["ES-AR"], "patron": "^(A-\\d{3,4}|ARA-)", "admin": "ccaa", "confianza": "alta", "motivo": "En Aragón las A- de tres o cuatro cifras forman la red autonómica."},
+    {"ccaa": ["ES-CB"], "patron": "^CA-\\d{3}", "admin": "ccaa", "confianza": "alta", "motivo": "En Cantabria el prefijo CA- con tres cifras identifica la red autonómica."},
+    {"ccaa": ["ES-AS"], "patron": "^AS-", "admin": "ccaa", "confianza": "alta", "motivo": "El prefijo AS- identifica la red del Principado de Asturias."},
+    {"ccaa": ["ES-RI"], "patron": "^LR-", "admin": "ccaa", "confianza": "alta", "motivo": "El prefijo LR- identifica la red autonómica de La Rioja."},
+    {"ccaa": ["ES-MC"], "patron": "^RM-", "admin": "ccaa", "confianza": "alta", "motivo": "El prefijo RM- identifica la red autonómica de la Región de Murcia."},
+    {"ccaa": ["ES-GA"], "patron": "^(AG|CG|VG)-", "admin": "ccaa", "confianza": "alta", "motivo": "Los prefijos AG-, CG- y VG- identifican vías de altas prestaciones de la Xunta de Galicia."},
+    {"ccaa": ["ES-GA"], "patron": "^(AC|LU|OU|PO)-\\d{3}$", "admin": "ccaa", "confianza": "media", "motivo": "En Galicia las carreteras con código provincial y tres cifras son de la red de la Xunta."},
+    {"ccaa": ["ES-GA"], "patron": "^(DP|CP|EP)-", "admin": "provincial", "confianza": "alta", "motivo": "Los prefijos DP-, CP- y EP- identifican la red de las Diputaciones gallegas."},
+    {"ccaa": ["ES-CL"], "patron": "^CL-", "admin": "ccaa", "confianza": "alta", "motivo": "El prefijo CL- identifica la red básica de la Junta de Castilla y León."},
+    {"ccaa": ["ES-CL"], "patron": "^[A-Z]{1,2}-\\d{3}$", "admin": "ccaa", "confianza": "media", "motivo": "En Castilla y León las carreteras con código provincial y tres cifras son de la red complementaria de la Junta."},
+    {"ccaa": ["ES-VC"], "patron": "^CV-\\d{1,3}$", "admin": "ccaa", "confianza": "media", "motivo": "Las CV- de hasta tres cifras suelen ser de la Generalitat Valenciana; algunas de tres cifras son de la Diputación."},
+    {"ccaa": ["ES-CM"], "patron": "^CM-", "admin": "ccaa", "confianza": "alta", "motivo": "El prefijo CM- identifica la red de la Junta de Castilla-La Mancha."},
+    {"ccaa": ["ES-EX"], "patron": "^EX-", "admin": "ccaa", "confianza": "alta", "motivo": "El prefijo EX- identifica la red de la Junta de Extremadura."},
+
+    {"patron": "^AP-\\d+", "admin": "estado", "confianza": "alta", "motivo": "El prefijo AP- identifica una autopista de la Red de Carreteras del Estado (Ley 37/2015, art. 4)."},
+    {"patron": "^N-(\\d+|[IVX]+)", "admin": "estado", "confianza": "alta", "motivo": "El prefijo N- identifica una carretera nacional de la Red de Carreteras del Estado (Ley 37/2015, art. 4)."},
+    {"patron": "^A-\\d{1,2}$", "admin": "estado", "confianza": "alta", "motivo": "Las A- de una o dos cifras son autovías de la Red de Carreteras del Estado (Ley 37/2015, art. 4)."},
+    {"patron": "^R-\\d$", "admin": "estado", "confianza": "media", "motivo": "Las radiales R- son autopistas de peaje de titularidad estatal."},
+    {"patron": "^[A-Z]{1,2}-\\d{2}$", "admin": "estado", "confianza": "media", "motivo": "Los accesos y circunvalaciones con código provincial y dos cifras ({ref}) suelen pertenecer a la red estatal."},
+    {"ccaa": ["ES-MD", "ES-CB", "ES-AS", "ES-RI", "ES-MC"], "patron": ".", "admin": "ccaa", "confianza": "media", "motivo": "En una comunidad uniprovincial no hay diputación: la red que no es estatal es autonómica."},
+    {"patron": ".", "admin": "provincial", "confianza": "baja", "motivo": "El código {ref} apunta a una carretera provincial o local; compruébalo en el catálogo oficial de la vía."}
+  ]
+}

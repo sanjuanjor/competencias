@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "¿De quién es la competencia?",
+  "version": "0.2.0",
+  "description": "Al leer una noticia, indica qué administración española (Estado, comunidad autónoma o ayuntamiento) tiene la competencia, con la ley que lo establece.",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.elpais.com/*",
+        "*://*.elmundo.es/*",
+        "*://*.abc.es/*",
+        "*://*.lavanguardia.com/*",
+        "*://*.elconfidencial.com/*",
+        "*://*.eldiario.es/*",
+        "*://*.20minutos.es/*",
+        "*://*.rtve.es/*",
+        "*://*.elespanol.com/*",
+        "*://*.okdiario.com/*",
+        "*://*.larazon.es/*",
+        "*://*.publico.es/*",
+        "*://*.elperiodico.com/*",
+        "*://*.europapress.es/*"
+      ],
+      "js": ["data.js", "core.js", "content.js"],
+      "css": ["badge.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

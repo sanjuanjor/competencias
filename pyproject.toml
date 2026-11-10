@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "competencias-espana-mcp"
+version = "0.2.0"
+description = "Servidor MCP con el reparto competencial entre administraciones públicas en España, referenciado al BOE."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["fastmcp>=2.0"]
+
+[project.scripts]
+competencias-mcp = "competencias_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mcp-server/competencias_mcp"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"data/competencias.json" = "competencias_mcp/datos/competencias.json"
+"data/carreteras.json" = "competencias_mcp/datos/carreteras.json"
+"data/verificacion_boe.json" = "competencias_mcp/datos/verificacion_boe.json"
+
+[tool.hatch.build.targets.sdist]
+include = ["mcp-server/competencias_mcp", "data", "README.md"]

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!-- Página de prueba para la extensión: simula un artículo de periódico y carga
+     los mismos archivos que inyecta el navegador. Abrir con un servidor local:
+     http://localhost:8000/tests/fixtures/noticia.html?t=Titular+de+prueba
+     Con ?tipo=website simula una portada (no debe aparecer ficha). -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Noticia de prueba | Cultura | Periódico</title>
+  <meta property="og:type" content="article" id="og-tipo">
+  <link rel="stylesheet" href="../../extension/badge.css">
+</head>
+<body>
+  <article>
+    <h1 id="titular">Las listas de espera quirúrgicas baten récord en los hospitales públicos</h1>
+    <h2 id="entradilla">Los sindicatos piden más personal para los quirófanos.</h2>
+    <p>Texto del artículo.</p>
+  </article>
+  <script>
+    const parametros = new URLSearchParams(location.search);
+    if (parametros.get("t")) {
+      document.getElementById("titular").textContent = parametros.get("t");
+      document.getElementById("entradilla").textContent = "";
+    }
+    if (parametros.get("tipo")) document.getElementById("og-tipo").content = parametros.get("tipo");
+  </script>
+  <script src="../../extension/data.js"></script>
+  <script src="../../extension/core.js"></script>
+  <script src="../../extension/content.js"></script>
+</body>
+</html>

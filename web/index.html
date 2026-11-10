@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿De quién es la competencia? — Reparto competencial en España</title>
+  <meta name="description" content="Descubre qué administración (Estado, comunidad autónoma, diputación o ayuntamiento) es responsable de cada materia en España, con la ley y el artículo que lo establecen.">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>¿De quién es la competencia?</h1>
+    <p class="subtitle">Quién hace qué en España — Estado, comunidades autónomas, diputaciones y ayuntamientos — con la ley y el artículo que lo dicen.</p>
+    <form class="search-box" role="search" onsubmit="return false">
+      <label for="buscador" class="solo-lectores">Busca una materia o un problema</label>
+      <input type="search" id="buscador" placeholder="Busca: becas comedor, baches, listas de espera, basuras, metro…" autocomplete="off">
+      <label for="territorio" class="solo-lectores">Tu comunidad autónoma</label>
+      <select id="territorio">
+        <option value="">Toda España (marco general)</option>
+      </select>
+    </form>
+    <div class="leyenda" aria-hidden="true">
+      <span class="chip chip-estado">Estado</span>
+      <span class="chip chip-ccaa">Comunidad Autónoma</span>
+      <span class="chip chip-provincial">Diputación</span>
+      <span class="chip chip-municipal">Ayuntamiento</span>
+    </div>
+  </header>
+
+  <main>
+    <section id="resultados" aria-live="polite"></section>
+
+    <section id="mapa-seccion">
+      <h2>¿De quién es esta carretera?</h2>
+      <p>Pulsa <strong>«Usar mi ubicación»</strong> si estás en una vía, o haz clic en cualquier punto del mapa. Localizamos la vía más cercana en OpenStreetMap y deducimos su titular por la nomenclatura oficial y el territorio.</p>
+      <div class="mapa-controles">
+        <button id="btn-ubicacion" type="button">Usar mi ubicación</button>
+        <span id="mapa-estado" role="status"></span>
+      </div>
+      <div id="mapa"></div>
+      <div id="mapa-resultado" aria-live="polite"></div>
+    </section>
+
+    <nav id="todas-las-materias" aria-label="Todas las materias">
+      <h2>Todas las materias</h2>
+      <!-- MATERIAS:INICIO -->
+      <ul>
+        <li><a href="materia/educacion.html">Educación</a></li>
+        <li><a href="materia/universidades.html">Universidades</a></li>
+        <li><a href="materia/sanidad.html">Sanidad</a></li>
+        <li><a href="materia/carreteras.html">Carreteras</a></li>
+        <li><a href="materia/vivienda.html">Vivienda y urbanismo</a></li>
+        <li><a href="materia/servicios-sociales.html">Servicios sociales y lucha contra la pobreza</a></li>
+        <li><a href="materia/pensiones.html">Pensiones y Seguridad Social</a></li>
+        <li><a href="materia/transporte-publico.html">Transporte público</a></li>
+        <li><a href="materia/seguridad.html">Seguridad ciudadana y tráfico</a></li>
+        <li><a href="materia/proteccion-civil.html">Protección civil, bomberos y emergencias</a></li>
+        <li><a href="materia/justicia.html">Justicia y prisiones</a></li>
+        <li><a href="materia/fiscalidad.html">Impuestos y financiación</a></li>
+        <li><a href="materia/empleo.html">Empleo y relaciones laborales</a></li>
+        <li><a href="materia/extranjeria.html">Inmigración y extranjería</a></li>
+        <li><a href="materia/energia.html">Energía</a></li>
+        <li><a href="materia/medio-ambiente.html">Medio ambiente</a></li>
+        <li><a href="materia/residuos-limpieza.html">Residuos y limpieza viaria</a></li>
+        <li><a href="materia/aguas.html">Aguas</a></li>
+        <li><a href="materia/cultura-deporte.html">Cultura y deporte</a></li>
+      </ul>
+      <!-- MATERIAS:FIN -->
+    </nav>
+  </main>
+
+  <footer>
+    <p>Contenido divulgativo sobre el marco general: la fuente vinculante es siempre el <a href="https://www.boe.es" target="_blank" rel="noopener">BOE</a> y los boletines autonómicos. <span id="verificacion"></span></p>
+    <p>La titularidad de las vías es una estimación a partir de <a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap</a>.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="core.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="app.js"></script>
+</body>
+</html>

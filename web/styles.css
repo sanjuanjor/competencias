@@ -1,0 +1,213 @@
+:root {
+  color-scheme: light dark;
+  --estado: #1d4ed8;
+  --estado-bg: #eff6ff;
+  --ccaa: #15803d;
+  --ccaa-bg: #f0fdf4;
+  --provincial: #b45309;
+  --provincial-bg: #fffbeb;
+  --municipal: #6d28d9;
+  --municipal-bg: #f5f3ff;
+  --desconocido: #6b7280;
+  --desconocido-bg: #f3f4f6;
+  --excepcion: #be123c;
+  --excepcion-bg: #fff1f2;
+  --texto: #1f2937;
+  --texto-suave: #5b6472;
+  --borde: #e5e7eb;
+  --fondo: #f9fafb;
+  --superficie: #ffffff;
+  --enlace: #1d4ed8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --estado: #60a5fa;
+    --estado-bg: #172554;
+    --ccaa: #4ade80;
+    --ccaa-bg: #052e16;
+    --provincial: #fbbf24;
+    --provincial-bg: #3b2506;
+    --municipal: #c4b5fd;
+    --municipal-bg: #2e1065;
+    --desconocido: #9ca3af;
+    --desconocido-bg: #1f2937;
+    --excepcion: #fda4af;
+    --excepcion-bg: #4c0519;
+    --texto: #e5e7eb;
+    --texto-suave: #a3acb9;
+    --borde: #374151;
+    --fondo: #0b1220;
+    --superficie: #111827;
+    --enlace: #93c5fd;
+  }
+  .chip { color: #0b1220; }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--texto);
+  background: var(--fondo);
+  line-height: 1.55;
+}
+
+a { color: var(--enlace); }
+
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+header {
+  background: linear-gradient(160deg, #0f172a, #1e3a8a);
+  color: #fff;
+  padding: 2.5rem 1rem 2rem;
+  text-align: center;
+}
+header.compacto { padding: 1.5rem 1rem 1.6rem; }
+header h1 { margin: 0 0 .4rem; font-size: clamp(1.5rem, 4vw, 2rem); }
+header a { color: #bfdbfe; }
+.migas { margin: 0 0 .6rem; font-size: .88rem; }
+.subtitle { margin: 0 auto 1.4rem; max-width: 640px; color: #cbd5e1; font-size: .98rem; }
+header.compacto .subtitle { margin-bottom: 0; }
+
+.search-box {
+  display: flex;
+  gap: .6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.search-box input,
+.search-box select {
+  padding: .8rem 1rem;
+  font-size: 1rem;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: #fff;
+  color: #1f2937;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .25);
+}
+.search-box input { flex: 1 1 320px; min-width: 0; }
+.search-box select { flex: 0 1 260px; }
+.search-box input:focus-visible,
+.search-box select:focus-visible { outline: none; border-color: #93c5fd; }
+
+.leyenda { margin-top: 1rem; display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; }
+
+.chip {
+  font-size: .78rem;
+  font-weight: 600;
+  padding: .2rem .65rem;
+  border-radius: 999px;
+  color: #fff;
+}
+.chip-estado { background: var(--estado); }
+.chip-ccaa { background: var(--ccaa); }
+.chip-provincial { background: var(--provincial); }
+.chip-municipal { background: var(--municipal); }
+.chip-desconocido { background: var(--desconocido); }
+.leyenda .chip-estado { background: #1d4ed8; color: #fff; }
+.leyenda .chip-ccaa { background: #15803d; color: #fff; }
+.leyenda .chip-provincial { background: #b45309; color: #fff; }
+.leyenda .chip-municipal { background: #6d28d9; color: #fff; }
+
+main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+.aviso-sin-resultados { text-align: center; color: var(--texto-suave); padding: 2rem 0; }
+
+.materia {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  margin: 1rem 0;
+  padding: 1.1rem 1.3rem;
+}
+.materia h2 { margin: 1.4rem 0 .4rem; font-size: 1.1rem; }
+.materia h3 { margin: 0 0 .2rem; font-size: 1.2rem; }
+.materia h3 a { color: inherit; text-decoration: none; }
+.materia h3 a:hover, .materia h3 a:focus-visible { color: var(--enlace); text-decoration: underline; }
+.materia .desc { margin: 0 0 .6rem; color: var(--texto-suave); font-size: .92rem; }
+
+.nivel, .excepcion {
+  border-left: 4px solid;
+  border-radius: 6px;
+  padding: .6rem .9rem;
+  margin: .5rem 0;
+}
+.nivel-estado { border-color: var(--estado); background: var(--estado-bg); }
+.nivel-ccaa { border-color: var(--ccaa); background: var(--ccaa-bg); }
+.nivel-provincial { border-color: var(--provincial); background: var(--provincial-bg); }
+.nivel-municipal { border-color: var(--municipal); background: var(--municipal-bg); }
+.nivel-desconocido { border-color: var(--desconocido); background: var(--desconocido-bg); }
+.excepcion { border-color: var(--excepcion); background: var(--excepcion-bg); }
+.excepcion h3, .excepcion h4 { margin: 0 0 .15rem; font-size: .98rem; color: var(--excepcion); }
+.excepcion .donde { font-size: .82rem; font-weight: 600; color: var(--texto-suave); }
+
+.nivel .cabecera { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: .2rem; }
+.nivel .rol { font-size: .82rem; color: var(--texto-suave); font-style: italic; }
+.nivel p, .excepcion p { margin: .25rem 0; font-size: .93rem; }
+
+.aviso-territorio { font-size: .85rem; color: var(--texto-suave); margin: 0 0 .5rem; }
+
+.refs { margin: .35rem 0 0; padding: 0; list-style: none; font-size: .82rem; }
+.refs li { margin: .15rem 0; }
+.refs a { color: inherit; font-weight: 600; }
+.ref-articulo { color: var(--texto-suave); }
+
+#mapa-seccion, #todas-las-materias {
+  margin-top: 2.5rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 1.2rem 1.3rem;
+}
+#mapa-seccion h2, #todas-las-materias h2 { margin-top: 0; font-size: 1.25rem; }
+#mapa { height: 380px; border-radius: 10px; margin-top: .8rem; }
+
+.mapa-controles { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+#btn-ubicacion {
+  background: #1d4ed8;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: .6rem 1rem;
+  font-size: .95rem;
+  cursor: pointer;
+}
+#btn-ubicacion:hover { background: #1e40af; }
+#btn-ubicacion:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+#mapa-estado { font-size: .85rem; color: var(--texto-suave); }
+
+#mapa-resultado { margin-top: .8rem; }
+#mapa-resultado .nivel { margin: 0; }
+#mapa-resultado .via-nombre { font-weight: 700; font-size: 1.05rem; }
+
+#todas-las-materias ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: .35rem 1rem;
+  font-size: .95rem;
+}
+
+.volver { margin-top: 1.5rem; }
+
+footer {
+  text-align: center;
+  color: var(--texto-suave);
+  font-size: .8rem;
+  padding: 1rem 1rem 2.5rem;
+}
+footer p { margin: .3rem 0; }
+footer a { color: inherit; }

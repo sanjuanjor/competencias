@@ -1,0 +1,505 @@
+{
+  "_": "Casos compartidos por tests/test_core.py (Python) y tests/core.test.mjs (Node). Las dos implementaciones de la lógica deben dar el mismo resultado.",
+  "busqueda": [
+    {
+      "q": "becas comedor",
+      "primero": "educacion"
+    },
+    {
+      "q": "¿quién recoge las basuras?",
+      "primero": "residuos-limpieza"
+    },
+    {
+      "q": "listas de espera hospital",
+      "primero": "sanidad"
+    },
+    {
+      "q": "quien paga a los profesores",
+      "primero": "educacion"
+    },
+    {
+      "q": "de quien depende el metro",
+      "primero": "transporte-publico"
+    },
+    {
+      "q": "baches en mi calle",
+      "primero": "carreteras"
+    },
+    {
+      "q": "guarderías",
+      "primero": "educacion"
+    },
+    {
+      "q": "impuestos",
+      "primero": "fiscalidad"
+    },
+    {
+      "q": "IBI",
+      "primero": "fiscalidad"
+    },
+    {
+      "q": "juzgados",
+      "primero": "justicia"
+    },
+    {
+      "q": "pensiones",
+      "primero": "pensiones"
+    },
+    {
+      "q": "universidad",
+      "primero": "universidades"
+    },
+    {
+      "q": "bomberos",
+      "primero": "proteccion-civil"
+    },
+    {
+      "q": "ambulancia",
+      "primero": "sanidad"
+    },
+    {
+      "q": "factura de la luz",
+      "primero": "energia"
+    },
+    {
+      "q": "inmigración",
+      "primero": "extranjeria"
+    },
+    {
+      "q": "HOSPITALES",
+      "primero": "sanidad"
+    },
+    {
+      "q": "alquiler",
+      "primero": "vivienda"
+    },
+    {
+      "q": "ingreso mínimo vital",
+      "primero": "servicios-sociales"
+    },
+    {
+      "q": "rodalies",
+      "primero": "transporte-publico"
+    },
+    {
+      "q": "aguacate",
+      "vacio": true
+    },
+    {
+      "q": "varios",
+      "vacio": true
+    },
+    {
+      "q": "obvia",
+      "vacio": true
+    },
+    {
+      "q": "historia",
+      "vacio": true
+    },
+    {
+      "q": "xyzzy sin sentido",
+      "vacio": true
+    },
+    {
+      "q": "",
+      "vacio": true
+    }
+  ],
+  "noticias": [
+    {
+      "texto": "El caos de los trenes de Cercanías obliga a cortar la línea C-4",
+      "materia": "transporte-publico"
+    },
+    {
+      "texto": "Los sindicatos denuncian falta de personal en los comedores escolares",
+      "materia": "educacion"
+    },
+    {
+      "texto": "Las listas de espera quirúrgicas baten récord en los hospitales públicos",
+      "materia": "sanidad"
+    },
+    {
+      "texto": "La tasa de basuras subirá un 18% el próximo año",
+      "materia": "residuos-limpieza"
+    },
+    {
+      "texto": "Sube el precio del alquiler un 11% en un año",
+      "materia": "vivienda"
+    },
+    {
+      "texto": "Los embalses de la cuenca del Segura, al 20% por la sequía",
+      "materia": "aguas"
+    },
+    {
+      "texto": "El Gobierno aprueba la subida de las pensiones para 2027",
+      "materia": "pensiones"
+    },
+    {
+      "texto": "Los bomberos dan por controlado el incendio forestal",
+      "materia": "proteccion-civil"
+    },
+    {
+      "texto": "Nuevo récord de llegadas de migrantes en cayucos",
+      "materia": "extranjeria"
+    },
+    {
+      "texto": "El Real Madrid gana la Champions en París",
+      "materia": null
+    },
+    {
+      "texto": "Rosalía anuncia gira mundial | Cultura | EL PAÍS",
+      "materia": null
+    },
+    {
+      "texto": "El Barça cierra el contrato de su nuevo delantero",
+      "materia": null
+    },
+    {
+      "texto": "Muere un ciclista en la etapa reina de la Vuelta, en plena calle",
+      "materia": null
+    },
+    {
+      "texto": "Netflix y Canal+ pelean por los derechos del fútbol",
+      "materia": null
+    },
+    {
+      "texto": "La selección nacional gana el Mundial",
+      "materia": null
+    },
+    {
+      "texto": "El juez cita a declarar al cantante",
+      "materia": null
+    },
+    {
+      "texto": "Multa millonaria de Bruselas a una tecnológica",
+      "materia": null
+    }
+  ],
+  "vias": [
+    {
+      "ref": "N-340",
+      "ccaa": "ES-VC",
+      "admin": "estado"
+    },
+    {
+      "ref": "AP-7",
+      "ccaa": "ES-CT",
+      "admin": "estado"
+    },
+    {
+      "ref": "A-6",
+      "ccaa": "ES-MD",
+      "admin": "estado"
+    },
+    {
+      "ref": "A-6",
+      "ccaa": null,
+      "admin": "estado"
+    },
+    {
+      "ref": "N-VI",
+      "ccaa": "ES-CL",
+      "admin": "estado"
+    },
+    {
+      "ref": "N-I",
+      "ccaa": "ES-PV",
+      "admin": "provincial",
+      "titular": "Diputación Foral de Gipuzkoa",
+      "provincia": "Gipuzkoa"
+    },
+    {
+      "ref": "N-121",
+      "ccaa": "ES-NC",
+      "admin": "ccaa",
+      "titular": "Gobierno de Navarra"
+    },
+    {
+      "ref": "A-15",
+      "ccaa": "ES-NC",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "AP-68",
+      "ccaa": "ES-PV",
+      "admin": "estado"
+    },
+    {
+      "ref": "A-92",
+      "ccaa": "ES-AN",
+      "admin": "ccaa",
+      "titular": "Junta de Andalucía"
+    },
+    {
+      "ref": "A-381",
+      "ccaa": "ES-AN",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "A-4",
+      "ccaa": "ES-AN",
+      "admin": "estado"
+    },
+    {
+      "ref": "CA-33",
+      "ccaa": "ES-AN",
+      "admin": "estado"
+    },
+    {
+      "ref": "MA-20",
+      "ccaa": "ES-AN",
+      "admin": "estado"
+    },
+    {
+      "ref": "A-23",
+      "ccaa": "ES-AR",
+      "admin": "estado"
+    },
+    {
+      "ref": "A-131",
+      "ccaa": "ES-AR",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "CA-131",
+      "ccaa": "ES-CB",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "Ma-13",
+      "ccaa": "ES-IB",
+      "admin": "provincial",
+      "titular": "Consell Insular"
+    },
+    {
+      "ref": "GC-1",
+      "ccaa": "ES-CN",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "M-30",
+      "ccaa": "ES-MD",
+      "admin": "municipal",
+      "titular": "Ayuntamiento de Madrid"
+    },
+    {
+      "ref": "M-40",
+      "ccaa": "ES-MD",
+      "admin": "estado"
+    },
+    {
+      "ref": "M-607",
+      "ccaa": "ES-MD",
+      "admin": "ccaa",
+      "titular": "Comunidad de Madrid"
+    },
+    {
+      "ref": "C-32",
+      "ccaa": "ES-CT",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "B-20",
+      "ccaa": "ES-CT",
+      "admin": "estado"
+    },
+    {
+      "ref": "BV-1221",
+      "ccaa": "ES-CT",
+      "admin": "provincial"
+    },
+    {
+      "ref": "AC-552",
+      "ccaa": "ES-GA",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "AG-55",
+      "ccaa": "ES-GA",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "CL-601",
+      "ccaa": "ES-CL",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "CM-42",
+      "ccaa": "ES-CM",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "TO-1234",
+      "ccaa": "ES-CM",
+      "admin": "provincial",
+      "titular": "Diputación Provincial de Toledo",
+      "provincia": "Toledo"
+    },
+    {
+      "ref": "TO-20",
+      "ccaa": "ES-CM",
+      "admin": "estado"
+    },
+    {
+      "ref": "AS-17",
+      "ccaa": "ES-AS",
+      "admin": "ccaa"
+    },
+    {
+      "ref": "A-6;M-40",
+      "ccaa": "ES-MD",
+      "admin": "estado"
+    },
+    {
+      "ref": "",
+      "tipo": "residential",
+      "ccaa": "ES-MD",
+      "admin": "municipal",
+      "titular": "Ayuntamiento de Madrid",
+      "municipio": "Madrid"
+    },
+    {
+      "ref": "",
+      "tipo": "motorway",
+      "ccaa": "ES-MD",
+      "admin": null
+    },
+    {
+      "ref": "A-92",
+      "ccaa": null,
+      "operador": "Junta de Andalucía",
+      "admin": "ccaa",
+      "titular": "Junta de Andalucía"
+    },
+    {
+      "ref": "BI-631",
+      "ccaa": "ES-PV",
+      "operador": "Bizkaiko Foru Aldundia",
+      "admin": "provincial"
+    }
+  ],
+  "geocodificacion": [
+    {
+      "_": "Autovía con código: vía, distancia y territorio",
+      "lat": 40.0,
+      "lon": -3.0,
+      "respuesta": {
+        "category": "highway",
+        "type": "motorway",
+        "namedetails": {
+          "ref": "A-6",
+          "name": "Autovía del Noroeste"
+        },
+        "extratags": {},
+        "geojson": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              -3.001,
+              40.0002
+            ],
+            [
+              -2.999,
+              40.0002
+            ]
+          ]
+        },
+        "address": {
+          "city": "Madrid",
+          "state": "Comunidad de Madrid",
+          "ISO3166-2-lvl4": "ES-MD"
+        }
+      },
+      "via": {
+        "ref": "A-6",
+        "nombre": "Autovía del Noroeste",
+        "tipo": "motorway",
+        "operador": "",
+        "distancia": 22
+      },
+      "territorio": {
+        "ccaa": "ES-MD",
+        "provincia": null,
+        "municipio": "Madrid"
+      }
+    },
+    {
+      "_": "Plaza peatonal (polígono) con nombre en castellano y provincia",
+      "lat": 42.8169,
+      "lon": -1.6432,
+      "respuesta": {
+        "category": "highway",
+        "type": "pedestrian",
+        "namedetails": {
+          "name": "Gazteluko plaza",
+          "name:es": "Plaza del Castillo"
+        },
+        "geojson": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -1.644,
+                42.8165
+              ],
+              [
+                -1.6425,
+                42.8165
+              ],
+              [
+                -1.6425,
+                42.8173
+              ],
+              [
+                -1.644,
+                42.8173
+              ],
+              [
+                -1.644,
+                42.8165
+              ]
+            ]
+          ]
+        },
+        "address": {
+          "town": "Tolosa",
+          "province": "Guipúzcoa",
+          "ISO3166-2-lvl4": "ES-PV"
+        }
+      },
+      "via": {
+        "ref": "",
+        "nombre": "Plaza del Castillo",
+        "tipo": "pedestrian",
+        "operador": "",
+        "distancia": 44
+      },
+      "territorio": {
+        "ccaa": "ES-PV",
+        "provincia": "Guipúzcoa",
+        "municipio": "Tolosa"
+      }
+    },
+    {
+      "_": "Lo más cercano no es una vía",
+      "lat": 40.0,
+      "lon": -3.0,
+      "respuesta": {
+        "category": "boundary",
+        "type": "administrative",
+        "address": {
+          "village": "Villar",
+          "province": "Cuenca",
+          "ISO3166-2-lvl4": "ES-CM"
+        }
+      },
+      "via": null,
+      "territorio": {
+        "ccaa": "ES-CM",
+        "provincia": "Cuenca",
+        "municipio": "Villar"
+      }
+    }
+  ]
+}
