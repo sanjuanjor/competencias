@@ -3,7 +3,7 @@ const SITIO = {
  "repositorio": "https://github.com/sanjuanjor/competencias",
  "goatcounter": "",
  "verificacion": {
-  "fecha": "2026-11-10",
+  "fecha": "2026-11-16",
   "normas": 37
  },
  "padron": "2025-01-01",

@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-11-10",
+  "fecha": "2026-11-16",
   "normas": {
     "BOE-A-1978-31229": {
       "id_boe": "BOE-A-1978-31229",
@@ -185,7 +185,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-06",
+      "ultima_actualizacion": "2026-11-11",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-13087"
     },
     "BOE-A-2006-21990": {
@@ -196,7 +196,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-10-06",
+      "ultima_actualizacion": "2026-11-11",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-21990"
     },
     "BOE-A-2006-7899": {
@@ -207,7 +207,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-04",
+      "ultima_actualizacion": "2026-11-16",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-7899"
     },
     "BOE-A-2007-20555": {
@@ -218,7 +218,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-04",
+      "ultima_actualizacion": "2026-11-16",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2007-20555"
     },
     "BOE-A-2007-4233": {
@@ -251,7 +251,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-03",
+      "ultima_actualizacion": "2026-11-11",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2013-13645"
     },
     "BOE-A-2015-10439": {
@@ -273,7 +273,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-04",
+      "ultima_actualizacion": "2026-11-11",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-10440"
     },
     "BOE-A-2015-11430": {
@@ -284,7 +284,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-10",
+      "ultima_actualizacion": "2026-11-16",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430"
     },
     "BOE-A-2015-11724": {
@@ -295,7 +295,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-05",
+      "ultima_actualizacion": "2026-11-11",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724"
     },
     "BOE-A-2015-3442": {
@@ -328,7 +328,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-04",
+      "ultima_actualizacion": "2026-11-12",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-15138"
     },
     "BOE-A-2021-21007": {
@@ -405,7 +405,7 @@
       "derogada": false,
       "anulada": false,
       "vigencia_agotada": false,
-      "ultima_actualizacion": "2026-11-10",
+      "ultima_actualizacion": "2026-11-16",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2023-7500"
     }
   },
