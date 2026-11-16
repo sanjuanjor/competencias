@@ -1,5 +1,6 @@
 /* Página «Tu municipio»: busca un municipio en el padrón del INE y muestra los
-   servicios que su ayuntamiento está obligado a prestar según su población. */
+   servicios que su ayuntamiento está obligado a prestar según su población,
+   quién gobierna cada administración y dónde reclamar. */
 (function () {
   "use strict";
 
@@ -72,21 +73,17 @@
     const { tramos, apoyos } = Core.serviciosObligatorios(SERVICIOS, municipio.poblacion);
     const siguiente = SERVICIOS.tramos.find(t => t.desde >= municipio.poblacion && t.desde > 0);
 
-    const intermedia = provincia.intermedia
-      || `${territorio.gobierno} (tu comunidad tiene una sola provincia y ejerce las funciones de diputación)`;
+    const isla = Core.islaDe(CARGOS, municipio.codigo);
+    const intermedia = isla
+      ? Core.conArticulo(CARGOS.intermedias.islas[isla].institucion)
+      : provincia.intermedia
+        ? Core.conArticulo(provincia.intermedia)
+        : `${Core.conArticulo(territorio.gobierno)} (tu comunidad tiene una sola provincia y ejerce las funciones de diputación)`;
     const htmlApoyos = !esCiudadAutonoma && apoyos.length ? `
       <h2>Apoyo a tu ayuntamiento</h2>
       <section class="nivel nivel-provincial">
         ${apoyos.map(a => `<p>${e(a.texto.replace("{intermedia}", intermedia))} <span class="ref-articulo">(art. ${e(a.apartado)})</span></p>`).join("")}
       </section>` : "";
-
-    const administraciones = esCiudadAutonoma ? `
-        <li><span class="chip chip-municipal">Ciudad autónoma</span> ${e(territorio.gobierno)}: reúne las funciones de ayuntamiento y parte de las de una comunidad. <a href="${e(territorio.web)}" target="_blank" rel="noopener">${e(territorio.web.replace("https://", ""))}</a></li>
-        <li><span class="chip chip-estado">Estado</span> Gestiona directamente sanidad y educación, que aquí no están transferidas.</li>` : `
-        <li><span class="chip chip-municipal">Ayuntamiento</span> Ayuntamiento de ${e(municipio.nombre)}</li>
-        ${provincia.intermedia ? `<li><span class="chip chip-provincial">Diputación</span> ${e(provincia.intermedia)}</li>` : ""}
-        <li><span class="chip chip-ccaa">Comunidad</span> ${e(territorio.gobierno)} · <a href="${e(territorio.web)}" target="_blank" rel="noopener">${e(territorio.web.replace("https://", ""))}</a></li>
-        <li><span class="chip chip-estado">Estado</span> Gobierno de España · <a href="${e(COMPETENCIAS.organismos.estado.web)}" target="_blank" rel="noopener">administracion.gob.es</a> · teléfono ${e(COMPETENCIAS.organismos.estado.telefono)}</li>`;
 
     const falta = siguiente
       ? `<p class="aviso-territorio">Le faltan ${numero(siguiente.desde - municipio.poblacion + 1)} habitantes para superar los ${numero(siguiente.desde)} y sumar más servicios obligatorios.</p>`
@@ -103,17 +100,43 @@
         <p class="aviso-territorio">Es el mínimo legal: tu ayuntamiento puede prestar más servicios, y otras leyes (o tu comunidad) pueden añadir obligaciones.</p>
         ${htmlApoyos}
 
-        <h2>Tus administraciones</h2>
-        <ul class="administraciones">${administraciones}</ul>
-        <p class="aviso-territorio">Hemos guardado ${e(territorio.nombre)} como tu comunidad: el <a href="./">buscador</a> te dará las respuestas que aplican allí.</p>
+        <h2>Quién gobierna</h2>
+        <div id="gobierno-municipio"><p class="aviso-territorio">Cargando…</p></div>
+        <p class="aviso-territorio">Hemos guardado ${e(municipio.nombre)} como tu municipio: el <a href="./">buscador</a> te dirá quién responde de cada cosa y dónde reclamar.</p>
       </article>`;
     acciones.hidden = false;
+    pintarGobierno(municipio, esCiudadAutonoma);
 
     try { localStorage.setItem("territorio", provincia.ccaa); } catch (_) { /* almacenamiento no disponible */ }
+    Gobierno.guardarMunicipio(municipio.codigo, municipio.nombre);
     const url = new URL(location.href);
     url.search = "?m=" + municipio.codigo;
     history.replaceState(null, "", url);
-    document.title = `${municipio.nombre}: qué está obligado a darte tu ayuntamiento`;
+    document.title = `${municipio.nombre}: servicios, quién gobierna y dónde reclamar`;
+  }
+
+  /* Quién gobierna, dónde reclamar y ministerios: las alcaldías llegan por provincia. */
+  async function pintarGobierno(municipio, esCiudadAutonoma) {
+    const destino = document.getElementById("gobierno-municipio");
+    const gobierno = await Gobierno.gobiernoDe(municipio.codigo);
+    if (!destino.isConnected) return;  // se eligió otro municipio mientras tanto
+    if (esCiudadAutonoma) {
+      // En Ceuta y Melilla la presidencia de la ciudad es también la alcaldía.
+      gobierno.municipal = { web: gobierno.municipal.web };
+    }
+    destino.innerHTML = `
+      ${Gobierno.htmlGobierno(gobierno, municipio.nombre)}
+      ${esCiudadAutonoma ? `<p class="aviso-territorio">Ceuta y Melilla son ciudades autónomas: su presidencia reúne las funciones de alcaldía y parte de las de una comunidad. Sanidad y educación las gestiona directamente el Estado.</p>` : ""}
+      ${CARGOS.aviso ? `<p class="aviso-territorio">${e(CARGOS.aviso)}</p>` : ""}
+
+      <h2>Si algo no funciona, dónde reclamar</h2>
+      ${Gobierno.htmlReclamarMunicipio(gobierno)}
+
+      <details class="ministerios-desplegable" id="ministerios">
+        <summary>Quién está al frente de cada ministerio</summary>
+        ${Gobierno.htmlMinisterios()}
+      </details>
+      <p class="fuente-cargos">${Gobierno.htmlFuentes()}</p>`;
   }
 
   function elegir(municipio) {

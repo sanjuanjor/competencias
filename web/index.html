@@ -24,6 +24,7 @@
         <option value="">Toda España (marco general)</option>
       </select>
     </form>
+    <p id="tu-municipio" class="tu-municipio"></p>
     <div class="leyenda" aria-hidden="true">
       <span class="chip chip-estado">Estado</span>
       <span class="chip chip-ccaa">Comunidad Autónoma</span>
@@ -53,8 +54,8 @@
       </section>
 
       <section class="bloque">
-        <h2>¿Qué está obligado a darte tu ayuntamiento?</h2>
-        <p>Depende de cuánta gente viva en tu municipio. Escribe su nombre y lo vemos con el padrón del INE.</p>
+        <h2>¿Dónde vives?</h2>
+        <p>Escribe tu municipio: qué está obligado a darte tu ayuntamiento según el padrón del INE, quién gobierna cada administración y dónde reclamar si algo no funciona.</p>
         <form class="formulario-linea" action="municipio.html" method="get">
           <label for="municipio-portada" class="solo-lectores">Nombre de tu municipio</label>
           <input type="search" id="municipio-portada" name="q" placeholder="Tu municipio" autocomplete="off" required>
@@ -115,8 +116,10 @@
 
   <script src="config.js"></script>
   <script src="data.js"></script>
+  <script src="cargos.js"></script>
   <script src="core.js"></script>
   <script src="comun.js"></script>
+  <script src="gobierno.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="app.js"></script>
 </body>

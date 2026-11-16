@@ -7,10 +7,13 @@ Fuentes (lo único que se edita a mano):
     data/servicios_municipales.json servicios obligatorios según la población
     data/provincias.json            provincias, comunidad y diputación
     data/municipios.json            padrón del INE (lo escribe actualizar_municipios.py)
+    data/cargos.json                presidencias, ministerios, diputaciones, defensores y vías de reclamación
+    data/ayuntamientos.json         alcaldías y webs municipales (lo escribe actualizar_ayuntamientos.py)
     shared/core.js                  lógica compartida
 
 Generado (no editar):
-    web/config.js, web/data.js, web/municipios.js, web/core.js
+    web/config.js, web/data.js, web/municipios.js, web/cargos.js, web/core.js
+    web/ayuntamientos/<provincia>.json
     web/materia/<id>.html, web/pregunta/<id>.html, web/administracion/<admin>.html
     web/preguntas.html, índice de materias de web/index.html
     extension/data.js, extension/core.js
@@ -187,13 +190,86 @@ def validar_municipal(datos: dict, servicios: dict, provincias: dict, municipios
     return errores
 
 
+def _validar_persona(donde: str, persona: dict | None, campos: tuple, errores: list[str]) -> None:
+    if not persona:
+        errores.append(f"{donde}: falta")
+        return
+    for campo in campos:
+        if not persona.get(campo):
+            errores.append(f"{donde}: falta «{campo}»")
+    for campo in ("web", "quejas", "queja", "fuente", "url"):
+        valor = persona.get(campo)
+        if valor and not str(valor).startswith("https://"):
+            errores.append(f"{donde}: «{campo}» debe ser una dirección https ({valor})")
+
+
+def validar_cargos(datos: dict, cargos: dict, provincias: dict, municipios: dict, ayuntamientos: dict) -> list[str]:
+    """Errores de cargos.json (personas, defensores, islas) y de ayuntamientos.json."""
+    errores: list[str] = []
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", cargos.get("fecha_revision", "")):
+        errores.append("cargos.json: falta fecha_revision (AAAA-MM-DD)")
+    materias = {m["id"] for m in datos["materias"]}
+    persona = ("cargo", "nombre", "partido", "fuente")
+    _validar_persona("cargos.json/estado/presidencia", cargos["estado"].get("presidencia"), persona, errores)
+    asignadas: dict[str, str] = {}
+    for i, ministerio in enumerate(cargos["estado"].get("ministerios", [])):
+        donde = f"cargos.json/estado/ministerios/{ministerio.get('nombre', i)}"
+        _validar_persona(donde, ministerio, ("nombre", "titular", "partido", "web", "fuente"), errores)
+        for materia in ministerio.get("materias", []):
+            if materia not in materias:
+                errores.append(f"{donde}: materia desconocida «{materia}»")
+            elif materia in asignadas:
+                errores.append(f"{donde}: «{materia}» ya está asignada a {asignadas[materia]}")
+            asignadas[materia] = ministerio.get("nombre", "")
+    ids = {m.get("id") for m in cargos["estado"].get("ministerios", [])}
+    for caso in _leer("casos.json")["casos"]:
+        if caso.get("ministerio") and caso["ministerio"] not in ids | {"ninguno"}:
+            errores.append(f"casos.json/{caso['id']}: ministerio desconocido «{caso['ministerio']}»")
+    for materia in datos["materias"]:
+        if any(n["administracion"] == "estado" for n in materia["niveles"]) and materia["id"] not in asignadas:
+            errores.append(f"cargos.json: ningún ministerio responde de «{materia['id']}»")
+    for t in datos["territorios"]:
+        c = cargos["ccaa"].get(t["iso"])
+        _validar_persona(f"cargos.json/ccaa/{t['iso']}", c, persona + ("quejas",), errores)
+        if c and c.get("defensor"):
+            _validar_persona(f"cargos.json/ccaa/{t['iso']}/defensor", c["defensor"], ("nombre", "web"), errores)
+    insulares = set(cargos["islas"]["defecto"])
+    for codigo, provincia in provincias.items():
+        if provincia.get("intermedia") and codigo not in insulares:
+            _validar_persona(f"cargos.json/intermedias/provincias/{codigo}", cargos["intermedias"]["provincias"].get(codigo),
+                             persona + ("institucion",), errores)
+    islas = set(cargos["islas"]["defecto"].values()) | set(cargos["islas"]["municipios"])
+    for isla in sorted(islas):
+        _validar_persona(f"cargos.json/intermedias/islas/{isla}", cargos["intermedias"]["islas"].get(isla),
+                         persona + ("institucion",), errores)
+    codigos = {m[0] for m in municipios.get("municipios", [])}
+    for isla, lista in cargos["islas"]["municipios"].items():
+        for codigo in lista:
+            if codigos and codigo not in codigos:
+                errores.append(f"cargos.json/islas/{isla}: municipio desconocido {codigo}")
+            elif codigo[:2] not in insulares:
+                errores.append(f"cargos.json/islas/{isla}: {codigo} no es de una provincia insular")
+    r = cargos.get("reclamar", {})
+    for clave in ("registro", "defensor_pueblo", "age"):
+        _validar_persona(f"cargos.json/reclamar/{clave}", r.get(clave), ("nombre",), errores)
+    _validar_refs("cargos.json/reclamar", r.get("refs"), errores)
+    for codigo in ayuntamientos.get("ayuntamientos", {}):
+        if codigos and codigo not in codigos:
+            errores.append(f"ayuntamientos.json: municipio desconocido {codigo}")
+            break
+    return errores
+
+
 def validar_todo() -> list[str]:
     datos = _leer("competencias.json")
+    provincias = _leer("provincias.json")
+    municipios = _leer("municipios.json", {"municipios": []})
     return (
         validar(datos, _leer("carreteras.json"))
         + validar_casos(datos, _leer("casos.json")["casos"])
-        + validar_municipal(datos, _leer("servicios_municipales.json"), _leer("provincias.json"),
-                            _leer("municipios.json", {"municipios": []}))
+        + validar_municipal(datos, _leer("servicios_municipales.json"), provincias, municipios)
+        + validar_cargos(datos, _leer("cargos.json"), provincias["provincias"], municipios,
+                         _leer("ayuntamientos.json", {"ayuntamientos": {}}))
     )
 
 
@@ -488,6 +564,8 @@ def construir() -> dict[Path, str]:
     provincias = _leer("provincias.json")["provincias"]
     municipios = _leer("municipios.json", {"municipios": []})
     verificacion = _leer("verificacion_boe.json", {})
+    cargos = _leer("cargos.json")
+    ayuntamientos = _leer("ayuntamientos.json", {"ayuntamientos": {}})
     site_url = os.environ.get("SITE_URL", "").rstrip("/")
 
     sitio = {
@@ -497,6 +575,8 @@ def construir() -> dict[Path, str]:
         "padron": municipios.get("fecha_referencia"),
         "materias": len(datos["materias"]),
         "preguntas": len(casos),
+        "cargos": cargos["fecha_revision"],
+        "alcaldias": ayuntamientos.get("ultimo_cambio"),
     }
     cabecera = f"// {AVISO}\n"
     j = lambda valor: json.dumps(valor, ensure_ascii=False, indent=1)  # noqa: E731
@@ -513,13 +593,22 @@ def construir() -> dict[Path, str]:
         ),
         WEB / "municipios.js": (
             f"{cabecera}const SERVICIOS = {j(servicios)};\n"
-            f"const PROVINCIAS = {j(provincias)};\n"
             f"const MUNICIPIOS = {compacto(municipios)};\n"
+        ),
+        WEB / "cargos.js": (
+            f"{cabecera}const CARGOS = {j(cargos)};\n"
+            f"const PROVINCIAS = {j(provincias)};\n"
+            f"const ALCALDIAS = {j({k: v for k, v in ayuntamientos.items() if k != 'ayuntamientos'})};\n"
         ),
         WEB / "core.js": core,
         ROOT / "extension" / "data.js": f"{cabecera}const COMPETENCIAS = {j(para_extension)};\n",
         ROOT / "extension" / "core.js": core,
     }
+    por_provincia: dict[str, dict] = {}
+    for codigo, ayuntamiento in ayuntamientos["ayuntamientos"].items():
+        por_provincia.setdefault(codigo[:2], {})[codigo] = ayuntamiento
+    for prov, contenido in sorted(por_provincia.items()):
+        archivos[WEB / "ayuntamientos" / f"{prov}.json"] = compacto(contenido) + "\n"
     for materia in datos["materias"]:
         archivos[WEB / "materia" / f"{materia['id']}.html"] = _pagina_materia(materia, datos, casos, sitio, site_url)
     for caso in casos:
@@ -547,7 +636,7 @@ def construir() -> dict[Path, str]:
     return archivos
 
 
-CARPETAS_GENERADAS = ("materia", "pregunta", "administracion")
+CARPETAS_GENERADAS = ("materia", "pregunta", "administracion", "ayuntamientos")
 
 
 def _sobrantes(archivos: dict[Path, str]) -> list[Path]:
@@ -556,7 +645,7 @@ def _sobrantes(archivos: dict[Path, str]) -> list[Path]:
         ruta
         for carpeta in CARPETAS_GENERADAS
         if (WEB / carpeta).exists()
-        for ruta in sorted((WEB / carpeta).glob("*.html"))
+        for ruta in sorted((WEB / carpeta).glob("*.*"))
         if ruta not in archivos
     ]
 

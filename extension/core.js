@@ -367,7 +367,113 @@
     };
   }
 
+  /* ---------- quién gobierna y dónde reclamar ---------- */
+
+  /* «la Diputación de Soria», «el Cabildo de La Palma», «el Govern de les Illes Balears». */
+  function conArticulo(nombre) {
+    return (/^(Cabildo|Consell|Gobierno|Govern|Principado|Ayuntamiento)\b/.test(nombre) ? "el " : "la ") + nombre;
+  }
+
+  /* Añade a cada presidencia autonómica el nombre y la web de su gobierno,
+     que ya están en competencias.json (territorios). */
+  function completarCargos(cargos, territorios) {
+    const ccaa = {};
+    for (const [iso, c] of Object.entries(cargos.ccaa)) {
+      const t = territorios.find(x => x.iso === iso) || {};
+      ccaa[iso] = Object.assign({ institucion: t.gobierno, web: t.web }, c);
+    }
+    return Object.assign({}, cargos, { ccaa });
+  }
+
+  /* Isla de un municipio balear o canario (su Consell o Cabildo hace de diputación). */
+  function islaDe(cargos, codigo) {
+    const prov = String(codigo).slice(0, 2);
+    const defecto = cargos.islas.defecto[prov];
+    if (!defecto) return null;
+    for (const [isla, codigos] of Object.entries(cargos.islas.municipios)) {
+      if (codigos.includes(codigo)) return isla;
+    }
+    return defecto;
+  }
+
+  /* Quién gobierna cada nivel para un municipio. `ayuntamiento` es su entrada de
+     data/ayuntamientos.json (o null). Devuelve {municipal, provincial, ccaa, estado};
+     provincial es null donde no hay diputación (comunidades uniprovinciales, Ceuta y Melilla). */
+  function gobiernoDelMunicipio(cargos, provincias, codigo, ayuntamiento) {
+    const provincia = provincias[String(codigo).slice(0, 2)];
+    const isla = islaDe(cargos, codigo);
+    const intermedia = isla ? cargos.intermedias.islas[isla] : cargos.intermedias.provincias[String(codigo).slice(0, 2)];
+    const a = ayuntamiento || {};
+    return {
+      municipal: Object.assign({ web: a.web || null }, a.alcaldia || {}),
+      provincial: intermedia || null,
+      ccaa: cargos.ccaa[provincia.ccaa] || null,
+      estado: cargos.estado.presidencia,
+      isoCcaa: provincia.ccaa,
+      isla,
+    };
+  }
+
+  /* Ministerio que responde en el Estado: el que fije la pregunta (`ministerioId`,
+     "ninguno" si no depende de ninguno) o, si no, el de su materia. */
+  function ministerioDe(cargos, materiaId, ministerioId) {
+    const lista = cargos.estado.ministerios;
+    if (ministerioId) return lista.find(m => m.id === ministerioId) || null;
+    return lista.find(m => (m.materias || []).includes(materiaId)) || null;
+  }
+
+  /* Persona que responde, en un nivel, de una materia. `gobierno` es el
+     resultado de gobiernoDelMunicipio, o {ccaa} si solo se conoce la comunidad. */
+  function responsable(cargos, admin, materiaId, gobierno, ministerioId) {
+    const g = gobierno || {};
+    if (admin === "estado") {
+      if (ministerioId === "ninguno") return null;
+      const ministerio = ministerioDe(cargos, materiaId, ministerioId);
+      return ministerio
+        ? { cargo: ministerio.nombre, nombre: ministerio.titular, partido: ministerio.partido, web: ministerio.web }
+        : Object.assign({}, cargos.estado.presidencia);
+    }
+    if (admin === "ccaa") return g.ccaa || null;
+    if (admin === "provincial") return g.provincial || null;
+    if (admin === "municipal") return g.municipal && g.municipal.nombre ? Object.assign({ cargo: "Alcaldía" }, g.municipal) : null;
+    return null;
+  }
+
+  /* Pasos para reclamar cuando algo no funciona: [{paso, nombre, url, detalle}].
+     1) a quien lo gestiona; 2) el registro electrónico, que llega a cualquier
+     administración; 3) el defensor autonómico (no supervisa al Estado) y el del Pueblo. */
+  function dondeReclamar(cargos, admin, materiaId, gobierno, ministerioId) {
+    const g = gobierno || {};
+    const r = cargos.reclamar;
+    const pasos = [];
+    let primero = null;
+    if (admin === "estado") {
+      const ministerio = ministerioDe(cargos, materiaId, ministerioId);
+      primero = ministerio && ministerio.quejas
+        ? { nombre: ministerio.nombre, url: ministerio.quejas }
+        : { nombre: r.age.nombre, url: r.age.url };
+    } else if (admin === "ccaa" && g.ccaa) {
+      primero = { nombre: g.ccaa.institucion, url: g.ccaa.quejas || g.ccaa.web || null };
+    } else if (admin === "provincial" && g.provincial) {
+      primero = { nombre: g.provincial.institucion, url: g.provincial.quejas || g.provincial.web || null };
+    } else if (admin === "municipal" && g.municipal) {
+      primero = { nombre: "Tu ayuntamiento", url: g.municipal.web || null };
+    }
+    if (primero) pasos.push(Object.assign({ paso: "gestor", detalle: "Reclama primero a quien presta el servicio: queja, sugerencia o solicitud en su sede electrónica." }, primero));
+    pasos.push({ paso: "registro", nombre: r.registro.nombre, url: r.registro.url, detalle: r.registro.detalle });
+    const defensorAutonomico = admin !== "estado" && g.ccaa && g.ccaa.defensor;
+    if (defensorAutonomico) {
+      pasos.push({ paso: "defensor", nombre: g.ccaa.defensor.nombre, url: g.ccaa.defensor.queja || g.ccaa.defensor.web, detalle: "Si no te responden o no estás de acuerdo." });
+    }
+    pasos.push({
+      paso: "defensor", nombre: r.defensor_pueblo.nombre, url: r.defensor_pueblo.queja,
+      detalle: defensorAutonomico ? "También puedes acudir al Defensor del Pueblo, que supervisa a todas las administraciones." : "Si no te responden o no estás de acuerdo: supervisa a todas las administraciones.",
+    });
+    return pasos;
+  }
+
   return {
+    conArticulo, completarCargos, islaDe, gobiernoDelMunicipio, ministerioDe, responsable, dondeReclamar,
     ETIQUETAS, normalizar, tokens, escaparHtml, urlRef,
     puntuar, buscar, detectarNoticia, excepcionesDe,
     buscarCasos, resolverCaso, refsDeCaso, titularCorto, serviciosObligatorios,

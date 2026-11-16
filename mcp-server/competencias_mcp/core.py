@@ -360,3 +360,107 @@ def interpretar_geocodificacion(respuesta: dict | None, lat: float, lon: float) 
         },
         "territorio": territorio,
     }
+
+
+# ---------- quién gobierna y dónde reclamar ----------
+
+def con_articulo(nombre: str) -> str:
+    """«la Diputación de Soria», «el Cabildo de La Palma», «el Govern de les Illes Balears»."""
+    return ("el " if re.match(r"(Cabildo|Consell|Gobierno|Govern|Principado|Ayuntamiento)\b", nombre) else "la ") + nombre
+
+
+def completar_cargos(cargos: dict, territorios: list[dict]) -> dict:
+    """Añade a cada presidencia autonómica el nombre y la web de su gobierno."""
+    ccaa = {}
+    for iso, c in cargos["ccaa"].items():
+        t = next((x for x in territorios if x["iso"] == iso), {})
+        ccaa[iso] = {"institucion": t.get("gobierno"), "web": t.get("web"), **c}
+    return {**cargos, "ccaa": ccaa}
+
+
+def isla_de(cargos: dict, codigo: str) -> str | None:
+    """Isla de un municipio balear o canario (su Consell o Cabildo hace de diputación)."""
+    defecto = cargos["islas"]["defecto"].get(str(codigo)[:2])
+    if not defecto:
+        return None
+    for isla, codigos in cargos["islas"]["municipios"].items():
+        if codigo in codigos:
+            return isla
+    return defecto
+
+
+def gobierno_del_municipio(cargos: dict, provincias: dict, codigo: str, ayuntamiento: dict | None) -> dict:
+    """Quién gobierna cada nivel para un municipio; provincial es None donde no hay diputación."""
+    provincia = provincias[str(codigo)[:2]]
+    isla = isla_de(cargos, codigo)
+    intermedia = cargos["intermedias"]["islas"].get(isla) if isla else cargos["intermedias"]["provincias"].get(str(codigo)[:2])
+    a = ayuntamiento or {}
+    return {
+        "municipal": {"web": a.get("web"), **(a.get("alcaldia") or {})},
+        "provincial": intermedia,
+        "ccaa": cargos["ccaa"].get(provincia["ccaa"]),
+        "estado": cargos["estado"]["presidencia"],
+        "isoCcaa": provincia["ccaa"],
+        "isla": isla,
+    }
+
+
+def ministerio_de(cargos: dict, materia_id: str | None, ministerio_id: str | None = None) -> dict | None:
+    """El ministerio que fije la pregunta ("ninguno" si no depende de ninguno) o el de su materia."""
+    lista = cargos["estado"]["ministerios"]
+    if ministerio_id:
+        return next((m for m in lista if m["id"] == ministerio_id), None)
+    return next((m for m in lista if materia_id in (m.get("materias") or [])), None)
+
+
+def responsable(cargos: dict, admin: str, materia_id: str | None, gobierno: dict | None,
+                ministerio_id: str | None = None) -> dict | None:
+    """Persona que responde, en un nivel, de una materia."""
+    g = gobierno or {}
+    if admin == "estado":
+        if ministerio_id == "ninguno":
+            return None
+        ministerio = ministerio_de(cargos, materia_id, ministerio_id)
+        if ministerio:
+            return {"cargo": ministerio["nombre"], "nombre": ministerio["titular"], "partido": ministerio["partido"], "web": ministerio["web"]}
+        return dict(cargos["estado"]["presidencia"])
+    if admin == "ccaa":
+        return g.get("ccaa")
+    if admin == "provincial":
+        return g.get("provincial")
+    if admin == "municipal":
+        municipal = g.get("municipal")
+        return {"cargo": "Alcaldía", **municipal} if municipal and municipal.get("nombre") else None
+    return None
+
+
+def donde_reclamar(cargos: dict, admin: str, materia_id: str | None, gobierno: dict | None,
+                   ministerio_id: str | None = None) -> list[dict]:
+    """Pasos para reclamar: a quien lo gestiona, por el registro electrónico y ante los defensores."""
+    g = gobierno or {}
+    r = cargos["reclamar"]
+    pasos: list[dict] = []
+    primero = None
+    if admin == "estado":
+        ministerio = ministerio_de(cargos, materia_id, ministerio_id)
+        primero = ({"nombre": ministerio["nombre"], "url": ministerio["quejas"]} if ministerio and ministerio.get("quejas")
+                   else {"nombre": r["age"]["nombre"], "url": r["age"]["url"]})
+    elif admin == "ccaa" and g.get("ccaa"):
+        primero = {"nombre": g["ccaa"].get("institucion"), "url": g["ccaa"].get("quejas") or g["ccaa"].get("web")}
+    elif admin == "provincial" and g.get("provincial"):
+        primero = {"nombre": g["provincial"]["institucion"], "url": g["provincial"].get("quejas") or g["provincial"].get("web")}
+    elif admin == "municipal" and g.get("municipal") is not None:
+        primero = {"nombre": "Tu ayuntamiento", "url": g["municipal"].get("web")}
+    if primero:
+        pasos.append({"paso": "gestor", "detalle": "Reclama primero a quien presta el servicio: queja, sugerencia o solicitud en su sede electrónica.", **primero})
+    pasos.append({"paso": "registro", "nombre": r["registro"]["nombre"], "url": r["registro"]["url"], "detalle": r["registro"]["detalle"]})
+    defensor = admin != "estado" and g.get("ccaa") and g["ccaa"].get("defensor")
+    if defensor:
+        pasos.append({"paso": "defensor", "nombre": defensor["nombre"], "url": defensor.get("queja") or defensor["web"],
+                      "detalle": "Si no te responden o no estás de acuerdo."})
+    pasos.append({
+        "paso": "defensor", "nombre": r["defensor_pueblo"]["nombre"], "url": r["defensor_pueblo"]["queja"],
+        "detalle": ("También puedes acudir al Defensor del Pueblo, que supervisa a todas las administraciones." if defensor
+                    else "Si no te responden o no estás de acuerdo: supervisa a todas las administraciones."),
+    })
+    return pasos

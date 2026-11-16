@@ -2654,6 +2654,7 @@ const CASOS = [
   "id": "becas-generales",
   "pregunta": "¿Quién da las becas generales para estudiar (becas MEC)?",
   "materia": "universidades",
+  "ministerio": "educacion",
   "admin": "estado",
   "respuesta": "El Ministerio de Educación convoca y paga el sistema general de becas para bachillerato, FP y universidad.",
   "claves": [
@@ -3097,6 +3098,7 @@ const CASOS = [
   "id": "ingreso-minimo-vital",
   "pregunta": "¿Quién concede el Ingreso Mínimo Vital?",
   "materia": "servicios-sociales",
+  "ministerio": "inclusion",
   "admin": "estado",
   "respuesta": "La Seguridad Social, a través del INSS.",
   "claves": [
@@ -3659,6 +3661,7 @@ const CASOS = [
   "id": "ume",
   "pregunta": "¿Quién decide que intervenga la UME?",
   "materia": "proteccion-civil",
+  "ministerio": "defensa",
   "admin": "estado",
   "respuesta": "El Estado, normalmente a petición de la comunidad autónoma que dirige la emergencia.",
   "claves": [
@@ -3714,6 +3717,7 @@ const CASOS = [
   "id": "carceles",
   "pregunta": "¿Quién gestiona las cárceles?",
   "materia": "justicia",
+  "ministerio": "interior",
   "admin": "estado",
   "respuesta": "El Estado, a través de Instituciones Penitenciarias (Ministerio del Interior).",
   "claves": [
@@ -4122,6 +4126,7 @@ const CASOS = [
   "id": "permiso-residencia",
   "pregunta": "¿Quién concede los permisos de residencia y trabajo?",
   "materia": "extranjeria",
+  "ministerio": "inclusion",
   "admin": "estado",
   "respuesta": "El Estado, a través de las Oficinas de Extranjería de cada provincia.",
   "claves": [
@@ -4138,6 +4143,7 @@ const CASOS = [
   "id": "nacionalidad",
   "pregunta": "¿Quién concede la nacionalidad española?",
   "materia": "extranjeria",
+  "ministerio": "justicia",
   "admin": "estado",
   "respuesta": "El Ministerio de Justicia.",
   "claves": [
@@ -4822,6 +4828,7 @@ const CASOS = [
   "id": "rtve",
   "pregunta": "¿De quién depende RTVE?",
   "materia": "telecomunicaciones",
+  "ministerio": "ninguno",
   "admin": "estado",
   "respuesta": "Del Estado: es una corporación pública estatal controlada por las Cortes Generales.",
   "claves": [
@@ -4835,6 +4842,7 @@ const CASOS = [
   "id": "correos",
   "pregunta": "¿De quién depende Correos?",
   "materia": "telecomunicaciones",
+  "ministerio": "hacienda",
   "admin": "estado",
   "respuesta": "Del Estado: es una empresa pública estatal.",
   "claves": [
@@ -4905,6 +4913,7 @@ const CASOS = [
   "id": "chiringuitos",
   "pregunta": "¿Quién autoriza un chiringuito en la playa?",
   "materia": "puertos-aeropuertos-costas",
+  "ministerio": "transicion-ecologica",
   "admin": "estado",
   "respuesta": "El Estado, a través del servicio de Costas, porque la playa es dominio público marítimo-terrestre.",
   "claves": [
@@ -4931,6 +4940,7 @@ const CASOS = [
   "id": "ejercito",
   "pregunta": "¿De quién depende el Ejército?",
   "materia": "defensa-exteriores",
+  "ministerio": "defensa",
   "admin": "estado",
   "respuesta": "Del Estado en exclusiva: Gobierno de España y Ministerio de Defensa.",
   "claves": [

@@ -7,7 +7,7 @@ ayuntamiento—, con la ley y el artículo del BOE que lo establecen y dónde ac
 
 Son tres aplicaciones sobre los mismos datos:
 
-- **Web**: preguntas concretas con respuesta directa, vista por administración, ficha de tu municipio con el padrón del INE y mapa «¿de quién es esta carretera?».
+- **Web**: preguntas concretas con respuesta directa, vista por administración, ficha de tu municipio (servicios obligatorios según el padrón del INE, quién gobierna cada administración y dónde reclamar) y mapa «¿de quién es esta carretera?».
 - **Servidor MCP**: las mismas consultas para agentes de IA (Claude, Cursor…).
 - **Extensión de navegador**: al leer una noticia, muestra a quién corresponde la competencia.
 
@@ -25,12 +25,15 @@ data/
   servicios_municipales.json ← servicios obligatorios según la población (FUENTE)
   provincias.json            ← provincias, comunidad y diputación (FUENTE)
   municipios.json            ← padrón del INE (lo escribe actualizar_municipios.py)
+  cargos.json                ← presidencias, ministerios, diputaciones, defensores y vías de reclamación (FUENTE)
+  ayuntamientos.json         ← alcaldías y webs municipales (lo escribe actualizar_ayuntamientos.py)
   verificacion_boe.json      ← informe de la última comprobación contra el BOE
 shared/core.js               ← lógica compartida por la web y la extensión (FUENTE)
 scripts/
   build_data.py              ← valida los datos y genera web/ y extension/
   verificar_boe.py           ← comprueba normas y artículos contra la API del BOE
   actualizar_municipios.py   ← descarga el padrón municipal del INE
+  actualizar_ayuntamientos.py← descarga alcaldías (registro oficial) y webs municipales (Wikidata)
   generar_imagen.py          ← imagen para compartir en redes (necesita Pillow)
 web/                         ← web estática (páginas a mano + generadas)
 extension/                   ← extensión Manifest V3
@@ -39,7 +42,7 @@ tests/                       ← casos compartidos y tests de Python y Node
 ```
 
 En `web/` se escriben a mano `index.html`, `municipio.html`, `como-lo-sabemos.html`,
-`app.js`, `municipio.js`, `comun.js` y `styles.css`. El resto lo genera
+`app.js`, `municipio.js`, `gobierno.js`, `comun.js` y `styles.css`. El resto lo genera
 `build_data.py`: una página por materia, por pregunta y por administración, el
 índice de preguntas y los ficheros de datos.
 
@@ -102,6 +105,29 @@ python scripts/actualizar_municipios.py
 python scripts/build_data.py
 ```
 
+### Quién gobierna
+
+Las **alcaldías** se actualizan solas cada mes (`ayuntamientos.yml`) desde el
+registro de cargos electos del Ministerio de Política Territorial; a mano:
+
+```bash
+pip install openpyxl
+```
+
+```bash
+python scripts/actualizar_ayuntamientos.py
+```
+
+El resto está en `data/cargos.json` y **se revisa a mano**: Presidencia del Gobierno
+y ministerios (con las materias de las que responde cada uno), presidencias
+autonómicas, diputaciones, cabildos y consells, defensores autonómicos y enlaces de
+quejas. Cada entrada lleva su `fuente`; al cambiar algo, actualiza `fecha_revision`.
+Cuando una pregunta de `casos.json` depende de un ministerio distinto al de su
+materia, lo indica con `"ministerio"` (o `"ninguno"`, como RTVE).
+
+Hay que revisarlo tras cada elección o relevo. **Pendiente inmediato:** las
+elecciones generales del 29 de noviembre de 2026 cambiarán el Gobierno.
+
 ## Tests
 
 ```bash
@@ -143,7 +169,8 @@ Sin IA propia: expone datos y lógica determinista.
 | `buscar_competencia(termino, comunidad?)` | Respuestas directas a preguntas concretas y fichas de materia, con referencias, dónde acudir y lo que cambia por territorio |
 | `obtener_materia(id_materia, comunidad?)` | Ficha completa de una materia |
 | `listar_materias()` | Catálogo de materias |
-| `consultar_municipio(nombre)` | Población (INE) y servicios que el ayuntamiento está obligado a prestar |
+| `consultar_municipio(nombre)` | Población (INE), servicios que el ayuntamiento está obligado a prestar, quién gobierna cada administración y dónde reclamar |
+| `donde_reclamar(problema, municipio?, comunidad?)` | Quién responde de un problema (persona y partido) y los pasos para reclamar |
 | `identificar_titular_carretera(latitud, longitud)` | Vía más cercana, titular concreto y grado de confianza |
 | `verificar_vigencia_boe(id_norma)` | Consulta en vivo al BOE: vigente, derogada o anulada |
 
@@ -182,10 +209,12 @@ Para probarla sin instalarla, con el servidor local en marcha:
 - `ci.yml`: valida los datos, comprueba que lo generado está al día y ejecuta los tests.
 - `pages.yml`: publica `web/` en GitHub Pages en cada push a `main`.
 - `boe.yml`: cada lunes verifica las referencias contra el BOE y abre una incidencia si una norma deja de estar vigente.
+- `ayuntamientos.yml`: el día 1 de cada mes actualiza las alcaldías y las webs municipales.
 
 ## Fuentes y límites
 
 - **Normas**: texto consolidado del BOE. **Población**: INE, cifras oficiales del padrón municipal. **Vías**: OpenStreetMap.
+- **Alcaldías**: registro de cargos electos locales del Ministerio de Política Territorial (si su portal está en mantenimiento, la copia literal que guarda OpenSanctions); familias políticas de las listas: SpainFacts; webs municipales: Wikidata. El partido de una alcaldía es la lista por la que salió elegida.
 - Describe el marco general más las excepciones territoriales recogidas en los datos; no sustituye a los Estatutos de Autonomía ni al asesoramiento jurídico.
 - Varias excepciones (competencias traspasadas por real decreto, como el tráfico en el País Vasco o la gestión del litoral) no tienen cita propia porque esos decretos no figuran en la legislación consolidada: se apoyan en la referencia general de su materia.
 - La titularidad de las vías es una estimación por nomenclatura y territorio, con grado de confianza.

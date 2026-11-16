@@ -641,5 +641,188 @@
       "tramos": 4,
       "apoyos": 0
     }
+  ],
+  "gobierno": [
+    {
+      "codigo": "07024",
+      "isla": "Formentera",
+      "provincial": true,
+      "ccaa": "ES-IB"
+    },
+    {
+      "codigo": "07040",
+      "isla": "Mallorca",
+      "provincial": true,
+      "ccaa": "ES-IB"
+    },
+    {
+      "codigo": "07015",
+      "isla": "Menorca",
+      "provincial": true,
+      "ccaa": "ES-IB"
+    },
+    {
+      "codigo": "35004",
+      "isla": "Lanzarote",
+      "provincial": true,
+      "ccaa": "ES-CN"
+    },
+    {
+      "codigo": "38038",
+      "isla": "Tenerife",
+      "provincial": true,
+      "ccaa": "ES-CN"
+    },
+    {
+      "codigo": "38901",
+      "isla": "El Hierro",
+      "provincial": true,
+      "ccaa": "ES-CN"
+    },
+    {
+      "codigo": "08019",
+      "isla": null,
+      "provincial": true,
+      "ccaa": "ES-CT"
+    },
+    {
+      "codigo": "20069",
+      "isla": null,
+      "provincial": true,
+      "ccaa": "ES-PV"
+    },
+    {
+      "codigo": "28079",
+      "isla": null,
+      "provincial": false,
+      "ccaa": "ES-MD"
+    },
+    {
+      "codigo": "51001",
+      "isla": null,
+      "provincial": false,
+      "ccaa": "ES-CE"
+    }
+  ],
+  "reclamar": [
+    {
+      "admin": "municipal",
+      "codigo": "08019",
+      "pasos": [
+        "gestor",
+        "registro",
+        "defensor",
+        "defensor"
+      ]
+    },
+    {
+      "admin": "municipal",
+      "codigo": "28079",
+      "pasos": [
+        "gestor",
+        "registro",
+        "defensor"
+      ]
+    },
+    {
+      "admin": "ccaa",
+      "codigo": "41091",
+      "pasos": [
+        "gestor",
+        "registro",
+        "defensor",
+        "defensor"
+      ]
+    },
+    {
+      "admin": "provincial",
+      "codigo": "28079",
+      "pasos": [
+        "registro",
+        "defensor"
+      ]
+    },
+    {
+      "admin": "estado",
+      "codigo": "08019",
+      "materia": "pensiones",
+      "pasos": [
+        "gestor",
+        "registro",
+        "defensor"
+      ]
+    },
+    {
+      "admin": "estado",
+      "codigo": null,
+      "materia": "pensiones",
+      "pasos": [
+        "gestor",
+        "registro",
+        "defensor"
+      ]
+    }
+  ],
+  "responsables": [
+    {
+      "admin": "estado",
+      "materia": "sanidad",
+      "ministerio": null,
+      "cargo": "Ministerio de Sanidad"
+    },
+    {
+      "admin": "estado",
+      "materia": "servicios-sociales",
+      "ministerio": "inclusion",
+      "cargo": "Ministerio de Inclusión, Seguridad Social y Migraciones"
+    },
+    {
+      "admin": "estado",
+      "materia": "telecomunicaciones",
+      "ministerio": "ninguno",
+      "cargo": null
+    },
+    {
+      "admin": "provincial",
+      "materia": "carreteras",
+      "codigo": "28079",
+      "cargo": null
+    },
+    {
+      "admin": "municipal",
+      "materia": "energia",
+      "codigo": null,
+      "cargo": null
+    }
+  ],
+  "articulos": [
+    [
+      "Diputación Provincial de Soria",
+      "la Diputación Provincial de Soria"
+    ],
+    [
+      "Cabildo Insular de La Palma",
+      "el Cabildo Insular de La Palma"
+    ],
+    [
+      "Consell de Mallorca",
+      "el Consell de Mallorca"
+    ],
+    [
+      "Govern de les Illes Balears",
+      "el Govern de les Illes Balears"
+    ],
+    [
+      "Gobierno de La Rioja",
+      "el Gobierno de La Rioja"
+    ],
+    [
+      "Comunidad de Madrid",
+      "la Comunidad de Madrid"
+    ],
+    [
+      "Xunta de Galicia",
+      "la Xunta de Galicia"
+    ]
   ]
 }

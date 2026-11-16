@@ -135,3 +135,45 @@ class Datos(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+CARGOS = core.completar_cargos(json.loads((ROOT / "data" / "cargos.json").read_text(encoding="utf-8")), DATOS["territorios"])
+PROVINCIAS = json.loads((ROOT / "data" / "provincias.json").read_text(encoding="utf-8"))["provincias"]
+
+
+def _gobierno(codigo):
+    return core.gobierno_del_municipio(CARGOS, PROVINCIAS, codigo, None) if codigo else None
+
+
+class Gobierno(unittest.TestCase):
+    def test_isla_y_diputacion(self):
+        for caso in CASOS["gobierno"]:
+            g = _gobierno(caso["codigo"])
+            self.assertEqual(g["isla"], caso["isla"], caso["codigo"])
+            self.assertEqual(g["provincial"] is not None, caso["provincial"], caso["codigo"])
+            self.assertEqual(g["isoCcaa"], caso["ccaa"], caso["codigo"])
+            self.assertTrue(g["ccaa"]["nombre"] and g["ccaa"]["institucion"], caso["codigo"])
+
+    def test_pasos_para_reclamar(self):
+        for caso in CASOS["reclamar"]:
+            pasos = core.donde_reclamar(CARGOS, caso["admin"], caso.get("materia"), _gobierno(caso["codigo"]))
+            self.assertEqual([p["paso"] for p in pasos], caso["pasos"], caso)
+            self.assertTrue(all(p["nombre"] for p in pasos), caso)
+
+    def test_responsables(self):
+        for caso in CASOS["responsables"]:
+            persona = core.responsable(CARGOS, caso["admin"], caso["materia"], _gobierno(caso.get("codigo")), caso.get("ministerio"))
+            self.assertEqual(persona["cargo"] if persona else None, caso["cargo"], caso)
+
+    def test_todo_municipio_tiene_gobierno_completo(self):
+        municipios = json.loads((ROOT / "data" / "municipios.json").read_text(encoding="utf-8"))["municipios"]
+        ayuntamientos = json.loads((ROOT / "data" / "ayuntamientos.json").read_text(encoding="utf-8"))["ayuntamientos"]
+        for codigo, nombre, _ in municipios:
+            g = core.gobierno_del_municipio(CARGOS, PROVINCIAS, codigo, ayuntamientos.get(codigo))
+            self.assertTrue(g["ccaa"], nombre)
+            if PROVINCIAS[codigo[:2]]["intermedia"]:
+                self.assertTrue(g["provincial"], nombre)
+
+    def test_articulo(self):
+        for nombre, esperado in CASOS["articulos"]:
+            self.assertEqual(core.con_articulo(nombre), esperado)

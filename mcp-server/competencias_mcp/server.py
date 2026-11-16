@@ -33,8 +33,10 @@ PREGUNTAS = _cargar("casos.json")["casos"]
 SERVICIOS = _cargar("servicios_municipales.json")
 PROVINCIAS = _cargar("provincias.json")["provincias"]
 PADRON = _cargar("municipios.json", {"municipios": []})
+AYUNTAMIENTOS = _cargar("ayuntamientos.json", {"ayuntamientos": {}})
 MATERIAS = DATOS["materias"]
 TERRITORIOS = DATOS["territorios"]
+CARGOS = core.completar_cargos(_cargar("cargos.json"), TERRITORIOS)
 
 mcp = FastMCP(
     "competencias-espana",
@@ -45,7 +47,8 @@ mcp = FastMCP(
         "problema: devuelve primero `respuestas_directas` a preguntas concretas y después las "
         "fichas de materia. Pasa `comunidad` si conoces el territorio, porque la respuesta "
         "cambia (régimen foral, Rodalies, policías autonómicas...). Usa consultar_municipio "
-        "para saber qué servicios está obligado a prestar un ayuntamiento según su población, "
+        "para saber qué servicios está obligado a prestar un ayuntamiento según su población y quién "
+        "gobierna cada administración, donde_reclamar para saber a quién y cómo quejarse de un problema, "
         "identificar_titular_carretera con coordenadas GPS y verificar_vigencia_boe para "
         "comprobar que una norma sigue vigente. El contenido está pendiente de revisión por un jurista. "
         "Los datos describen el marco general y son divulgativos: cita siempre la referencia legal."
@@ -203,23 +206,8 @@ def obtener_materia(id_materia: str, comunidad: str | None = None) -> dict:
     return _ficha(materia, _iso_de(comunidad))
 
 
-@mcp.tool()
-def consultar_municipio(nombre: str) -> dict:
-    """Servicios que un ayuntamiento está obligado a prestar según su población.
-
-    Usa las cifras oficiales del padrón (INE) y el artículo 26 de la Ley de
-    Bases del Régimen Local, cuyos mínimos dependen de si el municipio supera
-    los 5.000, 20.000 o 50.000 habitantes.
-
-    Args:
-        nombre: Nombre del municipio ("Tolosa", "A Coruña") o su código INE de
-            cinco cifras ("28079").
-
-    Returns:
-        Población, provincia, comunidad, servicios obligatorios por tramo, el
-        apoyo que debe dar la diputación a los municipios pequeños y sus
-        administraciones. Si el nombre es ambiguo, devuelve los candidatos.
-    """
+def _buscar_municipio(nombre: str) -> dict:
+    """{"municipio": [codigo, nombre, poblacion]} o un dict con `resultado` si no hay uno solo."""
     buscado = core.normalizar(nombre)
     municipios = PADRON["municipios"]
     exactos = [m for m in municipios if m[0] == nombre.strip() or core.normalizar(m[1]) == buscado]
@@ -238,11 +226,75 @@ def consultar_municipio(nombre: str) -> dict:
             ],
         }
 
-    codigo, nombre_oficial, poblacion = exactos[0]
+    return {"municipio": exactos[0]}
+
+
+def _persona(p: dict | None) -> dict | None:
+    if not p:
+        return None
+    claves = ("cargo", "institucion", "nombre", "partido", "lista", "familia", "desde", "web", "en_funciones")
+    return {k: p[k] for k in claves if p.get(k) not in (None, "")}
+
+
+def _gobierno(codigo: str) -> dict:
+    return core.gobierno_del_municipio(CARGOS, PROVINCIAS, codigo, AYUNTAMIENTOS["ayuntamientos"].get(codigo))
+
+
+def _quien_gobierna(gobierno: dict, nombre_municipio: str) -> dict:
+    municipal = gobierno["municipal"]
+    alcaldia = {"cargo": f"Alcaldía de {nombre_municipio}", **_persona(municipal)} if municipal.get("nombre") else None
+    if alcaldia and alcaldia.get("lista"):
+        alcaldia["nota"] = "«lista» es la candidatura por la que salió elegida la persona; puede no coincidir con su afiliación actual."
+    return {
+        "ayuntamiento": alcaldia,
+        "diputacion_cabildo_o_consell": _persona(gobierno["provincial"]),
+        "comunidad_autonoma": _persona(gobierno["ccaa"]),
+        "estado": _persona(gobierno["estado"]),
+        "fuentes": {
+            "alcaldias": AYUNTAMIENTOS.get("fuentes", {}).get("alcaldias", {}).get("nombre"),
+            "alcaldias_ultimo_cambio": AYUNTAMIENTOS.get("ultimo_cambio"),
+            "resto_revisado": CARGOS["fecha_revision"],
+        },
+        **({"aviso": CARGOS["aviso"]} if CARGOS.get("aviso") else {}),
+    }
+
+
+def _base_legal_reclamar() -> list[dict]:
+    return _con_url(CARGOS["reclamar"]["refs"])
+
+
+@mcp.tool()
+def consultar_municipio(nombre: str) -> dict:
+    """Servicios que un ayuntamiento está obligado a prestar según su población.
+
+    Usa las cifras oficiales del padrón (INE) y el artículo 26 de la Ley de
+    Bases del Régimen Local, cuyos mínimos dependen de si el municipio supera
+    los 5.000, 20.000 o 50.000 habitantes.
+
+    Args:
+        nombre: Nombre del municipio ("Tolosa", "A Coruña") o su código INE de
+            cinco cifras ("28079").
+
+    Returns:
+        Población, provincia, comunidad, servicios obligatorios por tramo, el
+        apoyo que debe dar la diputación a los municipios pequeños, quién
+        gobierna cada administración (persona y partido o lista) y dónde
+        reclamar en cada nivel. Si el nombre es ambiguo, devuelve los candidatos.
+    """
+    encontrado = _buscar_municipio(nombre)
+    if "resultado" in encontrado:
+        return encontrado
+    codigo, nombre_oficial, poblacion = encontrado["municipio"]
     provincia = PROVINCIAS[codigo[:2]]
     territorio = next(t for t in TERRITORIOS if t["iso"] == provincia["ccaa"])
     obligatorios = core.servicios_obligatorios(SERVICIOS, poblacion)
-    intermedia = provincia["intermedia"] or f"{territorio['gobierno']} (comunidad de una sola provincia)"
+    isla = core.isla_de(CARGOS, codigo)
+    if isla:
+        intermedia = core.con_articulo(CARGOS["intermedias"]["islas"][isla]["institucion"])
+    elif provincia["intermedia"]:
+        intermedia = core.con_articulo(provincia["intermedia"])
+    else:
+        intermedia = core.con_articulo(territorio["gobierno"]) + " (comunidad de una sola provincia)"
     es_ciudad_autonoma = provincia["ccaa"] in ("ES-CE", "ES-ML")
     return {
         "resultado": "ok",
@@ -267,12 +319,81 @@ def consultar_municipio(nombre: str) -> dict:
         ],
         "administraciones": {
             "ayuntamiento": f"Ayuntamiento de {nombre_oficial}" if not es_ciudad_autonoma else territorio["gobierno"],
-            "diputacion": provincia["intermedia"],
+            "diputacion": CARGOS["intermedias"]["islas"][isla]["institucion"] if isla else provincia["intermedia"],
             "comunidad_autonoma": territorio["gobierno"],
             "portal_comunidad": territorio["web"],
         },
+        "quien_gobierna": _quien_gobierna(_gobierno(codigo), nombre_oficial),
+        "donde_reclamar": {
+            nivel: core.donde_reclamar(CARGOS, admin, None, _gobierno(codigo))
+            for nivel, admin in (("ayuntamiento", "municipal"), ("diputacion_cabildo_o_consell", "provincial"),
+                                 ("comunidad_autonoma", "ccaa"), ("estado", "estado"))
+            if admin != "provincial" or _gobierno(codigo)["provincial"]
+        },
+        "base_legal_reclamaciones": _base_legal_reclamar(),
         "referencias": _con_url([SERVICIOS["ref"], SERVICIOS["ref_diputacion"]]),
         "aviso": "Es el mínimo legal: el ayuntamiento puede prestar más servicios.",
+    }
+
+
+@mcp.tool()
+def donde_reclamar(problema: str, municipio: str | None = None, comunidad: str | None = None) -> dict:
+    """A quién reclamar cuando algo no funciona y quién responde políticamente.
+
+    Identifica qué administración se encarga del problema y devuelve la persona
+    al frente (alcaldía, presidencia de la diputación o de la comunidad, o el
+    ministerio), su partido o lista, y los pasos para reclamar: a quien presta
+    el servicio, por el Registro Electrónico General y ante el defensor
+    autonómico o el Defensor del Pueblo.
+
+    Args:
+        problema: Lo que no funciona, en lenguaje llano: "farola fundida",
+            "lista de espera del médico", "no me llega la pensión".
+        municipio: Opcional pero recomendable. Nombre o código INE de donde vive
+            la persona; permite nombrar a su alcaldía y su diputación.
+        comunidad: Opcional si se da el municipio. Comunidad autónoma por nombre o ISO.
+    """
+    gobierno = None
+    nombre_municipio = None
+    if municipio:
+        encontrado = _buscar_municipio(municipio)
+        if "resultado" in encontrado:
+            return encontrado
+        codigo, nombre_municipio, _ = encontrado["municipio"]
+        gobierno = _gobierno(codigo)
+        iso = gobierno["isoCcaa"]
+    else:
+        iso = _iso_de(comunidad)
+        if iso:
+            gobierno = {"ccaa": CARGOS["ccaa"].get(iso), "estado": CARGOS["estado"]["presidencia"], "isoCcaa": iso}
+    casos = core.buscar_casos(PREGUNTAS, problema)
+    if not casos:
+        materias = core.buscar(MATERIAS, problema)
+        if not materias:
+            return {"resultado": "sin_coincidencias", "sugerencia": "Describe el problema con otras palabras o usa buscar_competencia."}
+        return {
+            "resultado": "varias_administraciones",
+            "detalle": "No hay una respuesta única: en esta materia intervienen varias administraciones. Concreta el problema.",
+            "materia": _ficha(materias[0][1], iso),
+        }
+    caso = casos[0][1]
+    resuelto = core.resolver_caso(caso, iso)
+    admin, materia_id = resuelto["admin"], caso["materia"]
+    responsable = _persona(core.responsable(CARGOS, admin, materia_id, gobierno, caso.get("ministerio")))
+    if responsable is None and admin in ("municipal", "provincial"):
+        responsable = "Indica el municipio para saber quién gobierna el ayuntamiento o la diputación."
+    return {
+        "resultado": "ok",
+        "pregunta": caso["pregunta"],
+        "respuesta": resuelto["respuesta"],
+        "administracion": core.titular_corto(admin, iso, TERRITORIOS),
+        **({"municipio": nombre_municipio} if nombre_municipio else {}),
+        "quien_responde": responsable,
+        "pasos_para_reclamar": core.donde_reclamar(CARGOS, admin, materia_id, gobierno, caso.get("ministerio")),
+        "base_legal": _base_legal_reclamar(),
+        "referencias_competencia": _con_url(core.refs_de_caso(caso, MATERIAS, iso)),
+        "datos_revisados": CARGOS["fecha_revision"],
+        **({"aviso": CARGOS["aviso"]} if CARGOS.get("aviso") else {}),
     }
 
 

@@ -1,0 +1,33 @@
+name: Alcaldías
+
+# Cada mes descarga del registro oficial quién ocupa cada alcaldía (mociones de
+# censura, relevos…) y la web de cada ayuntamiento, y publica los cambios.
+# Las presidencias, ministerios y defensores (data/cargos.json) se revisan a mano.
+on:
+  schedule:
+    - cron: "0 5 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install openpyxl
+      - name: Descargar alcaldías y webs
+        run: python scripts/actualizar_ayuntamientos.py
+      - name: Regenerar y publicar
+        run: |
+          python scripts/build_data.py
+          python -m unittest discover -s tests
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ayuntamientos.json web
+          git diff --cached --quiet || git commit -m "Actualización mensual de alcaldías"
+          git push

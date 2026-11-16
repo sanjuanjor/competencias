@@ -52,17 +52,17 @@
   "apoyo_diputacion": [
     {
       "hasta": 20000,
-      "texto": "Al tener menos de 20.000 habitantes, la {intermedia} coordina la prestación de la recogida y el tratamiento de residuos, el agua y el alcantarillado, la limpieza viaria, el acceso a los núcleos de población, la pavimentación y el alumbrado público.",
+      "texto": "Al tener menos de 20.000 habitantes, {intermedia} coordina la prestación de la recogida y el tratamiento de residuos, el agua y el alcantarillado, la limpieza viaria, el acceso a los núcleos de población, la pavimentación y el alumbrado público.",
       "apartado": "26.2"
     },
     {
       "hasta": 20000,
-      "texto": "Si el ayuntamiento no presta el servicio de prevención y extinción de incendios, lo asume la {intermedia}.",
+      "texto": "Si el ayuntamiento no presta el servicio de prevención y extinción de incendios, lo asume {intermedia}.",
       "apartado": "36.1.c"
     },
     {
       "hasta": 5000,
-      "texto": "Si el ayuntamiento no presta el tratamiento de residuos, lo asume la {intermedia}.",
+      "texto": "Si el ayuntamiento no presta el tratamiento de residuos, lo asume {intermedia}.",
       "apartado": "36.1.c"
     }
   ]

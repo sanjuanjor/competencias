@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "competencias-espana-mcp"
-version = "0.3.0"
+version = "0.4.0"
 description = "Servidor MCP con el reparto competencial entre administraciones públicas en España, referenciado al BOE."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -24,6 +24,8 @@ packages = ["mcp-server/competencias_mcp"]
 "data/servicios_municipales.json" = "competencias_mcp/datos/servicios_municipales.json"
 "data/provincias.json" = "competencias_mcp/datos/provincias.json"
 "data/municipios.json" = "competencias_mcp/datos/municipios.json"
+"data/cargos.json" = "competencias_mcp/datos/cargos.json"
+"data/ayuntamientos.json" = "competencias_mcp/datos/ayuntamientos.json"
 
 [tool.hatch.build.targets.sdist]
 include = ["mcp-server/competencias_mcp", "data", "README.md"]

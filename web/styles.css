@@ -372,3 +372,23 @@ body { overflow-wrap: anywhere; }
   .search-box input { flex: 1 1 320px; }
   .search-box select { flex: 0 1 260px; }
 }
+
+/* ---------- quién gobierna y dónde reclamar ---------- */
+.tu-municipio { font-size: .9rem; color: var(--texto-suave); margin: .6rem 0 0; }
+.quien { font-size: .92rem; margin: .5rem 0; }
+.partido { color: var(--texto-suave); }
+details.reclamar {
+  margin: .6rem 0; padding: .5rem .75rem;
+  border: 1px solid var(--borde); border-radius: 8px; background: var(--fondo);
+}
+details.reclamar > summary { font-weight: 600; font-size: .92rem; }
+details.reclamar[open] > summary { margin-bottom: .3rem; }
+.pasos-reclamar { margin: .4rem 0; padding-left: 1.3rem; font-size: .92rem; }
+.pasos-reclamar > li { margin: .45rem 0; }
+.pasos-reclamar ul { margin: .3rem 0; padding-left: 1.1rem; }
+.pasos-reclamar ul li { margin: .25rem 0; }
+.ministerios-desplegable { margin: 1rem 0; }
+.ministerios-desplegable > summary { font-weight: 600; }
+.ministerios { padding-left: 1.1rem; font-size: .92rem; }
+.ministerios li { margin: .35rem 0; }
+.fuente-cargos { font-size: .8rem; color: var(--texto-suave); }

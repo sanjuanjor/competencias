@@ -30,6 +30,25 @@
 
   const territorioDe = iso => territorios.find(t => t.iso === iso);
 
+  /* ---------- municipio elegido y quién gobierna ---------- */
+
+  const tuMunicipio = document.getElementById("tu-municipio");
+  let gobiernoActual = Gobierno.gobiernoDeComunidad(territorioActual);
+
+  /* El municipio guardado solo vale si es de la comunidad elegida. */
+  async function actualizarGobierno() {
+    const municipio = Gobierno.leerMunicipio();
+    const valido = municipio && PROVINCIAS[municipio.codigo.slice(0, 2)].ccaa === territorioActual;
+    gobiernoActual = Gobierno.gobiernoDeComunidad(territorioActual);
+    tuMunicipio.innerHTML = valido
+      ? `Vives en <strong>${e(municipio.nombre)}</strong> · <a href="municipio.html?m=${e(municipio.codigo)}">quién gobierna y dónde reclamar</a> · <a href="municipio.html">cambiar</a>`
+      : `<a href="municipio.html">¿Dónde vives?</a> Te decimos quién gobierna tu ayuntamiento y dónde reclamar.`;
+    if (valido) {
+      const gobierno = await Gobierno.gobiernoDe(municipio.codigo);
+      if (gobierno.isoCcaa === territorioActual) gobiernoActual = Object.assign(gobierno, { nombreMunicipio: municipio.nombre });
+    }
+  }
+
   /* ---------- piezas ---------- */
 
   function htmlRefs(refs) {
@@ -63,7 +82,9 @@
       ? `<p class="aviso-territorio">No es igual en toda España: elige tu comunidad arriba.</p>` : "";
     const detalle = detallada ? `
         ${otros}
+        ${Gobierno.htmlResponsable(resuelto.admin, caso.materia, gobiernoActual, caso.ministerio)}
         ${htmlDonde(materia, resuelto.admin)}
+        ${Gobierno.htmlReclamar(resuelto.admin, caso.materia, gobiernoActual, caso.ministerio)}
         ${htmlRefs(Core.refsDeCaso(caso, materias, territorioActual))}
         <p class="acciones">
           <a class="boton-secundario" href="pregunta/${e(caso.id)}.html">Ver la explicación completa</a>
@@ -192,11 +213,13 @@
   selectorTerritorio.addEventListener("change", () => {
     territorioActual = selectorTerritorio.value;
     guardarPreferencia(territorioActual);
+    actualizarGobierno().then(pintar);
     pintar();
   });
 
   entrada.value = new URLSearchParams(location.search).get("q") || "";
   pintar();
+  actualizarGobierno().then(pintar);
 
   if (SITIO.verificacion.fecha) {
     document.getElementById("verificacion").textContent =

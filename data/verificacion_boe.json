@@ -34,6 +34,17 @@
       "ultima_actualizacion": "2026-03-30",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1980-21166"
     },
+    "BOE-A-1981-10325": {
+      "id_boe": "BOE-A-1981-10325",
+      "titulo": "Ley Orgánica 3/1981, de 6 de abril, del Defensor del Pueblo.",
+      "rango": "Ley Orgánica",
+      "vigente": true,
+      "derogada": false,
+      "anulada": false,
+      "vigencia_agotada": false,
+      "ultima_actualizacion": "2025-12-16",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1981-10325"
+    },
     "BOE-A-1982-20824": {
       "id_boe": "BOE-A-1982-20824",
       "titulo": "Ley Orgánica 13/1982, de 10 de agosto, de reintegración y amejoramiento del Régimen Foral de Navarra.",
@@ -177,6 +188,17 @@
       "ultima_actualizacion": "2026-10-07",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2004-4214"
     },
+    "BOE-A-2005-14836": {
+      "id_boe": "BOE-A-2005-14836",
+      "titulo": "Real Decreto 951/2005, de 29 de julio, por el que se establece el marco general para la mejora de la calidad en la Administración General del Estado.",
+      "rango": "Real Decreto",
+      "vigente": true,
+      "derogada": false,
+      "anulada": false,
+      "vigencia_agotada": false,
+      "ultima_actualizacion": "2025-12-18",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2005-14836"
+    },
     "BOE-A-2006-13087": {
       "id_boe": "BOE-A-2006-13087",
       "titulo": "Ley Orgánica 6/2006, de 19 de julio, de reforma del Estatuto de Autonomía de Cataluña.",
@@ -275,6 +297,17 @@
       "vigencia_agotada": false,
       "ultima_actualizacion": "2026-11-11",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-10440"
+    },
+    "BOE-A-2015-10565": {
+      "id_boe": "BOE-A-2015-10565",
+      "titulo": "Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas.",
+      "rango": "Ley",
+      "vigente": true,
+      "derogada": false,
+      "anulada": false,
+      "vigencia_agotada": false,
+      "ultima_actualizacion": "2026-11-16",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565"
     },
     "BOE-A-2015-11430": {
       "id_boe": "BOE-A-2015-11430",

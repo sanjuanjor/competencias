@@ -96,3 +96,36 @@ test("interpretación del geocodificador", () => {
 test("escape de HTML", () => {
   assert.equal(core.escaparHtml('<img src=x onerror="alert(1)">'), "&lt;img src=x onerror=&quot;alert(1)&quot;&gt;");
 });
+
+const cargos = core.completarCargos(leer("../data/cargos.json"), datos.territorios);
+const provincias = leer("../data/provincias.json").provincias;
+const gobiernoDe = codigo => (codigo ? core.gobiernoDelMunicipio(cargos, provincias, codigo, null) : null);
+
+test("quién gobierna: isla, diputación y comunidad", () => {
+  for (const caso of casos.gobierno) {
+    const g = gobiernoDe(caso.codigo);
+    assert.equal(g.isla, caso.isla, caso.codigo);
+    assert.equal(g.provincial !== null, caso.provincial, caso.codigo);
+    assert.equal(g.isoCcaa, caso.ccaa, caso.codigo);
+    assert.ok(g.ccaa.nombre && g.ccaa.institucion, caso.codigo);
+  }
+});
+
+test("pasos para reclamar", () => {
+  for (const caso of casos.reclamar) {
+    const pasos = core.dondeReclamar(cargos, caso.admin, caso.materia, gobiernoDe(caso.codigo));
+    assert.deepEqual(pasos.map(p => p.paso), caso.pasos, JSON.stringify(caso));
+    assert.ok(pasos.every(p => p.nombre), JSON.stringify(caso));
+  }
+});
+
+test("quién responde", () => {
+  for (const caso of casos.responsables) {
+    const persona = core.responsable(cargos, caso.admin, caso.materia, gobiernoDe(caso.codigo), caso.ministerio);
+    assert.equal(persona ? persona.cargo : null, caso.cargo, JSON.stringify(caso));
+  }
+});
+
+test("artículo delante de cada institución", () => {
+  for (const [nombre, esperado] of casos.articulos) assert.equal(core.conArticulo(nombre), esperado);
+});

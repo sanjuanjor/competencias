@@ -44,6 +44,15 @@
       </ul>
       <p>Cada respuesta enlaza al artículo exacto en el texto consolidado del Boletín Oficial del Estado, para que puedas leerlo tú.</p>
 
+      <h2>Quién gobierna y dónde reclamar</h2>
+      <ul>
+        <li><strong>Alcaldías</strong>: registro de cargos electos locales del Ministerio de Política Territorial, con la lista por la que salió elegida cada persona y la fecha de toma de posesión. Se descarga cada mes, así que recoge mociones de censura y relevos. La familia política de cada lista (por ejemplo, que «PSC-CP» es el PSC) sale de la tabla de <a href="https://github.com/spainfacts/spainfacts.github.io/blob/main/transform/seeds/partidos_familias.md" target="_blank" rel="noopener">SpainFacts</a>.</li>
+        <li><strong>Presidencias, ministerios, diputaciones, cabildos, consells y defensores</strong>: revisados a mano con las webs oficiales y la prensa, con la fuente de cada uno en los datos. <span id="estado-cargos"></span></li>
+        <li><strong>Webs de los ayuntamientos</strong>: Wikidata. Si falta o está mal la de tu municipio, avísanos.</li>
+        <li><strong>Dónde reclamar</strong>: primero a quien presta el servicio; después por el Registro Electrónico General, que llega a cualquier administración (Ley 39/2015, art. 16.4); y, si no te responden, al defensor de tu comunidad o al Defensor del Pueblo, que supervisa a todas (Ley Orgánica 3/1981).</li>
+        <li>Indicamos el partido como dato, no como valoración: sin colores ni comparaciones. La «lista» de una alcaldía es la candidatura por la que salió elegida, que puede no coincidir con su afiliación actual.</li>
+      </ul>
+
       <h2>Cómo se comprueba</h2>
       <p id="estado-verificacion">Un programa consulta periódicamente la API de datos abiertos del BOE y comprueba, para cada cita, que la norma sigue vigente y que el artículo enlazado existe.</p>
       <p>La población de los municipios procede de las cifras oficiales del padrón que publica el Instituto Nacional de Estadística. <span id="estado-padron"></span></p>
@@ -100,6 +109,10 @@
     if (SITIO.verificacion.fecha) {
       document.getElementById("estado-verificacion").textContent +=
         " La última comprobación, sobre " + SITIO.verificacion.normas + " normas, es del " + SITIO.verificacion.fecha + ".";
+    }
+    if (SITIO.cargos) {
+      document.getElementById("estado-cargos").textContent = "Última revisión: " + SITIO.cargos +
+        (SITIO.alcaldias ? "; último cambio de alcaldía recogido: " + SITIO.alcaldias : "") + ".";
     }
     if (SITIO.padron) {
       document.getElementById("estado-padron").textContent = "Los datos cargados son los de " + SITIO.padron + ".";

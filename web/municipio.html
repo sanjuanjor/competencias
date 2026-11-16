@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tu municipio: qué está obligado a darte tu ayuntamiento</title>
-  <meta name="description" content="Escribe el nombre de tu municipio y consulta, según su población en el padrón del INE, qué servicios está obligado a prestar tu ayuntamiento y cuáles son tus administraciones.">
+  <title>Tu municipio: servicios, quién gobierna y dónde reclamar</title>
+  <meta name="description" content="Escribe dónde vives y consulta qué servicios está obligado a prestar tu ayuntamiento, quién gobierna tu ayuntamiento, tu diputación, tu comunidad y el Estado, y dónde reclamar si algo no funciona.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="¿Qué está obligado a darte tu ayuntamiento?">
   <meta property="og:description" content="Los servicios obligatorios de cada ayuntamiento dependen de su población. Consulta el tuyo con el padrón del INE.">
@@ -13,8 +13,8 @@
 <body>
   <header class="compacto">
     <p class="migas"><a href="./">¿De quién es la competencia?</a></p>
-    <h1>¿Qué está obligado a darte tu ayuntamiento?</h1>
-    <p class="subtitle">Depende de cuánta gente viva en tu municipio. Escribe su nombre.</p>
+    <h1>¿Dónde vives?</h1>
+    <p class="subtitle">Escribe tu municipio: te decimos qué está obligado a darte tu ayuntamiento, quién gobierna cada administración y dónde reclamar si algo no funciona.</p>
     <form class="search-box" role="search" onsubmit="return false">
       <label for="buscador-municipio" class="solo-lectores">Nombre de tu municipio</label>
       <input type="search" id="buscador-municipio" placeholder="Empieza a escribir el nombre de tu municipio" autocomplete="off"
@@ -40,9 +40,11 @@
 
   <script src="config.js"></script>
   <script src="data.js"></script>
+  <script src="cargos.js"></script>
   <script src="municipios.js"></script>
   <script src="core.js"></script>
   <script src="comun.js"></script>
+  <script src="gobierno.js"></script>
   <script src="municipio.js"></script>
 </body>
 </html>
